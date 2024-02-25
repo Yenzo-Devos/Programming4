@@ -31,7 +31,7 @@ protected:
 	dae::GameObject* GetOwner() const { return m_pOwner; }
 
 private:
-	dae::GameObject* m_pOwner;
-	bool m_IsDead;
+	dae::GameObject* m_pOwner{ nullptr };
+	bool m_IsDead{ false };
 };
 
