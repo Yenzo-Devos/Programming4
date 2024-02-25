@@ -1,32 +1,78 @@
 #pragma once
-#include <memory>
+#include "BaseComponent.h"
 #include "Transform.h"
+#include <vector>
+#include <memory>
+#include <concepts>
 
 namespace dae
 {
+	template<typename ComponentType>
+	concept ComponentCon = requires(ComponentType c)
+	{
+		{std::derived_from<ComponentType, BaseComponent> };
+	};
 	class Texture2D;
 
 	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
-		virtual void FixedUpdate(float fixedDeltaTime);
-		virtual void Update(float deltaTime);
-		virtual void Render() const;
-
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
-
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
+		
+		virtual void FixedUpdate(float fixedDeltaTime);
+		virtual void Update(float deltaTime);
+		virtual void Render() const;
+
+		void SetPosition(float x, float y);
+		glm::vec3 GetPosition() const { return m_transform.GetPosition(); }
+
+		void RemoveDead();
 
 	private:
 		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		std::vector<std::unique_ptr<BaseComponent>> m_pComponentVector;
+
+	public:
+		template<ComponentCon ComponentType, typename... Args>
+		void AddComponent(const Args&... args)
+		{
+			auto component{ std::make_unique<ComponentType>(args...) };
+			bool componentAdded{ false };
+			for (int componentIndex{ 0 }; componentIndex < m_pComponentVector.size(); ++componentIndex)
+			{
+				if (m_pComponentVector[componentIndex].get())
+					continue;
+
+				m_pComponentVector[componentIndex] = std::move(component);
+				m_pComponentVector[componentIndex]->SetOwner(this);
+				componentAdded = true;
+				break;
+			}
+
+			if (!componentAdded)
+			{
+				auto& newComp{ m_pComponentVector.emplace_back(std::move(component)) };
+				newComp->SetOwner(this);
+				newComp->Awake();
+			}
+		}
+
+		template<ComponentCon ComponentType>
+		ComponentType* GetComponent()
+		{
+			for (auto&& comp : m_pComponentVector)
+			{
+				auto pCast = dynamic_cast<ComponentType*>(comp.get());
+				if (pCast)
+					return pCast
+			}
+			return nullptr;
+		}
 	};
 }

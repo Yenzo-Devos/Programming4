@@ -50,3 +50,11 @@ void Scene::Render() const
 	}
 }
 
+void dae::Scene::RemoveDead()
+{
+	for (const auto& object : m_objects)
+	{
+		object->RemoveDead();
+	}
+}
+
