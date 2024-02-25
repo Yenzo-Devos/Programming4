@@ -5,12 +5,14 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <chrono>
+#include <thread>
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
 
+using namespace std::chrono;
 SDL_Window* g_window{};
 
 void PrintSDLVersion()
@@ -85,13 +87,14 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	// todo: this update loop could use some work.
+	float msPerFrame{ 1000.f / framesPerSecond };
 	bool doContinue = true;
-	auto lastTime = std::chrono::high_resolution_clock::now();
+	auto lastTime = high_resolution_clock::now();
 	float lag = 0.f;
 	while (doContinue)
 	{
-		const auto currentTime = std::chrono::high_resolution_clock::now();
-		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
+		const auto currentTime = high_resolution_clock::now();
+		const float deltaTime = duration<float>(currentTime - lastTime).count();
 		lastTime = currentTime;
 		lag += deltaTime;
 
@@ -104,6 +107,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		sceneManager.Update(deltaTime);
 		renderer.Render();
 
-		const auto sleepTime = currentTime + std::chrono::milliseconds() - std::chrono::high_resolution_clock::now();
+		const auto sleepTime = currentTime + milliseconds(long long(msPerFrame)) - high_resolution_clock::now();
+
+		std::this_thread::sleep_for(sleepTime);
 	}
 }
