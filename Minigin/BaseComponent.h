@@ -1,7 +1,11 @@
 #pragma once
+//#include "GameObject.h"
 #include <memory>
 
-class GameObject;
+namespace dae
+{
+	class GameObject;
+}
 
 class BaseComponent
 {
@@ -19,13 +23,15 @@ public:
 	virtual void FixedUpdate(float) {};
 	virtual void Render() const {};
 
-	virtual void SetOwner(GameObject* ownerPtr);
+	virtual void SetOwner(dae::GameObject* ownerPtr);
 	virtual void SetDead() { m_IsDead = true; }
+	virtual bool GetIsDead() { return m_IsDead; }
 
 protected:
-	dae::GameObject* m_pOwner;
+	dae::GameObject* GetOwner() const { return m_pOwner; }
 
 private:
+	dae::GameObject* m_pOwner;
 	bool m_IsDead;
 };
 

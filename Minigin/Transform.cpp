@@ -1,5 +1,9 @@
 #include "Transform.h"
 
+void dae::Transform::Awake()
+{
+}
+
 void dae::Transform::SetPosition(const float x, const float y, const float z)
 {
 	m_position.x = x;

@@ -1,6 +1,6 @@
 #include "BaseComponent.h"
 
-void BaseComponent::SetOwner(GameObject* ownerPtr)
+void BaseComponent::SetOwner(dae::GameObject* ownerPtr)
 {
 	m_pOwner = ownerPtr;
 }

@@ -86,6 +86,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
+	sceneManager.RemoveDead();
 	// todo: this update loop could use some work.
 	float msPerFrame{ 1000.f / framesPerSecond };
 	bool doContinue = true;

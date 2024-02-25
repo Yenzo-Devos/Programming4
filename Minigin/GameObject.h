@@ -10,7 +10,7 @@ namespace dae
 	template<typename ComponentType>
 	concept ComponentCon = requires(ComponentType c)
 	{
-		{std::derived_from<ComponentType, BaseComponent> };
+		{std::is_base_of<BaseComponent, ComponentType>::value };
 	};
 	class Texture2D;
 
@@ -32,10 +32,10 @@ namespace dae
 		void SetPosition(float x, float y);
 		glm::vec3 GetPosition() const { return m_transform.GetPosition(); }
 
-		void RemoveDead();
+		void RemoveDeadComponents();
 
 	private:
-		Transform m_transform{};
+		dae::Transform m_transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponentVector;
 
 	public:
@@ -70,7 +70,7 @@ namespace dae
 			{
 				auto pCast = dynamic_cast<ComponentType*>(comp.get());
 				if (pCast)
-					return pCast
+					return pCast;
 			}
 			return nullptr;
 		}
