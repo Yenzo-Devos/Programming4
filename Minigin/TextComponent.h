@@ -8,7 +8,7 @@
 class TextComponent final : public BaseComponent
 {
 public:
-	TextComponent(const std::string& text = "nothing inserted", const std::string& font = "Lingua.otf", unsigned int fontSize = 36);
+	TextComponent(dae::GameObject* pOwner, const std::string& text = "nothing inserted", const std::string& font = "Lingua.otf", unsigned int fontSize = 36);
 	~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;

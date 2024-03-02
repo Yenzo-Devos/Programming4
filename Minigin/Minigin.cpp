@@ -100,12 +100,14 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		lag += deltaTime;
 
 		doContinue = input.ProcessInput();
-		while (lag >= fixedTimeStep)
+		// only needed to be called if FixedUpdate() is used
+		/*while (lag >= fixedTimeStep)
 		{
 			sceneManager.FixedUpdate(fixedTimeStep);
 			lag -= fixedTimeStep;
-		}
+		}*/
 		sceneManager.Update(deltaTime);
+		// if LateUpdate() needed, implement before rendering but after all other updates
 		renderer.Render();
 
 		const auto sleepTime = currentTime + milliseconds(long long(msPerFrame)) - high_resolution_clock::now();

@@ -5,8 +5,9 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
-TextComponent::TextComponent(const std::string& text, const std::string& font, unsigned int fontSize)
-	: m_Text{ text }
+TextComponent::TextComponent(dae::GameObject* pOwner, const std::string& text, const std::string& font, unsigned int fontSize)
+	: BaseComponent(pOwner)
+	, m_Text{ text }
 	, m_TextTexture{ nullptr }
 	, m_IsTextChanged{ true }
 {

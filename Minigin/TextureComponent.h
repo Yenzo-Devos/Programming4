@@ -6,7 +6,7 @@
 class TextureComponent final : public BaseComponent
 {
 public:
-	TextureComponent(std::string texture);
+	TextureComponent(dae::GameObject* pOwner, std::string texture);
 	~TextureComponent() = default;
 
 	TextureComponent(const TextureComponent& other) = delete;

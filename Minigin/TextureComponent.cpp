@@ -3,7 +3,8 @@
 #include "Renderer.h"
 #include "GameObject.h"
 
-TextureComponent::TextureComponent(std::string texture)
+TextureComponent::TextureComponent(dae::GameObject* pOwner, std::string texture)
+	: BaseComponent(pOwner)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(texture);
 }

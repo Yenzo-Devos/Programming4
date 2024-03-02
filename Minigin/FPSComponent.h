@@ -6,7 +6,7 @@ class TextComponent;
 class FPSComponent final : public BaseComponent
 {
 public:
-	FPSComponent(TextComponent* textComponent);
+	FPSComponent(dae::GameObject* pOwner, TextComponent* textComponent);
 	virtual ~FPSComponent() = default;
 
 	FPSComponent(const FPSComponent& other) = delete;

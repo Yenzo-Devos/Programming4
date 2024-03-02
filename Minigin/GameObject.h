@@ -30,19 +30,19 @@ namespace dae
 		virtual void Render() const;
 
 		void SetPosition(float x, float y);
-		glm::vec3 GetPosition() const { return m_transform.GetPosition(); }
+		glm::vec3 GetPosition() const { return m_Transform.GetPosition(); }
 
 		void RemoveDeadComponents();
 
 	private:
-		dae::Transform m_transform{};
+		dae::Transform m_Transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponentVector;
 
 	public:
 		template<ComponentCon ComponentType, typename... Args>
 		void AddComponent(const Args&... args)
 		{
-			auto component{ std::make_unique<ComponentType>(args...) };
+			auto component{ std::make_unique<ComponentType>(this, args...) };
 			bool componentAdded{ false };
 			for (int componentIndex{ 0 }; componentIndex < m_pComponentVector.size(); ++componentIndex)
 			{

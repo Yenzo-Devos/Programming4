@@ -3,7 +3,8 @@
 #include <iomanip>
 #include <sstream>
 
-FPSComponent::FPSComponent(TextComponent* textComponent)
+FPSComponent::FPSComponent(dae::GameObject* pOwner, TextComponent* textComponent)
+	: BaseComponent(pOwner)
 {
 	m_pTextComponent = textComponent;
 }

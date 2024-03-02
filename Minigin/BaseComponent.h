@@ -1,5 +1,4 @@
 #pragma once
-//#include "GameObject.h"
 #include <memory>
 
 namespace dae
@@ -10,7 +9,6 @@ namespace dae
 class BaseComponent
 {
 public:
-	BaseComponent() = default;
 	virtual ~BaseComponent() = default;
 
 	BaseComponent(const BaseComponent& other) = delete;
@@ -28,6 +26,7 @@ public:
 	virtual bool GetIsDead() { return m_IsDead; }
 
 protected:
+	BaseComponent(dae::GameObject* pOwner);
 	dae::GameObject* GetOwner() const { return m_pOwner; }
 
 private:
