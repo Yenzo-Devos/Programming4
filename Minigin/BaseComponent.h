@@ -21,7 +21,6 @@ public:
 	virtual void FixedUpdate(float) {};
 	virtual void Render() const {};
 
-	virtual void SetOwner(dae::GameObject* ownerPtr);
 	virtual void SetDead() { m_IsDead = true; }
 	virtual bool GetIsDead() { return m_IsDead; }
 

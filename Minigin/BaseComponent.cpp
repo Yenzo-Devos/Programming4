@@ -8,10 +8,7 @@ BaseComponent::BaseComponent(dae::GameObject* pOwner)
 	if (!pOwner)
 		throw std::runtime_error(std::string("owner is nullptr"));
 
-	SetOwner(pOwner);
+	m_pOwner = pOwner;
 }
 
-void BaseComponent::SetOwner(dae::GameObject* ownerPtr)
-{
-	m_pOwner = ownerPtr;
-}
+

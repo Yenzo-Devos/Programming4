@@ -28,8 +28,3 @@ void FPSComponent::Update(float deltaTime)
 void FPSComponent::Render() const
 {
 }
-
-void FPSComponent::SetOwner(dae::GameObject* pOwner)
-{
-	BaseComponent::SetOwner(pOwner);
-}

@@ -18,8 +18,6 @@ public:
 	void Update(float deltaTime) override;
 	void Render() const override;
 
-	void SetOwner(dae::GameObject* pOwner) override;
-
 private:
 	TextComponent* m_pTextComponent;
 	float m_FixedTimeStep{0.2f};

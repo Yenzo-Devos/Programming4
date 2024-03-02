@@ -50,7 +50,6 @@ namespace dae
 					continue;
 
 				m_pComponentVector[componentIndex] = std::move(component);
-				m_pComponentVector[componentIndex]->SetOwner(this);
 				componentAdded = true;
 				break;
 			}
@@ -58,7 +57,6 @@ namespace dae
 			if (!componentAdded)
 			{
 				auto& newComp{ m_pComponentVector.emplace_back(std::move(component)) };
-				newComp->SetOwner(this);
 				newComp->Awake();
 			}
 		}
