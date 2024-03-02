@@ -6,7 +6,7 @@ class TextComponent;
 class FPSComponent final : public BaseComponent
 {
 public:
-	FPSComponent();
+	FPSComponent(TextComponent* textComponent);
 	virtual ~FPSComponent() = default;
 
 	FPSComponent(const FPSComponent& other) = delete;
@@ -21,7 +21,7 @@ public:
 	void SetOwner(dae::GameObject* pOwner) override;
 
 private:
-	std::unique_ptr<TextComponent> m_pTextComponent;
+	TextComponent* m_pTextComponent;
 	float m_FixedTimeStep{0.2f};
 	float m_AccuFrameTime{};
 };

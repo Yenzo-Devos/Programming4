@@ -3,9 +3,9 @@
 #include <iomanip>
 #include <sstream>
 
-FPSComponent::FPSComponent()
+FPSComponent::FPSComponent(TextComponent* textComponent)
 {
-	m_pTextComponent = std::make_unique<TextComponent>();
+	m_pTextComponent = textComponent;
 }
 
 void FPSComponent::Awake()
@@ -20,18 +20,15 @@ void FPSComponent::Update(float deltaTime)
 		std::ostringstream ss;
 		ss << std::fixed << std::setprecision(1) << 1.f / deltaTime << " FPS";
 		m_pTextComponent->SetText(ss.str());
-		m_pTextComponent->Update(deltaTime);
 		m_AccuFrameTime -= m_FixedTimeStep;
 	}
 }
 
 void FPSComponent::Render() const
 {
-	m_pTextComponent->Render();
 }
 
 void FPSComponent::SetOwner(dae::GameObject* pOwner)
 {
 	BaseComponent::SetOwner(pOwner);
-	m_pTextComponent->SetOwner(pOwner);
 }
