@@ -2,12 +2,12 @@
 
 #include "GameObject.h"
 
-RenderComponent::RenderComponent(engine::GameObject* pOwner)
+engine::RenderComponent::RenderComponent(engine::GameObject* pOwner)
 	: BaseComponent(pOwner)
 {
 }
 
-void RenderComponent::Awake()
+void engine::RenderComponent::Awake()
 {
 
 }

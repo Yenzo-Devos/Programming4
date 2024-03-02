@@ -1,27 +1,32 @@
 #pragma once
 #include "BaseComponent.h"
 
-class TextComponent;
 
-class FPSComponent final : public BaseComponent
+namespace engine
 {
-public:
-	FPSComponent(engine::GameObject* pOwner, TextComponent* textComponent);
-	virtual ~FPSComponent() = default;
+	class TextComponent;
 
-	FPSComponent(const FPSComponent& other) = delete;
-	FPSComponent(FPSComponent&& other) = delete;
-	FPSComponent& operator=(const FPSComponent& other) = delete;
-	FPSComponent& operator=(FPSComponent&& other) = delete;
+	class FPSComponent final : public BaseComponent
+	{
+	public:
+		FPSComponent(engine::GameObject* pOwner, TextComponent* textComponent);
+		virtual ~FPSComponent() = default;
 
-	void Awake() override;
-	void Update(float deltaTime) override;
+		FPSComponent(const FPSComponent& other) = delete;
+		FPSComponent(FPSComponent&& other) = delete;
+		FPSComponent& operator=(const FPSComponent& other) = delete;
+		FPSComponent& operator=(FPSComponent&& other) = delete;
 
-private:
-	TextComponent* m_pTextComponent;
-	float m_FixedTimeStep{0.2f};
-	float m_AccuFrameTime{};
-	float m_FPS{};
-	int m_DeltaTimeCount{};
-};
+		void Awake() override;
+		void Update(float deltaTime) override;
+
+	private:
+		TextComponent* m_pTextComponent;
+		float m_FixedTimeStep{ 0.2f };
+		float m_AccuFrameTime{};
+		float m_FPS{};
+		int m_DeltaTimeCount{};
+	};
+}
+
 

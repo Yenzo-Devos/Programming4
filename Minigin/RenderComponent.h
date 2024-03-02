@@ -2,18 +2,21 @@
 #include "BaseComponent.h"
 #include "Transform.h"
 
-class RenderComponent : public BaseComponent
+namespace engine
 {
-public:
-	RenderComponent(engine::GameObject* pOwner);
-	virtual ~RenderComponent() = default;
+	class RenderComponent : public BaseComponent
+	{
+	public:
+		RenderComponent(engine::GameObject* pOwner);
+		virtual ~RenderComponent() = default;
 
-	RenderComponent(const RenderComponent& other) = delete;
-	RenderComponent(RenderComponent&& other) = delete;
-	RenderComponent& operator=(const RenderComponent& other) = delete;
-	RenderComponent& operator=(RenderComponent&& other) = delete;
+		RenderComponent(const RenderComponent& other) = delete;
+		RenderComponent(RenderComponent&& other) = delete;
+		RenderComponent& operator=(const RenderComponent& other) = delete;
+		RenderComponent& operator=(RenderComponent&& other) = delete;
 
-	virtual void Awake() override;
-	virtual void Render(const glm::mat4& viewProj) const = 0;
-};
+		virtual void Awake() override;
+		virtual void Render(const glm::mat4& viewProj) const = 0;
+	};
+}
 

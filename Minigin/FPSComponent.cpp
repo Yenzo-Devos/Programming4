@@ -3,17 +3,17 @@
 #include <iomanip>
 #include <sstream>
 
-FPSComponent::FPSComponent(engine::GameObject* pOwner, TextComponent* textComponent)
-	: BaseComponent(pOwner)
+engine::FPSComponent::FPSComponent(engine::GameObject* pOwner, engine::TextComponent* textComponent)
+	: engine::BaseComponent(pOwner)
 {
 	m_pTextComponent = textComponent;
 }
 
-void FPSComponent::Awake()
+void engine::FPSComponent::Awake()
 {
 }
 
-void FPSComponent::Update(float deltaTime)
+void engine::FPSComponent::Update(float deltaTime)
 {
 	m_AccuFrameTime += deltaTime;
 	++m_DeltaTimeCount;

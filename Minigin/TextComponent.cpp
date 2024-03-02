@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
-TextComponent::TextComponent(engine::GameObject* pOwner, const std::string& text, const std::string& font, unsigned int fontSize)
+engine::TextComponent::TextComponent(engine::GameObject* pOwner, const std::string& text, const std::string& font, unsigned int fontSize)
 	: BaseComponent(pOwner)
 	, m_Text{ text }
 	, m_TextTexture{ nullptr }
@@ -14,12 +14,12 @@ TextComponent::TextComponent(engine::GameObject* pOwner, const std::string& text
 	m_Font = engine::ResourceManager::GetInstance().LoadFont(font, fontSize);
 }
 
-void TextComponent::Awake()
+void engine::TextComponent::Awake()
 {
 
 }
 
-void TextComponent::Update(float deltaTime)
+void engine::TextComponent::Update(float deltaTime)
 {
 	deltaTime;
 	if (m_IsTextChanged)
@@ -41,7 +41,7 @@ void TextComponent::Update(float deltaTime)
 	}
 }
 
-void TextComponent::Render() const
+void engine::TextComponent::Render() const
 {
 	if (m_TextTexture)
 	{
@@ -50,7 +50,7 @@ void TextComponent::Render() const
 	}
 }
 
-void TextComponent::SetText(std::string newText)
+void engine::TextComponent::SetText(std::string newText)
 {
 	m_Text = newText;
 	m_IsTextChanged = true;

@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 
-BaseComponent::BaseComponent(engine::GameObject* pOwner)
+engine::BaseComponent::BaseComponent(engine::GameObject* pOwner)
 {
 	if (!pOwner)
 		throw std::runtime_error(std::string("owner is nullptr"));

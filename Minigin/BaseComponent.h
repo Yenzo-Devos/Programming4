@@ -6,30 +6,33 @@ namespace engine
 	class GameObject;
 }
 
-class BaseComponent
+namespace engine
 {
-public:
-	virtual ~BaseComponent() = default;
+	class BaseComponent
+	{
+	public:
+		virtual ~BaseComponent() = default;
 
-	BaseComponent(const BaseComponent& other) = delete;
-	BaseComponent(BaseComponent&& other) = delete;
-	BaseComponent& operator=(const BaseComponent& other) = delete;
-	BaseComponent& operator=(BaseComponent&& other) = delete;
+		BaseComponent(const BaseComponent& other) = delete;
+		BaseComponent(BaseComponent&& other) = delete;
+		BaseComponent& operator=(const BaseComponent& other) = delete;
+		BaseComponent& operator=(BaseComponent&& other) = delete;
 
-	virtual void Awake() = 0;
-	virtual void Update(float) {};
-	virtual void FixedUpdate(float) {};
-	virtual void Render() const {};
+		virtual void Awake() = 0;
+		virtual void Update(float) {};
+		virtual void FixedUpdate(float) {};
+		virtual void Render() const {};
 
-	virtual void SetDead() { m_IsDead = true; }
-	virtual bool GetIsDead() { return m_IsDead; }
+		virtual void SetDead() { m_IsDead = true; }
+		virtual bool GetIsDead() { return m_IsDead; }
 
-protected:
-	BaseComponent(engine::GameObject* pOwner);
-	engine::GameObject* GetOwner() const { return m_pOwner; }
+	protected:
+		BaseComponent(engine::GameObject* pOwner);
+		engine::GameObject* GetOwner() const { return m_pOwner; }
 
-private:
-	engine::GameObject* m_pOwner{ nullptr };
-	bool m_IsDead{ false };
-};
+	private:
+		engine::GameObject* m_pOwner{ nullptr };
+		bool m_IsDead{ false };
+	};
+}
 
