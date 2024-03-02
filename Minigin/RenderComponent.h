@@ -5,7 +5,7 @@
 class RenderComponent : public BaseComponent
 {
 public:
-	RenderComponent(dae::GameObject* pOwner);
+	RenderComponent(engine::GameObject* pOwner);
 	virtual ~RenderComponent() = default;
 
 	RenderComponent(const RenderComponent& other) = delete;

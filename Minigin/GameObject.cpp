@@ -4,9 +4,9 @@
 #include "Renderer.h"
 #include "Transform.h"
 
-dae::GameObject::~GameObject() = default;
+engine::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(float deltaTime)
+void engine::GameObject::Update(float deltaTime)
 {
 	for (const std::unique_ptr<BaseComponent>& component : m_pComponentVector)
 	{
@@ -17,12 +17,12 @@ void dae::GameObject::Update(float deltaTime)
 	}
 }
 
-void dae::GameObject::FixedUpdate(float fixedDeltaTime)
+void engine::GameObject::FixedUpdate(float fixedDeltaTime)
 {
 	fixedDeltaTime;
 }
 
-void dae::GameObject::Render() const
+void engine::GameObject::Render() const
 {
 	for (const std::unique_ptr<BaseComponent>& component : m_pComponentVector)
 	{
@@ -34,12 +34,12 @@ void dae::GameObject::Render() const
 }
 
 
-void dae::GameObject::SetPosition(float x, float y)
+void engine::GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
 }
 
-void dae::GameObject::RemoveDeadComponents()
+void engine::GameObject::RemoveDeadComponents()
 {
 	for (int componentIndex{ 0 }; componentIndex < m_pComponentVector.size(); ++componentIndex)
 	{

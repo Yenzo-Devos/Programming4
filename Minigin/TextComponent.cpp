@@ -5,13 +5,13 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
-TextComponent::TextComponent(dae::GameObject* pOwner, const std::string& text, const std::string& font, unsigned int fontSize)
+TextComponent::TextComponent(engine::GameObject* pOwner, const std::string& text, const std::string& font, unsigned int fontSize)
 	: BaseComponent(pOwner)
 	, m_Text{ text }
 	, m_TextTexture{ nullptr }
 	, m_IsTextChanged{ true }
 {
-	m_Font = dae::ResourceManager::GetInstance().LoadFont(font, fontSize);
+	m_Font = engine::ResourceManager::GetInstance().LoadFont(font, fontSize);
 }
 
 void TextComponent::Awake()
@@ -30,13 +30,13 @@ void TextComponent::Update(float deltaTime)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
 		}
-		auto texture = SDL_CreateTextureFromSurface(dae::Renderer::GetInstance().GetSDLRenderer(), surf);
+		auto texture = SDL_CreateTextureFromSurface(engine::Renderer::GetInstance().GetSDLRenderer(), surf);
 		if (texture == nullptr) 
 		{
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		m_TextTexture = std::make_shared<dae::Texture2D>(texture);
+		m_TextTexture = std::make_shared<engine::Texture2D>(texture);
 		m_IsTextChanged = false;
 	}
 }
@@ -46,15 +46,12 @@ void TextComponent::Render() const
 	if (m_TextTexture)
 	{
 		auto pos{ GetOwner()->GetPosition() };
-		dae::Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
+		engine::Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
 	}
 }
 
 void TextComponent::SetText(std::string newText)
 {
-	if (m_Text == newText)
-		return;
-
 	m_Text = newText;
 	m_IsTextChanged = true;
 }

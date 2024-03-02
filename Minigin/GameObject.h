@@ -5,7 +5,7 @@
 #include <memory>
 #include <concepts>
 
-namespace dae
+namespace engine
 {
 	template<typename ComponentType>
 	concept ComponentCon = requires(ComponentType c)
@@ -35,7 +35,7 @@ namespace dae
 		void RemoveDeadComponents();
 
 	private:
-		dae::Transform m_Transform{};
+		engine::Transform m_Transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponentVector;
 
 	public:

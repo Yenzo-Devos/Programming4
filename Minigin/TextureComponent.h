@@ -6,7 +6,7 @@
 class TextureComponent final : public BaseComponent
 {
 public:
-	TextureComponent(dae::GameObject* pOwner, std::string texture);
+	TextureComponent(engine::GameObject* pOwner, std::string texture);
 	~TextureComponent() = default;
 
 	TextureComponent(const TextureComponent& other) = delete;
@@ -18,6 +18,6 @@ public:
 	void Render() const override;
 
 private:
-	std::shared_ptr<dae::Texture2D> m_pTexture;
+	std::shared_ptr<engine::Texture2D> m_pTexture;
 };
 

@@ -6,7 +6,7 @@ class TextComponent;
 class FPSComponent final : public BaseComponent
 {
 public:
-	FPSComponent(dae::GameObject* pOwner, TextComponent* textComponent);
+	FPSComponent(engine::GameObject* pOwner, TextComponent* textComponent);
 	virtual ~FPSComponent() = default;
 
 	FPSComponent(const FPSComponent& other) = delete;
@@ -16,11 +16,12 @@ public:
 
 	void Awake() override;
 	void Update(float deltaTime) override;
-	void Render() const override;
 
 private:
 	TextComponent* m_pTextComponent;
 	float m_FixedTimeStep{0.2f};
 	float m_AccuFrameTime{};
+	float m_FPS{};
+	int m_DeltaTimeCount{};
 };
 

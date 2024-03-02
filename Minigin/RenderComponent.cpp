@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-RenderComponent::RenderComponent(dae::GameObject* pOwner)
+RenderComponent::RenderComponent(engine::GameObject* pOwner)
 	: BaseComponent(pOwner)
 {
 }

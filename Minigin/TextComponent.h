@@ -8,7 +8,7 @@
 class TextComponent final : public BaseComponent
 {
 public:
-	TextComponent(dae::GameObject* pOwner, const std::string& text = "nothing inserted", const std::string& font = "Lingua.otf", unsigned int fontSize = 36);
+	TextComponent(engine::GameObject* pOwner, const std::string& text = "nothing inserted", const std::string& font = "Lingua.otf", unsigned int fontSize = 36);
 	~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;
@@ -25,7 +25,7 @@ private:
 	bool m_IsTextChanged;
 	std::string m_Text;
 
-	std::shared_ptr<dae::Font> m_Font;
-	std::shared_ptr<dae::Texture2D> m_TextTexture;
+	std::shared_ptr<engine::Font> m_Font;
+	std::shared_ptr<engine::Texture2D> m_TextTexture;
 };
 

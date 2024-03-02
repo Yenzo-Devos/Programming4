@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-namespace dae
+namespace engine
 {
 	class GameObject;
 }
@@ -25,11 +25,11 @@ public:
 	virtual bool GetIsDead() { return m_IsDead; }
 
 protected:
-	BaseComponent(dae::GameObject* pOwner);
-	dae::GameObject* GetOwner() const { return m_pOwner; }
+	BaseComponent(engine::GameObject* pOwner);
+	engine::GameObject* GetOwner() const { return m_pOwner; }
 
 private:
-	dae::GameObject* m_pOwner{ nullptr };
+	engine::GameObject* m_pOwner{ nullptr };
 	bool m_IsDead{ false };
 };
 

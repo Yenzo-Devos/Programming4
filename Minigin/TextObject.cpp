@@ -5,11 +5,11 @@
 #include "Font.h"
 #include "Texture2D.h"
 
-//dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
+//engine::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 
 //	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
 //{ }
 //
-//void dae::TextObject::Update(float deltaTime)
+//void engine::TextObject::Update(float deltaTime)
 //{
 //	deltaTime;
 //	if (m_needsUpdate)
@@ -31,7 +31,7 @@
 //	}
 //}
 //
-//void dae::TextObject::Render() const
+//void engine::TextObject::Render() const
 //{
 //	if (m_textTexture != nullptr)
 //	{
@@ -41,13 +41,13 @@
 //}
 //
 //// This implementation uses the "dirty flag" pattern
-//void dae::TextObject::SetText(const std::string& text)
+//void engine::TextObject::SetText(const std::string& text)
 //{
 //	m_text = text;
 //	m_needsUpdate = true;
 //}
 //
-//void dae::TextObject::SetPosition(const float x, const float y)
+//void engine::TextObject::SetPosition(const float x, const float y)
 //{
 //	m_transform.SetPosition(x, y, 0.0f);
 //}
