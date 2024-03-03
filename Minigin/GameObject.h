@@ -34,9 +34,21 @@ namespace engine
 
 		void RemoveDeadComponents();
 
+		GameObject* GetParent() const { return m_pParent; }
+		void SetParent(GameObject* pParent);
+		int GetChildCount() const { return int(m_pChildren.size()); }
+		GameObject* GetChildAt(int index) const;
+
 	private:
 		engine::Transform m_Transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponentVector;
+
+		GameObject* m_pParent{ nullptr };
+		std::vector<GameObject*> m_pChildren;
+
+		void AddChild(GameObject* pChild);
+		// void RemoveChild(GameObject* pChild);
+		bool IsChild(GameObject* pParent);
 
 	public:
 		template<ComponentCon ComponentType, typename... Args>
