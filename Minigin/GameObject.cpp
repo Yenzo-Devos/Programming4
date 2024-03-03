@@ -34,12 +34,6 @@ void engine::GameObject::Render() const
 	}
 }
 
-
-void engine::GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
-}
-
 void engine::GameObject::RemoveDeadComponents()
 {
 	for (int componentIndex{ 0 }; componentIndex < m_pComponentVector.size(); ++componentIndex)
@@ -49,13 +43,21 @@ void engine::GameObject::RemoveDeadComponents()
 	}
 }
 
-void engine::GameObject::SetParent(GameObject* pParent)
+void engine::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
 	if (!pParent || IsChild(pParent) || m_pParent == pParent)
 		return;
 
-	if (m_pParent)
-		m_pParent = nullptr;
+	if (!pParent)
+		SetLocalPosition(GetWorldPosition());
+	else
+	{
+		if (keepWorldPosition)
+			SetLocalPosition(GetWorldPosition() - pParent->GetWorldPosition());
+		SetPositionDirty();
+	}
+
+	m_pParent->RemoveChild(this);
 	m_pParent = pParent;
 	m_pParent->AddChild(this);
 }
@@ -68,9 +70,44 @@ engine::GameObject* engine::GameObject::GetChildAt(int index) const
 		throw std::runtime_error(std::string("Index Invalid"));
 }
 
+void engine::GameObject::SetLocalPosition(glm::vec3 position)
+{
+	m_LocalPosition = position;
+	SetPositionDirty();
+}
+
+void engine::GameObject::UpdateWorldPositon()
+{
+	if (m_IsPositionDirty)
+	{
+		if (m_pParent)
+			m_WorldPosition = m_pParent->GetWorldPosition() + m_LocalPosition;
+		else
+			m_WorldPosition = m_LocalPosition;
+	}
+}
+
+glm::vec3 engine::GameObject::GetWorldPosition()
+{
+	if (m_IsPositionDirty)
+		UpdateWorldPositon();
+	return m_WorldPosition;
+}
+
 void engine::GameObject::AddChild(GameObject* pChild)
 {
 	m_pChildren.emplace_back(pChild);
+}
+
+void engine::GameObject::RemoveChild(GameObject* pChild)
+{
+	if (!pChild)
+		return;
+
+	auto lastValid = std::remove_if(std::begin(m_pChildren), std::end(m_pChildren),
+		[&](GameObject* algChild) {
+			return algChild == pChild;
+		});
 }
 
 bool engine::GameObject::IsChild(GameObject* pParent)
@@ -81,4 +118,9 @@ bool engine::GameObject::IsChild(GameObject* pParent)
 			return true;
 	}
 	return false;
+}
+
+void engine::GameObject::SetPositionDirty()
+{
+	m_IsPositionDirty = true;
 }

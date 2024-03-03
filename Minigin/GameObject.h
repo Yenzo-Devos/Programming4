@@ -19,36 +19,43 @@ namespace engine
 	{
 	public:
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 		
-		virtual void FixedUpdate(float fixedDeltaTime);
-		virtual void Update(float deltaTime);
-		virtual void Render() const;
-
-		void SetPosition(float x, float y);
-		glm::vec3 GetPosition() const { return m_Transform.GetPosition(); }
+		void FixedUpdate(float fixedDeltaTime);
+		void Update(float deltaTime);
+		void Render() const;
 
 		void RemoveDeadComponents();
 
 		GameObject* GetParent() const { return m_pParent; }
-		void SetParent(GameObject* pParent);
+		void SetParent(GameObject* pParent, bool keepWorldPosition);
 		int GetChildCount() const { return int(m_pChildren.size()); }
 		GameObject* GetChildAt(int index) const;
 
+		void SetLocalPosition(glm::vec3 position);
+		void UpdateWorldPositon();
+		glm::vec3 GetWorldPosition();
+
 	private:
-		engine::Transform m_Transform{};
+		//engine::Transform m_Transform{};
+		glm::vec3 m_LocalPosition;
+		glm::vec3 m_WorldPosition;
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponentVector;
 
 		GameObject* m_pParent{ nullptr };
 		std::vector<GameObject*> m_pChildren;
 
+		bool m_IsPositionDirty{ false };
+
 		void AddChild(GameObject* pChild);
-		// void RemoveChild(GameObject* pChild);
+		void RemoveChild(GameObject* pChild);
 		bool IsChild(GameObject* pParent);
+
+		void SetPositionDirty();
 
 	public:
 		template<ComponentCon ComponentType, typename... Args>
