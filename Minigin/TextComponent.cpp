@@ -45,7 +45,7 @@ void engine::TextComponent::Render() const
 {
 	if (m_TextTexture)
 	{
-		auto pos{ GetOwner()->GetPosition() };
+		auto pos{ GetOwner()->GetWorldPosition() };
 		engine::Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
 	}
 }

@@ -16,6 +16,6 @@ void engine::TextureComponent::Awake()
 
 void engine::TextureComponent::Render() const
 {
-	auto pos = GetOwner()->GetPosition();
+	auto pos = GetOwner()->GetWorldPosition();
 	engine::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }

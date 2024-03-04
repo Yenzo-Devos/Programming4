@@ -57,7 +57,9 @@ void engine::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 		SetPositionDirty();
 	}
 
-	m_pParent->RemoveChild(this);
+	if (m_pParent)
+		m_pParent->RemoveChild(this);
+
 	m_pParent = pParent;
 	m_pParent->AddChild(this);
 }
