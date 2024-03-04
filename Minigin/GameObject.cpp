@@ -45,7 +45,7 @@ void engine::GameObject::RemoveDeadComponents()
 
 void engine::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
-	if (!pParent || IsChild(pParent) || m_pParent == pParent)
+	if (pParent == this || IsChild(pParent) || m_pParent == pParent)
 		return;
 
 	if (!pParent)
@@ -61,7 +61,9 @@ void engine::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 		m_pParent->RemoveChild(this);
 
 	m_pParent = pParent;
-	m_pParent->AddChild(this);
+	
+	if (m_pParent)
+		m_pParent->AddChild(this);
 }
 
 engine::GameObject* engine::GameObject::GetChildAt(int index) const
