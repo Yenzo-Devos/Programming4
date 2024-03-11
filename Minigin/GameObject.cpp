@@ -70,7 +70,7 @@ void engine::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 
 engine::GameObject* engine::GameObject::GetChildAt(int index) const
 {
-	if (index < m_pChildren.size())
+	if (index < int(m_pChildren.size()))
 		return m_pChildren[index];
 	else
 		throw std::runtime_error(std::string("Index Invalid"));
