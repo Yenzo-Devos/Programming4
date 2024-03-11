@@ -25,6 +25,14 @@ void engine::SceneManager::Render()
 	}
 }
 
+void engine::SceneManager::RenderUI()
+{
+	for (const auto& scene : m_scenes)
+	{
+		scene->RenderUI();
+	}
+}
+
 void engine::SceneManager::RemoveDead()
 {
 	for (const auto& scene : m_scenes)
@@ -35,7 +43,7 @@ void engine::SceneManager::RemoveDead()
 
 engine::Scene& engine::SceneManager::CreateScene(const std::string& name)
 {
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
+	const auto& scene = std::unique_ptr<Scene>(new Scene(name));
 	m_scenes.push_back(scene);
 	return *scene;
 }

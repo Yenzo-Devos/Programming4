@@ -35,17 +35,9 @@ engine::TrashTheCache::~TrashTheCache()
 
 void engine::TrashTheCache::RenderUI()
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
 	// RenderExercises
 	RenderEx1();
 	RenderEx2();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	//ImGui::EndFrame();
 }
 
 void engine::TrashTheCache::PlottingData(std::vector<float> data, ImColor color)

@@ -15,10 +15,11 @@ namespace engine
 		void Update(float deltaTime);
 		void FixedUpdate(float fixedDeltaTime);
 		void Render();
+		void RenderUI();
 		void RemoveDead();
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
-		std::vector<std::shared_ptr<Scene>> m_scenes;
+		std::vector<std::unique_ptr<Scene>> m_scenes;
 	};
 }

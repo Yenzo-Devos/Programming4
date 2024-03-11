@@ -6,6 +6,12 @@
 #include <stdexcept>
 #include <string>
 
+engine::GameObject::GameObject()
+	: m_LocalPosition{ }
+	, m_WorldPosition{ }
+{
+}
+
 engine::GameObject::~GameObject() = default;
 
 void engine::GameObject::Update(float deltaTime)
@@ -32,6 +38,16 @@ void engine::GameObject::Render() const
 			continue;
 
 		component->Render();
+	}
+}
+
+void engine::GameObject::RenderUI()
+{
+	for (const std::unique_ptr<BaseComponent>& component : m_pComponentVector)
+	{
+		if (!component)
+			continue;
+
 		component->RenderUI();
 	}
 }

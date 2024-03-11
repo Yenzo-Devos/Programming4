@@ -18,7 +18,7 @@ namespace engine
 	class GameObject final
 	{
 	public:
-		GameObject() = default;
+		GameObject();
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -28,6 +28,7 @@ namespace engine
 		void FixedUpdate(float fixedDeltaTime);
 		void Update(float deltaTime);
 		void Render() const;
+		void RenderUI();
 
 		void RemoveDeadComponents();
 
