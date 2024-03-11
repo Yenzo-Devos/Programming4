@@ -122,7 +122,7 @@ void engine::TrashTheCache::TrashTheCacheBenchmark(int benchmarkAmount)
 
 	int stepSize{ 1 };
 	std::vector<float> averages;
-	for (int i{ 0 }; i < m_StepsInfo.size(); i++)
+	for (int i{ 0 }; i < int(m_StepsInfo.size()); i++)
 	{
 		std::sort(elapsedTimes[i].begin(), elapsedTimes[i].end());
 		if (m_BenchmarkAmount != 1)
@@ -219,7 +219,7 @@ void engine::TrashTheCache::GameObject3DTest(int benchmarkCount)
 
 	int stepSize{ 1 };
 	std::vector<float> averages;
-	for (int i{ 0 }; i < m_StepsInfo.size(); i++)
+	for (int i{ 0 }; i < int(m_StepsInfo.size()); i++)
 	{
 		std::sort(elapsedTimes[i].begin(), elapsedTimes[i].end());
 
@@ -261,7 +261,7 @@ void engine::TrashTheCache::AltGameObject3DTest(int benchmarkCount)
 
 	int stepSize{ 1 };
 	std::vector<float> averages;
-	for (int i{ 0 }; i < m_StepsInfo.size(); i++)
+	for (int i{ 0 }; i < int(m_StepsInfo.size()); i++)
 	{
 		std::sort(elapsedTimes[i].begin(), elapsedTimes[i].end());
 

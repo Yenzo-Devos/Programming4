@@ -38,7 +38,7 @@ void engine::GameObject::Render() const
 
 void engine::GameObject::RemoveDeadComponents()
 {
-	for (int componentIndex{ 0 }; componentIndex < m_pComponentVector.size(); ++componentIndex)
+	for (int componentIndex{ 0 }; componentIndex < int(m_pComponentVector.size()); ++componentIndex)
 	{
 		if (m_pComponentVector[componentIndex].get()->GetIsDead())
 			m_pComponentVector[componentIndex].reset();

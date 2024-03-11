@@ -63,7 +63,7 @@ namespace engine
 		{
 			auto component{ std::make_unique<ComponentType>(this, args...) };
 			bool componentAdded{ false };
-			for (int componentIndex{ 0 }; componentIndex < m_pComponentVector.size(); ++componentIndex)
+			for (int componentIndex{ 0 }; componentIndex < int(m_pComponentVector.size()); ++componentIndex)
 			{
 				if (m_pComponentVector[componentIndex].get())
 					continue;
