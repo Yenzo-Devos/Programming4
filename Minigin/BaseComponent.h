@@ -22,6 +22,7 @@ namespace engine
 		virtual void Update(float) {};
 		virtual void FixedUpdate(float) {};
 		virtual void Render() const {};
+		virtual void RenderUI() {};
 
 		virtual void SetDead() { m_IsDead = true; }
 		virtual bool GetIsDead() { return m_IsDead; }

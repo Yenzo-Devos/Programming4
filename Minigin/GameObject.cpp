@@ -32,6 +32,7 @@ void engine::GameObject::Render() const
 			continue;
 
 		component->Render();
+		component->RenderUI();
 	}
 }
 
