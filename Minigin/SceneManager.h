@@ -20,6 +20,6 @@ namespace engine
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
-		std::vector<std::unique_ptr<Scene>> m_scenes;
+		std::vector<std::shared_ptr<Scene>> m_scenes;
 	};
 }
