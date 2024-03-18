@@ -13,7 +13,7 @@ void engine::FPSComponent::Awake()
 {
 }
 
-void engine::FPSComponent::Update(float deltaTime)
+void engine::FPSComponent::Update()
 {
 	m_AccuFrameTime += deltaTime;
 	++m_DeltaTimeCount;

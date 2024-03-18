@@ -26,7 +26,7 @@ namespace engine
 		GameObject& operator=(GameObject&& other) = delete;
 		
 		void FixedUpdate(float fixedDeltaTime);
-		void Update(float deltaTime);
+		void Update();
 		void Render() const;
 		void RenderUI();
 

@@ -34,7 +34,7 @@ void engine::Scene::FixedUpdate(float fixedDeltaTime)
 	}
 }
 
-void Scene::Update(float deltaTime)
+void Scene::Update()
 {
 	for(auto& object : m_objects)
 	{

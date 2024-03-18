@@ -1,31 +1,57 @@
 #include "Command.h"
 #include "GameObject.h"
 #include "MovementComponent.h"
+#include "Time.h"
 
-void command::MoveUp::Execute(engine::GameObject* gameObject)
+void command::MoveUp::Execute()
 {
+	auto gameObject = GetControlledObject();
 	auto movementComp = gameObject->GetComponent<engine::MovementComponent>();
-	if (movementComp)
-		movementComp->SetMovementDirection(glm::vec3(0.f, -1.f, 0.f));
+	if (!movementComp)
+		return;
+	float speed = movementComp->GetMaxMovementSpeed();
+	auto worldPos{ gameObject->GetWorldPosition() };
+	worldPos += m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime();
+	auto nextPos{ worldPos + (m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime()) };
+	gameObject->SetLocalPosition(nextPos);
 }
 
-void command::MoveDown::Execute(engine::GameObject* gameObject)
+void command::MoveDown::Execute()
 {
+	auto gameObject = GetControlledObject();
 	auto movementComp = gameObject->GetComponent<engine::MovementComponent>();
-	if (movementComp)
-		movementComp->SetMovementDirection(glm::vec3(0.f, 1.f, 0.f));
+	if (!movementComp)
+		return;
+	float speed = movementComp->GetMaxMovementSpeed();
+	auto worldPos{ gameObject->GetWorldPosition() };
+	worldPos += m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime();
+	auto nextPos{ worldPos + (m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime()) };
+	gameObject->SetLocalPosition(nextPos);
+	// m_MoveDirection = {};
 }
 
-void command::MoveLeft::Execute(engine::GameObject* gameObject)
+void command::MoveLeft::Execute()
 {
+	auto gameObject = GetControlledObject();
 	auto movementComp = gameObject->GetComponent<engine::MovementComponent>();
-	if (movementComp)
-		movementComp->SetMovementDirection(glm::vec3(-1.f, 0.f, 0.f));
+	if (!movementComp)
+		return;
+	float speed = movementComp->GetMaxMovementSpeed();
+	auto worldPos{ gameObject->GetWorldPosition() };
+	worldPos += m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime();
+	auto nextPos{ worldPos + (m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime()) };
+	gameObject->SetLocalPosition(nextPos);
 }
 
-void command::MoveRight::Execute(engine::GameObject* gameObject)
+void command::MoveRight::Execute()
 {
+	auto gameObject = GetControlledObject();
 	auto movementComp = gameObject->GetComponent<engine::MovementComponent>();
-	if (movementComp)
-		movementComp->SetMovementDirection(glm::vec3(1.f, 0.f, 0.f));
+	if (!movementComp)
+		return;
+	float speed = movementComp->GetMaxMovementSpeed();
+	auto worldPos{ gameObject->GetWorldPosition() };
+	worldPos += m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime();
+	auto nextPos{ worldPos + (m_MoveDirection * speed * engine::Time::GetInstance().GetDeltaTime()) };
+	gameObject->SetLocalPosition(nextPos);
 }

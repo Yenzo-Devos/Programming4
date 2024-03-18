@@ -18,7 +18,7 @@ namespace engine
 		FPSComponent& operator=(FPSComponent&& other) = delete;
 
 		void Awake() override;
-		void Update(float deltaTime) override;
+		void Update() override;
 
 	private:
 		TextComponent* m_pTextComponent;

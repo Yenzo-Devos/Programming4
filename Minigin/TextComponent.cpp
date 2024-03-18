@@ -19,7 +19,7 @@ void engine::TextComponent::Awake()
 
 }
 
-void engine::TextComponent::Update(float deltaTime)
+void engine::TextComponent::Update()
 {
 	deltaTime;
 	if (m_IsTextChanged)

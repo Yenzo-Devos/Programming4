@@ -11,6 +11,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
 
 using namespace std::chrono;
 SDL_Window* g_window{};
@@ -87,7 +88,7 @@ void engine::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	sceneManager.RemoveDead();
-	// todo: this update loop could use some work.
+	
 	float msPerFrame{ 1000.f / framesPerSecond };
 	bool doContinue = true;
 	auto lastTime = high_resolution_clock::now();
@@ -95,9 +96,9 @@ void engine::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		const auto currentTime = high_resolution_clock::now();
-		const float deltaTime = duration<float>(currentTime - lastTime).count();
+		Time::GetInstance().CalculateDeltaTime(currentTime, lastTime);
 		lastTime = currentTime;
-		lag += deltaTime;
+		lag += Time::GetInstance().GetDeltaTime();
 
 		doContinue = input.ProcessInput();
 		// only needed to be called if FixedUpdate() is used
@@ -106,7 +107,7 @@ void engine::Minigin::Run(const std::function<void()>& load)
 			sceneManager.FixedUpdate(fixedTimeStep);
 			lag -= fixedTimeStep;
 		}*/
-		sceneManager.Update(deltaTime);
+		sceneManager.Update(Time::GetInstance().GetDeltaTime());
 		// if LateUpdate() needed, implement before rendering but after all other updates
 		renderer.Render();
 

@@ -22,6 +22,7 @@ namespace engine
 		void SetMaxMovementSpeed(float newMaxMovementSpeed) { m_MaxMovementSpeed = newMaxMovementSpeed; }
 		void SetMovementDirection(glm::vec3 newMovementDirection) { m_MovementDirection = newMovementDirection; }
 		
+		float GetMaxMovementSpeed() const { return m_MaxMovementSpeed; }
 	private:
 		glm::vec3 m_MovementDirection{};
 		float m_MaxMovementSpeed{};

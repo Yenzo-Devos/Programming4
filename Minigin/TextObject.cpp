@@ -9,7 +9,7 @@
 //	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
 //{ }
 //
-//void engine::TextObject::Update(float deltaTime)
+//void engine::TextObject::Update()
 //{
 //	deltaTime;
 //	if (m_needsUpdate)

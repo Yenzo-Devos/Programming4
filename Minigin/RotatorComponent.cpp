@@ -14,7 +14,7 @@ engine::RotatorComponent::RotatorComponent(engine::GameObject* pOwner, const glm
 	
 }
 
-void engine::RotatorComponent::Update(float deltaTime)
+void engine::RotatorComponent::Update()
 {
 	m_Angle += deltaTime * (float((2 * M_PI)) * m_Speed);
 

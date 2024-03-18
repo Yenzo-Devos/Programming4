@@ -12,7 +12,7 @@ namespace engine
 	public:
 		Scene& CreateScene(const std::string& name);
 
-		void Update(float deltaTime);
+		void Update();
 		void FixedUpdate(float fixedDeltaTime);
 		void Render();
 		void RenderUI();

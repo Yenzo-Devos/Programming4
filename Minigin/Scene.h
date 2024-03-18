@@ -14,7 +14,7 @@ namespace engine
 		void RemoveAll();
 
 		void FixedUpdate(float fixedDeltaTime);
-		void Update(float deltaTime);
+		void Update();
 		void Render() const;
 		void RenderUI();
 		void RemoveDead();

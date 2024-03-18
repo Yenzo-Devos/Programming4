@@ -7,7 +7,7 @@ engine::MovementComponent::MovementComponent(engine::GameObject* pOwner, float m
 {
 }
 
-void engine::MovementComponent::Update(float deltaTime)
+void engine::MovementComponent::Update()
 {
 	if (m_MovementDirection.x != 0.f ||
 		m_MovementDirection.y != 0.f)

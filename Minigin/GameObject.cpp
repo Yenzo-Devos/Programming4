@@ -14,7 +14,7 @@ engine::GameObject::GameObject()
 
 engine::GameObject::~GameObject() = default;
 
-void engine::GameObject::Update(float deltaTime)
+void engine::GameObject::Update()
 {
 	for (const std::unique_ptr<BaseComponent>& component : m_pComponentVector)
 	{

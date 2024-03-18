@@ -19,7 +19,7 @@ namespace engine
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 		virtual void Awake() = 0;
-		virtual void Update(float) {};
+		virtual void Update() {};
 		virtual void FixedUpdate(float) {};
 		virtual void Render() const {};
 		virtual void RenderUI() {};

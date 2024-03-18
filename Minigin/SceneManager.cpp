@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
-void engine::SceneManager::Update(float deltaTime)
+void engine::SceneManager::Update()
 {
 	for(auto& scene : m_scenes)
 	{

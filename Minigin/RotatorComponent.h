@@ -16,7 +16,7 @@ namespace engine
 		RotatorComponent& operator=(RotatorComponent&& other) = delete;
 
 		void Awake() override {};
-		void Update(float deltaTime) override;
+		void Update() override;
 	private:
 		glm::vec3 m_Origin;
 		float m_Radius;

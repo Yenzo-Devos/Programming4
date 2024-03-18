@@ -19,7 +19,7 @@ namespace engine
 		TextComponent& operator=(TextComponent&& other) = delete;
 
 		void Awake() override;
-		void Update(float deltaTime) override;
+		void Update() override;
 		void Render() const override;
 		void SetText(std::string newText);
 
