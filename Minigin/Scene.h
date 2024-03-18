@@ -9,8 +9,8 @@ namespace engine
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(std::shared_ptr<GameObject>&& object);
-		void Remove(std::shared_ptr<GameObject>& object);
+		void Add(std::shared_ptr<GameObject> object);
+		void Remove(std::shared_ptr<GameObject> object);
 		void RemoveAll();
 
 		void FixedUpdate(float fixedDeltaTime);
