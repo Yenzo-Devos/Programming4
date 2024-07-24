@@ -4,11 +4,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <chrono>
+#include <thread>
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
 
 SDL_Window* g_window{};
 
@@ -84,11 +87,22 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	// todo: this update loop could use some work.
+	float msPerFrame{ 1000.f / m_FramesPerSecond };
 	bool doContinue = true;
+	auto lastTime = std::chrono::high_resolution_clock::now();
+	float lag = 0.f;
 	while (doContinue)
 	{
+		const auto currentTime = std::chrono::high_resolution_clock::now();
+		Time::GetInstance().CalculateDeltaTime(currentTime, lastTime);
+		lastTime = currentTime;
+
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
+		// late update should always be after normal update and before any renderering.
+		// remove gameobjects marked as dead
 		renderer.Render();
+		const auto sleepTime = currentTime + std::chrono::milliseconds(long long(msPerFrame)) - std::chrono::high_resolution_clock::now();
+		std::this_thread::sleep_for(sleepTime);
 	}
 }
