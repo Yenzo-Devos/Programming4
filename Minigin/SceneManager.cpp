@@ -1,9 +1,10 @@
 #include "SceneManager.h"
-#include "Scene.h"
+
+#include <stdexcept>
 
 void dae::SceneManager::Update()
 {
-	for(auto& scene : m_scenes)
+	for(auto& scene : m_Scenes)
 	{
 		scene->Update();
 	}
@@ -11,15 +12,23 @@ void dae::SceneManager::Update()
 
 void dae::SceneManager::Render()
 {
-	for (const auto& scene : m_scenes)
+	for (const auto& scene : m_Scenes)
 	{
 		scene->Render();
 	}
 }
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
+void dae::SceneManager::CreateScene(const std::string& name)
 {
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	return *scene;
+	m_Scenes.push_back(std::make_unique<Scene>(name));
+}
+
+dae::Scene& dae::SceneManager::GetSceneByName(const std::string& name) const
+{
+	for (const auto& scene : m_Scenes)
+	{
+		if (scene->GetName() == name)
+			return *scene;
+	}
+	throw std::runtime_error("Unable to find scene");
 }

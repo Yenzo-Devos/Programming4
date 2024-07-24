@@ -3,20 +3,21 @@
 #include <string>
 #include <memory>
 #include "Singleton.h"
+#include "Scene.h"
 
 namespace dae
 {
-	class Scene;
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(const std::string& name);
+		void CreateScene(const std::string& name);
+		Scene& GetSceneByName(const std::string& name) const;
 
 		void Update();
 		void Render();
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
-		std::vector<std::shared_ptr<Scene>> m_scenes;
+		std::vector<std::unique_ptr<Scene>> m_Scenes;
 	};
 }
