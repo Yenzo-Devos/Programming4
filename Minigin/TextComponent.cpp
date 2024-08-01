@@ -56,7 +56,7 @@ void dae::TextComponent::SetText(std::string newText)
 	m_IsTextChanged = true;
 }
 
-void dae::TextComponent::SetFont(std::unique_ptr<dae::Font> font)
+void dae::TextComponent::SetFont(std::shared_ptr<dae::Font> font)
 {
 	m_Font = std::move(font);
 }

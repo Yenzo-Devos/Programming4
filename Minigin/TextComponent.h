@@ -20,12 +20,12 @@ namespace dae
 		void Update(float deltaTime) override;
 		void Render() const override;
 		void SetText(std::string newText);
-		void SetFont(std::unique_ptr<dae::Font> font);
+		void SetFont(std::shared_ptr<dae::Font> font);
 
 	private:
 		bool m_IsTextChanged;
 		std::string m_Text;
-		std::unique_ptr<dae::Font> m_Font;
+		std::shared_ptr<dae::Font> m_Font;
 		std::unique_ptr<dae::Texture2D> m_TextTexture;
 	};
 }

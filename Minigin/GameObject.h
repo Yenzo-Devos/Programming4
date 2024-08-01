@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include <stdexcept>
 
 #include "Transform.h"
 
@@ -46,6 +47,50 @@ namespace dae
 				m_pComponentVec.push_back(tempComp);
 				return tempComp;
 			}
+			else
+				std::runtime_error("component added has no correct baseComponent");
+		}
+
+		template<typename Component>
+		Component* GetComponent() const
+		{
+			Component* tempComp;
+			for (auto component : m_pComponentVec)
+			{
+				tempComp = dynamic_cast<Component*>(component);
+				if (tempComp)
+					return tempComp;
+			}
+			std::runtime_error("component not found in gameobject");
+			return nullptr;
+		}
+
+		template<typename Component>
+		void RemoveComponent() const
+		{
+			Component* tempComp;
+			for (int index{}; index < m_pComponentVec.size; ++index)
+			{
+				tempComp = dynamic_cast<Component*>(m_pComponentVec[index]);
+				if (tempComp)
+				{
+					delete m_pComponentVec[index];
+					m_pComponentVec[index] = nullptr;
+				}
+			}
+		}
+
+		template<typename Component>
+		bool HasComponent()
+		{
+			Component* tempComp;
+			for (auto component : m_pComponentVec)
+			{
+				tempComp = dynamic_cast<Component*>(component);
+				if (tempComp)
+					return true;
+			}
+			return false;
 		}
 	};
 }
