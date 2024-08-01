@@ -10,7 +10,7 @@ namespace dae
 	{
 	public:
 		TextComponent(GameObject* pOwner);
-		~TextComponent() override = default;
+		~TextComponent() = default;
 
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent(TextComponent&& other) = delete;
@@ -20,7 +20,7 @@ namespace dae
 		void Update(float deltaTime) override;
 		void Render() const override;
 		void SetText(std::string newText);
-		void SetFont(std::shared_ptr<dae::Font> font);
+		void SetFont(std::string fontName, int fontSize);
 
 	private:
 		bool m_IsTextChanged;

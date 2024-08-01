@@ -42,3 +42,14 @@ void Scene::Render() const
 	}
 }
 
+void dae::Scene::RemoveDead()
+{
+	for (int index{}; index < m_objects.size(); ++index)
+	{
+		if (m_objects[index]->GetIsDead())
+		{
+			m_objects[index].reset();
+		}
+	}
+}
+

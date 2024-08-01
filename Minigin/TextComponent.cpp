@@ -10,11 +10,10 @@
 dae::TextComponent::TextComponent(GameObject* pOwner)
 	: BaseComponent(pOwner)
 	, m_Text{ "no text given" }
-	, m_Font{ nullptr }
 	, m_TextTexture{ nullptr }
 	, m_IsTextChanged{ true }
 {
-	
+	m_Font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 }
 
 void dae::TextComponent::Update(float deltaTime)
@@ -56,7 +55,7 @@ void dae::TextComponent::SetText(std::string newText)
 	m_IsTextChanged = true;
 }
 
-void dae::TextComponent::SetFont(std::shared_ptr<dae::Font> font)
+void dae::TextComponent::SetFont(std::string fontName, int fontSize)
 {
-	m_Font = std::move(font);
+	m_Font = dae::ResourceManager::GetInstance().LoadFont(fontName, fontSize);
 }

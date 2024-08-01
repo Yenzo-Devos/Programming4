@@ -18,6 +18,14 @@ void dae::SceneManager::Render()
 	}
 }
 
+void dae::SceneManager::RemoveDead()
+{
+	for (const auto& scene : m_Scenes)
+	{
+		scene->RemoveDead();
+	}
+}
+
 void dae::SceneManager::CreateScene(const std::string& name)
 {
 	m_Scenes.push_back(std::make_unique<Scene>(name));

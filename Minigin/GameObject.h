@@ -12,25 +12,27 @@ namespace dae
 	class Texture2D;
 	class BaseComponent;
 	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
-		virtual void Update(float deltaTime);
-		virtual void Render() const;
+		void Update(float deltaTime);
+		void Render() const;
 
 		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 		glm::vec3 GetLocation() const { return m_transform.GetPosition(); }
+		bool GetIsDead() { return m_IsDead; }
 
 	private:
+		bool m_IsDead{ false };
 		Transform m_transform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
 		//std::shared_ptr<Texture2D> m_texture{};
@@ -48,7 +50,7 @@ namespace dae
 				return tempComp;
 			}
 			else
-				std::runtime_error("component added has no correct baseComponent");
+				throw std::runtime_error("component added has no correct baseComponent");
 		}
 
 		template<typename Component>
@@ -61,8 +63,7 @@ namespace dae
 				if (tempComp)
 					return tempComp;
 			}
-			std::runtime_error("component not found in gameobject");
-			return nullptr;
+			throw std::runtime_error("component not found in gameobject");
 		}
 
 		template<typename Component>

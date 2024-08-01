@@ -14,6 +14,7 @@ namespace dae
 
 		void Update(float deltaTime);
 		void Render() const;
+		void RemoveDead();
 
 		std::string GetName() { return m_Name; }
 
