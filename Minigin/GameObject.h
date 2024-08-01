@@ -14,7 +14,7 @@ namespace dae
 	class GameObject 
 	{
 	public:
-		virtual void Update();
+		virtual void Update(float deltaTime);
 		virtual void Render() const;
 
 		void SetTexture(const std::string& filename);
@@ -40,7 +40,7 @@ namespace dae
 		template<typename Component>
 		Component* AddComponent()
 		{
-			if (std::is_base_of(BaseComponent, Component))
+			if (std::is_base_of<BaseComponent, Component>::value)
 			{
 				Component* tempComp{ new Component(this) };
 				m_pComponentVec.push_back(tempComp);

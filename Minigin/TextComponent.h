@@ -17,7 +17,7 @@ namespace dae
 		TextComponent& operator=(const TextComponent& other) = delete;
 		TextComponent& operator=(TextComponent&& other) = delete;
 
-		void Update() override;
+		void Update(float deltaTime) override;
 		void Render() const override;
 		void SetText(std::string newText);
 		void SetFont(std::unique_ptr<dae::Font> font);

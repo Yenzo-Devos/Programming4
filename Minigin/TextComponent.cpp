@@ -17,8 +17,9 @@ dae::TextComponent::TextComponent(GameObject* pOwner)
 	
 }
 
-void dae::TextComponent::Update()
+void dae::TextComponent::Update(float deltaTime)
 {
+	deltaTime;
 	if (m_IsTextChanged)
 	{
 		const SDL_Color color = { 255,255,255,255 }; // only white text is supported now

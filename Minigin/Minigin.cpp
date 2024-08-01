@@ -90,15 +90,15 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	float msPerFrame{ 1000.f / m_FramesPerSecond };
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
-	float lag = 0.f;
+	//float lag = 0.f;
 	while (doContinue)
 	{
 		const auto currentTime = std::chrono::high_resolution_clock::now();
-		Time::GetInstance().CalculateDeltaTime(currentTime, lastTime);
+		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
 		lastTime = currentTime;
 
 		doContinue = input.ProcessInput();
-		sceneManager.Update();
+		sceneManager.Update(deltaTime);
 		// late update should always be after normal update and before any renderering.
 		// remove gameobjects marked as dead
 		renderer.Render();

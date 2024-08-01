@@ -12,7 +12,7 @@ namespace dae
 		void Remove(std::unique_ptr<GameObject> object);
 		void RemoveAll();
 
-		void Update();
+		void Update(float deltaTime);
 		void Render() const;
 
 		std::string GetName() { return m_Name; }
