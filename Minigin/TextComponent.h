@@ -25,8 +25,8 @@ namespace dae
 	private:
 		bool m_IsTextChanged;
 		std::string m_Text;
-		std::shared_ptr<dae::Font> m_Font;
-		std::unique_ptr<dae::Texture2D> m_TextTexture;
+		std::shared_ptr<Font> m_Font;
+		std::unique_ptr<Texture2D> m_TextTexture;
 	};
 }
 

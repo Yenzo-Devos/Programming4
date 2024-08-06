@@ -45,7 +45,7 @@ void dae::TextComponent::Render() const
 		throw std::runtime_error(std::string("no texture to render"));
 
 	// if you have parent get location
-	auto pos{ m_pOwner->GetLocation() };
+	glm::vec3 pos = m_pOwner->GetLocation();
 	dae::Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
 }
 
