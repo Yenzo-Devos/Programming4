@@ -18,12 +18,13 @@ namespace dae
 		virtual void Render() const = 0;
 
 		virtual void SetDead() { m_IsDead = true; }
+		virtual bool GetIsDead() { return m_IsDead; }
 	protected:
 		BaseComponent(dae::GameObject* pOwner);
 		
-		dae::GameObject* m_pOwner;
-
+		GameObject* GetOwner() const { return m_pOwner; }
 	private:
+		dae::GameObject* m_pOwner{ nullptr };
 		bool m_IsDead{ false };
 	};
 }

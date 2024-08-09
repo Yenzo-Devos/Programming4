@@ -18,9 +18,6 @@ namespace dae
 		void Update(float deltaTime);
 		void Render() const;
 
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
-
 		GameObject() = default;
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -28,18 +25,42 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
-		glm::vec3 GetLocation() const { return m_transform.GetPosition(); }
+		//glm::vec3 GetLocation() const { return m_transform.GetPosition(); }
 		bool GetIsDead() { return m_IsDead; }
+
+		// parent children functions
+		void SetParent(GameObject* parent);
+		GameObject* GetParent() const { return m_pParent; }
+		size_t GetChildCount() const { return m_pChildren.size(); }
+		GameObject* GetChildAt(unsigned int index) const { return m_pChildren[index]; }
+
+		// position functions
+		void SetLocalPos(const glm::vec3& pos);
+		const glm::vec3& GetWorldPos();
+		void UpdateWorldPos();
 
 	private:
 		bool m_IsDead{ false };
-		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		//std::shared_ptr<Texture2D> m_texture{};
+		//Transform m_transform{};
 		std::vector<dae::BaseComponent*> m_pComponentVec;
 
-	public:
+		std::vector<GameObject*> m_pChildren;
+		GameObject* m_pParent;
+
+		glm::vec3 m_LocalPosition;
+		glm::vec3 m_WorldPosition;
+
+		// parent children functions
+		void AddChild(GameObject* pChild);
+		void RemoveChild(GameObject* pChild);
+		bool IsChild(GameObject* pParent);
+
+		// position function && vars
+		bool m_IsPosDirty{ false };
+		void SetPositionDirty() { m_IsPosDirty = true; }
+
 		// Everything component template related
+	public:
 		template<typename Component>
 		Component* AddComponent()
 		{

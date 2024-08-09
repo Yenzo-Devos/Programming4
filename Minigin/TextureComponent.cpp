@@ -14,11 +14,11 @@ void dae::TextureComponent::Render() const
 	if (!m_pTexture)
 		throw std::runtime_error(std::string("no texture to render"));
 
-	glm::vec3 pos = m_pOwner->GetLocation();
+	glm::vec3 pos = GetOwner()->GetWorldPos();
 	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }
 
 void dae::TextureComponent::LoadTexture(const std::string& textureName)
 {
-	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(textureName);
+	m_pTexture = ResourceManager::GetInstance().LoadTexture(textureName);
 }
