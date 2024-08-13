@@ -20,7 +20,7 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 		controller->PollInput();
 		
 		// if index is correct in command
-		for (auto const& command : m_ConsoleCommands)
+		for (auto& command : m_ControllerCommands)
 		{
 			if (command.first.first.first != controller->GetIndex())
 				continue;
@@ -44,9 +44,9 @@ void dae::InputManager::AddController()
 
 void dae::InputManager::BindAction(int controllerIndex, Controller::ControllerInput controllerinput, Controller::InputType keyState, std::unique_ptr<Command> pCommand)
 {
-	ControllerKey keyPair{ std::make_pair(controllerIndex, controllerinput) };
-	ControllerKeyState statePair{ std::make_pair(keyPair, keyState) };
-	m_ConsoleCommands.push_back(std::make_pair(statePair, std::move(pCommand)));
+	ControllerInputIndex keyPair{ std::make_pair(controllerIndex, controllerinput) };
+	ControllerState statePair{ std::make_pair(keyPair, keyState) };
+	m_ControllerCommands.push_back(std::make_pair(statePair, std::move(pCommand)));
 }
 
 void dae::InputManager::BindAction(SDL_Scancode button, std::unique_ptr<Command> pCommand)
