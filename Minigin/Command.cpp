@@ -2,7 +2,8 @@
 #include "GameObject.h"
 
 dae::MoveCommand::MoveCommand(GameObject* gameObject, glm::vec3 dir, float speed)
-	: m_pGameObject{ gameObject }
+	: Command()
+	, m_pGameObject{ gameObject }
 	, m_Direction{ dir }
 	, m_Speed{ speed }
 {
