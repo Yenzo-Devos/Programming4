@@ -44,7 +44,7 @@ void Scene::Render() const
 
 void dae::Scene::RemoveDead()
 {
-	for (int index{}; index < m_objects.size(); ++index)
+	for (int index{}; index < static_cast<int>(m_objects.size()); ++index)
 	{
 		if (m_objects[index]->GetIsDead())
 		{

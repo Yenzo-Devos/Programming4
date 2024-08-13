@@ -6,7 +6,7 @@
 
 dae::GameObject::~GameObject()
 {
-	for (int index{}; index < m_pComponentVec.size(); ++index)
+	for (int index{}; index < static_cast<int>(m_pComponentVec.size()); ++index)
 	{
 		delete m_pComponentVec[index];
 		m_pComponentVec[index] = nullptr;
@@ -72,7 +72,7 @@ void dae::GameObject::RemoveChild(GameObject* pChild)
 
 bool dae::GameObject::IsChild(GameObject* pParent)
 {
-	for (int index{}; index < pParent->GetChildCount(); ++index)
+	for (int index{}; index < static_cast<int>(pParent->GetChildCount()); ++index)
 	{
 		if (pParent->GetChildAt(index) == this)
 			return true;
