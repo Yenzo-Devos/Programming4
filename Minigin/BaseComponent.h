@@ -11,8 +11,8 @@ namespace dae
 		BaseComponent& operator=(const BaseComponent& other) = delete;
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
-		virtual void Update() {}
-		virtual void Render() = 0;
+		virtual void Update(float deltaTime) { deltaTime; }
+		virtual void Render() {};
 
 		virtual void SetDead() { m_IsDead = true; }
 		virtual bool GetIsDead() { return m_IsDead; }

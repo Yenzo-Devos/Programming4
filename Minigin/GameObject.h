@@ -10,11 +10,11 @@ namespace dae
 	class Texture2D;
 
 	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
-		virtual void Update();
-		virtual void FixedUpdate();
+		virtual void Update(float deltaTime);
+		virtual void FixedUpdate(float fixedDeltaTime);
 		virtual void Render() const;
 
 		void SetPosition(float x, float y);
@@ -29,7 +29,6 @@ namespace dae
 	private:
 		Transform m_transform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_pTexture{};
 		std::vector<std::unique_ptr<BaseComponent>> m_ComponentVec{};
 	
 	// templated component functions

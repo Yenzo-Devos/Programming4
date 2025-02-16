@@ -15,14 +15,14 @@ namespace dae
 	{
 	public:
 		TextComponent(float x = 0, float y = 0);
-		~TextComponent() = default;
+		virtual ~TextComponent() = default;
 
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent(TextComponent&& other) = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;
 		TextComponent& operator=(TextComponent&& other) = delete;
 
-		virtual void Update() override;
+		virtual void Update(float deltaTime) override;
 		virtual void Render() override;
 
 		virtual void SetText(const std::string& text);
@@ -34,7 +34,7 @@ namespace dae
 		bool m_IsTextChanged;
 
 		std::string m_Text{};
-		std::shared_ptr<Font> m_Font;
-		std::unique_ptr<Texture2D> m_TextTexture;
+		std::shared_ptr<Font> m_pFont;
+		std::unique_ptr<Texture2D> m_pTextTexture;
 	};
 }
