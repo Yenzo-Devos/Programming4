@@ -14,7 +14,7 @@ namespace dae
 	class TextComponent : public BaseComponent
 	{
 	public:
-		TextComponent(int x, int y);
+		TextComponent(float x = 0, float y = 0);
 		~TextComponent() = default;
 
 		TextComponent(const TextComponent& other) = delete;
@@ -27,9 +27,10 @@ namespace dae
 
 		virtual void SetText(const std::string& text);
 		virtual void SetPosition(const float x, const float y);
+		virtual void SetFont(const std::string& font, uint8_t fontSize);
 
 	private:
-		int m_X, m_Y;
+		float m_X, m_Y;
 		bool m_IsTextChanged;
 
 		std::string m_Text{};

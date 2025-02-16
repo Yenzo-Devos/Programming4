@@ -1,6 +1,6 @@
 #include "TextComponent.h"
 
-dae::TextComponent::TextComponent(int x, int y)
+dae::TextComponent::TextComponent(float x, float y)
 	: BaseComponent()
 	, m_X{ x }, m_Y{ y }
 	, m_Text{ "no text give" }
@@ -47,4 +47,9 @@ void dae::TextComponent::SetPosition(const float x, const float y)
 {
 	m_X = x;
 	m_Y = y;
+}
+
+void dae::TextComponent::SetFont(const std::string& font, uint8_t fontSize)
+{
+	m_Font = dae::ResourceManager::GetInstance().LoadFont(font, fontSize);
 }

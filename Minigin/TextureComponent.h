@@ -11,7 +11,7 @@ namespace dae
 	class TextureComponent : public BaseComponent
 	{
 	public:
-		TextureComponent(int x, int y);
+		TextureComponent(float x = 0, float y = 0);
 		~TextureComponent() = default;
 
 		TextureComponent(const TextureComponent& other) = delete;
@@ -23,7 +23,7 @@ namespace dae
 		void LoadTexture(const std::string& textureName);
 	
 	private:
-		int m_X, m_Y;
+		float m_X, m_Y;
 		std::shared_ptr<Texture2D> m_pTexture;
 	};
 }

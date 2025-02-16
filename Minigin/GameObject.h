@@ -1,7 +1,10 @@
 #pragma once
 #include <memory>
-#include "Transform.h"
+#include <vector>
+#include <stdexcept>
 
+#include "Transform.h"
+#include "BaseComponent.h"
 namespace dae
 {
 	class Texture2D;
@@ -14,7 +17,6 @@ namespace dae
 		virtual void FixedUpdate();
 		virtual void Render() const;
 
-		void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 		GameObject() = default;
@@ -27,6 +29,65 @@ namespace dae
 	private:
 		Transform m_transform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		std::shared_ptr<Texture2D> m_pTexture{};
+		std::vector<std::unique_ptr<BaseComponent>> m_ComponentVec{};
+	
+	// templated component functions
+	public:
+		template <typename Comp, typename... Args>
+		void AddComponent(Args&&... args)
+		{
+			if (std::is_base_of<BaseComponent, Comp>::value)
+			{
+				auto comp = std::make_unique<Comp>(std::forward<Args>(args)...);
+				m_ComponentVec.emplace_back(std::move(comp));
+			}
+			else
+				throw std::runtime_error("T must inherit from BaseComponent");
+			
+		}
+
+		template <typename Comp>
+		void RemoveComponent()
+		{
+			Comp* tempComp;
+			for (int index{}; index < m_ComponentVec.size(); ++index)
+			{
+				tempComp = dynamic_cast<Comp*>(m_ComponentVec[index].get());
+				if (tempComp)
+				{
+					delete m_ComponentVec[index];
+					m_ComponentVec[index] = nullptr;
+				}
+			}
+		}
+
+		template <typename Comp>
+		Comp* GetComponent()
+		{
+			Comp* tempComp;
+			for (auto& comp : m_ComponentVec)
+			{
+				tempComp = dynamic_cast<Comp*>(comp.get());
+				if (tempComp)
+					return tempComp;
+			}
+			throw std::runtime_error("component not found");
+		}
+
+		template <typename Comp>
+		bool HasComponent()
+		{
+			Comp* tempComp;
+			for (auto comp : m_ComponentVec)
+			{
+				tempComp = dynamic_cast<Comp*>(comp.get());
+				if (tempComp)
+					return true;
+				else
+					return false;
+			}
+			return false;
+		}
 	};
 }

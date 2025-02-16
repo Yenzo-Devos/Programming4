@@ -1,6 +1,6 @@
 #include "TextureComponent.h"
 
-dae::TextureComponent::TextureComponent(int x, int y)
+dae::TextureComponent::TextureComponent(float x, float y)
 	: BaseComponent()
 	, m_X{ x }, m_Y{ y }
 	, m_pTexture { nullptr }
@@ -9,7 +9,7 @@ dae::TextureComponent::TextureComponent(int x, int y)
 
 void dae::TextureComponent::Render()
 {
-	if (!m_pTexture)
+	if (m_pTexture)
 		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, m_X, m_Y);
 }
 
