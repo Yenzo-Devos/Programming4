@@ -1,8 +1,9 @@
 #include "TextComponent.h"
+#include "GameObject.h"
+#include "Transform.h"
 
-dae::TextComponent::TextComponent(GameObject* owner, float x, float y)
+dae::TextComponent::TextComponent(GameObject* owner)
 	: BaseComponent(owner)
-	, m_X{ x }, m_Y{ y }
 	, m_Text{ "no text give" }
 	, m_pTextTexture{ nullptr }
 	, m_IsTextChanged{ true }
@@ -35,19 +36,13 @@ void dae::TextComponent::Update(float deltaTime)
 void dae::TextComponent::Render()
 {
 	if (m_pTextTexture != nullptr)
-		Renderer::GetInstance().RenderTexture(*m_pTextTexture, m_X, m_Y);
+		Renderer::GetInstance().RenderTexture(*m_pTextTexture, m_pOwner->GetTransform().GetPosition().x, m_pOwner->GetTransform().GetPosition().x);
 }
 
 void dae::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_IsTextChanged = true;
-}
-
-void dae::TextComponent::SetPosition(const float x, const float y)
-{
-	m_X = x;
-	m_Y = y;
 }
 
 void dae::TextComponent::SetFont(const std::string& font, uint8_t fontSize)

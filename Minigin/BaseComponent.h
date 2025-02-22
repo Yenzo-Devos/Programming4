@@ -20,11 +20,11 @@ namespace dae
 
 	protected:
 		BaseComponent(GameObject* owner);
+		GameObject* m_pOwner{};
 
 	private:
 		bool m_IsDead = false;
 
-		GameObject* m_pOwner{};
 	};
 }
 

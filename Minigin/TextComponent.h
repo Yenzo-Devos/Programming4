@@ -14,7 +14,7 @@ namespace dae
 	class TextComponent : public BaseComponent
 	{
 	public:
-		TextComponent(GameObject* owner, float x = 0, float y = 0);
+		TextComponent(GameObject* owner);
 		virtual ~TextComponent() = default;
 
 		TextComponent(const TextComponent& other) = delete;
@@ -26,11 +26,9 @@ namespace dae
 		virtual void Render() override;
 
 		virtual void SetText(const std::string& text);
-		virtual void SetPosition(const float x, const float y);
 		virtual void SetFont(const std::string& font, uint8_t fontSize);
 
 	private:
-		float m_X, m_Y;
 		bool m_IsTextChanged;
 
 		std::string m_Text{};
