@@ -10,7 +10,7 @@ namespace dae
 	class FPSComponent : public BaseComponent
 	{
 	public:
-		FPSComponent(TextComponent* textComp);
+		FPSComponent(GameObject* owner, TextComponent* textComp);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent& other) = delete;

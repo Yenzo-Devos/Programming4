@@ -1,6 +1,7 @@
 #pragma once
 namespace dae
 {
+	class GameObject;
 	class BaseComponent
 	{
 	public:
@@ -18,10 +19,12 @@ namespace dae
 		virtual bool GetIsDead() { return m_IsDead; }
 
 	protected:
-		BaseComponent() = default;
+		BaseComponent(GameObject* owner);
 
 	private:
 		bool m_IsDead = false;
+
+		GameObject* m_pOwner{};
 	};
 }
 

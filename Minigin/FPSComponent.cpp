@@ -2,8 +2,8 @@
 #include <iomanip>
 #include <sstream>
 
-dae::FPSComponent::FPSComponent(TextComponent* textComp)
-	: BaseComponent()
+dae::FPSComponent::FPSComponent(GameObject* owner, TextComponent* textComp)
+	: BaseComponent(owner)
 {
 	m_pTextComp = textComp;
 }

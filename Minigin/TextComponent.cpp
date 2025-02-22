@@ -1,7 +1,7 @@
 #include "TextComponent.h"
 
-dae::TextComponent::TextComponent(float x, float y)
-	: BaseComponent()
+dae::TextComponent::TextComponent(GameObject* owner, float x, float y)
+	: BaseComponent(owner)
 	, m_X{ x }, m_Y{ y }
 	, m_Text{ "no text give" }
 	, m_pTextTexture{ nullptr }

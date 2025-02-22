@@ -11,7 +11,7 @@ namespace dae
 	class TextureComponent : public BaseComponent
 	{
 	public:
-		TextureComponent(float x = 0, float y = 0);
+		TextureComponent(GameObject* owner, float x = 0, float y = 0);
 		~TextureComponent() = default;
 
 		TextureComponent(const TextureComponent& other) = delete;

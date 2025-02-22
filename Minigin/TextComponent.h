@@ -14,7 +14,7 @@ namespace dae
 	class TextComponent : public BaseComponent
 	{
 	public:
-		TextComponent(float x = 0, float y = 0);
+		TextComponent(GameObject* owner, float x = 0, float y = 0);
 		virtual ~TextComponent() = default;
 
 		TextComponent(const TextComponent& other) = delete;

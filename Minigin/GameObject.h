@@ -28,7 +28,6 @@ namespace dae
 
 	private:
 		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
 		std::vector<std::unique_ptr<BaseComponent>> m_ComponentVec{};
 	
 	// templated component functions
@@ -38,7 +37,7 @@ namespace dae
 		{
 			if (std::is_base_of<BaseComponent, Comp>::value)
 			{
-				auto comp = std::make_unique<Comp>(std::forward<Args>(args)...);
+				auto comp = std::make_unique<Comp>(this, std::forward<Args>(args)...);
 				m_ComponentVec.emplace_back(std::move(comp));
 			}
 			else
@@ -54,10 +53,7 @@ namespace dae
 			{
 				tempComp = dynamic_cast<Comp*>(m_ComponentVec[index].get());
 				if (tempComp)
-				{
-					delete m_ComponentVec[index];
-					m_ComponentVec[index] = nullptr;
-				}
+					tempComp->SetDead();
 			}
 		}
 

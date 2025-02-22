@@ -1,7 +1,7 @@
 #include "TextureComponent.h"
 
-dae::TextureComponent::TextureComponent(float x, float y)
-	: BaseComponent()
+dae::TextureComponent::TextureComponent(GameObject* owner, float x, float y)
+	: BaseComponent(owner)
 	, m_X{ x }, m_Y{ y }
 	, m_pTexture { nullptr }
 {
