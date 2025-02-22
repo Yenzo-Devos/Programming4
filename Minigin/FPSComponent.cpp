@@ -12,11 +12,13 @@ void dae::FPSComponent::Update(float deltaTime)
 {
 	++m_Counter;
 	m_AccuTime += deltaTime;
-	if (m_Counter >= m_SampleSize)
+
+	if (m_AccuTime >= m_FPSRefreshRate)
 	{
 		float fps = m_Counter / m_AccuTime;
+		m_AccuTime -= m_FPSRefreshRate;
 		m_Counter = 0;
-		m_AccuTime = 0.f;
+
 		if (fps == m_FPS)
 			return;
 

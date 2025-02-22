@@ -23,10 +23,10 @@ namespace dae
 	private:
 		TextComponent* m_pTextComp;
 
-		int m_SampleSize{ 20 };
 		int m_Counter{ 0 };
 		float m_FPS{ };
 		float m_AccuTime{ 0.f };
+		float m_FPSRefreshRate{ 1.f };
 	};
 }
 
