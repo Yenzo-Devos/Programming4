@@ -18,6 +18,8 @@ namespace dae
 		virtual void Render() const;
 
 		void SetPosition(float x, float y);
+		void SetDead() { m_IsDead = true; }
+		bool GetIsDead() { return m_IsDead; }
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -27,6 +29,9 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		bool m_IsDead{ false };
+		bool m_HasDeadComponent{ false };
+
 		Transform m_transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_ComponentVec{};
 	
@@ -53,7 +58,10 @@ namespace dae
 			{
 				tempComp = dynamic_cast<Comp*>(m_ComponentVec[index].get());
 				if (tempComp)
+				{
 					tempComp->SetDead();
+					m_HasDeadComponent = true;
+				}
 			}
 		}
 

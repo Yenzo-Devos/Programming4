@@ -11,6 +11,17 @@ void dae::GameObject::Update(float deltaTime)
 	{
 		comp->Update(deltaTime);
 	}
+
+	if (m_HasDeadComponent)
+	{
+		for (int index{}; index < m_ComponentVec.size(); ++index)
+		{
+			if (m_ComponentVec[index]->GetIsDead())
+			{
+				m_ComponentVec.erase(std::remove(m_ComponentVec.begin(), m_ComponentVec.end(), m_ComponentVec[index]), m_ComponentVec.end());
+			}
+		}
+	}
 }
 
 void dae::GameObject::FixedUpdate(float fixedDeltaTime) { fixedDeltaTime; }

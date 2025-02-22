@@ -32,6 +32,12 @@ void Scene::Update(float deltaTime)
 	{
 		object->Update(deltaTime);
 	}
+
+	for (auto& object : m_objects)
+	{
+		if (object->GetIsDead())
+			Remove(object);
+	}
 }
 
 void dae::Scene::FixedUpdate(float fixedDeltaTime)
