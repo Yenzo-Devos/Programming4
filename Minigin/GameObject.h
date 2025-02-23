@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include <stdexcept>
+#include <glm.hpp>
 
 #include "Transform.h"
 #include "BaseComponent.h"
@@ -24,6 +25,17 @@ namespace dae
 		void SetDead() { m_IsDead = true; }
 		bool GetIsDead() { return m_IsDead; }
 
+		// scenegraph function
+		GameObject* GetParent() { return m_pParent; }
+		void SetParent(GameObject* pParent, bool keepWorldPos);
+		int GetChildCount() { return static_cast<int>(m_pChildren.size()); }
+		GameObject* GetChildAt(int index) { return m_pChildren[index]; }
+
+		// position functions
+		const glm::vec3& GetWorldPosition();
+		void SetLocalPosition(const glm::vec3& pos);
+		void UpdateWorldPosition();
+
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -37,6 +49,23 @@ namespace dae
 
 		Transform m_Transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_ComponentVec{};
+
+		// scenegraph member vars
+		GameObject* m_pParent{};
+		std::vector<GameObject*> m_pChildren{};
+
+		// scenegraph function
+		void AddChild(GameObject* pChild);
+		void RemoveChild(GameObject* pChild);
+		bool IsChild(GameObject* pGameObject);
+
+		// position member vars
+		bool m_IsPositionDirty{ false };
+		glm::vec3 m_WorldPos{};
+		glm::vec3 m_LocalPos{};
+
+		// position function
+		void SetPositionDirty() { m_IsPositionDirty = true; }
 	
 	// templated component functions
 	public:
