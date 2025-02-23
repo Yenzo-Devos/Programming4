@@ -19,9 +19,6 @@ namespace dae
 		virtual void FixedUpdate(float fixedDeltaTime);
 		virtual void Render() const;
 
-		void SetPosition(float x, float y);
-		Transform GetTransform() { return m_Transform; }
-
 		void SetDead() { m_IsDead = true; }
 		bool GetIsDead() { return m_IsDead; }
 
@@ -47,7 +44,6 @@ namespace dae
 		bool m_IsDead{ false };
 		bool m_HasDeadComponent{ false };
 
-		Transform m_Transform{};
 		std::vector<std::unique_ptr<BaseComponent>> m_ComponentVec{};
 
 		// scenegraph member vars
@@ -61,8 +57,8 @@ namespace dae
 
 		// position member vars
 		bool m_IsPositionDirty{ false };
-		glm::vec3 m_WorldPos{};
-		glm::vec3 m_LocalPos{};
+		glm::vec3 m_WorldPosition{};
+		glm::vec3 m_LocalPosition{};
 
 		// position function
 		void SetPositionDirty() { m_IsPositionDirty = true; }

@@ -35,11 +35,6 @@ void dae::GameObject::Render() const
 	}
 }
 
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
-}
-
 void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPos)
 {
 	if (IsChild(pParent) or pParent == this or pParent == m_pParent)

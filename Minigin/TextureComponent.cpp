@@ -10,7 +10,7 @@ dae::TextureComponent::TextureComponent(GameObject* owner)
 void dae::TextureComponent::Render()
 {
 	if (m_pTexture)
-		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, m_pOwner->GetTransform().GetPosition().x, m_pOwner->GetTransform().GetPosition().y);
+		dae::Renderer::GetInstance().RenderTexture(*m_pTexture, m_pOwner->GetWorldPosition().x, m_pOwner->GetWorldPosition().y);
 }
 
 void dae::TextureComponent::LoadTexture(const std::string& textureName)

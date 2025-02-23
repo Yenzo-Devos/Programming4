@@ -36,7 +36,7 @@ void dae::TextComponent::Update(float deltaTime)
 void dae::TextComponent::Render()
 {
 	if (m_pTextTexture != nullptr)
-		Renderer::GetInstance().RenderTexture(*m_pTextTexture, m_pOwner->GetTransform().GetPosition().x, m_pOwner->GetTransform().GetPosition().x);
+		Renderer::GetInstance().RenderTexture(*m_pTextTexture, m_pOwner->GetWorldPosition().x, m_pOwner->GetWorldPosition().y);
 }
 
 void dae::TextComponent::SetText(const std::string& text)
