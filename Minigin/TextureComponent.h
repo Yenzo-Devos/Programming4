@@ -8,7 +8,7 @@
 
 namespace dae
 {
-	class TextureComponent : public BaseComponent
+	class TextureComponent final : public BaseComponent
 	{
 	public:
 		TextureComponent(GameObject* owner);

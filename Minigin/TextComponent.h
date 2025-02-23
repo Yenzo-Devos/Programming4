@@ -11,7 +11,7 @@
 #include <string>
 namespace dae
 {
-	class TextComponent : public BaseComponent
+	class TextComponent final : public BaseComponent
 	{
 	public:
 		TextComponent(GameObject* owner);
