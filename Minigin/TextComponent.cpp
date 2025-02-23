@@ -1,6 +1,5 @@
 #include "TextComponent.h"
 #include "GameObject.h"
-#include "Transform.h"
 
 dae::TextComponent::TextComponent(GameObject* owner)
 	: BaseComponent(owner)

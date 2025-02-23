@@ -19,6 +19,7 @@ namespace dae
 		TextureComponent& operator=(const TextureComponent& other) = delete;
 		TextureComponent& operator=(TextureComponent&& other) = delete;
 
+		virtual void Update(float) override {};
 		void Render() override;
 		void LoadTexture(const std::string& textureName);
 	

@@ -9,7 +9,6 @@ dae::RotatingComponent::RotatingComponent(GameObject* owner, glm::vec3 origin, f
 	, m_Radius{ radius }
 	, m_Speed{ speed }
 {
-
 }
 
 void dae::RotatingComponent::Update(float deltaTime)
@@ -21,7 +20,7 @@ void dae::RotatingComponent::Update(float deltaTime)
 	m_pOwner->SetLocalPosition(pos);
 
 	if (m_Angle > 2 * M_PI)
-		m_Angle -= float(2 * M_PI);
+		m_Angle -= static_cast<float>(2 * M_PI);
 	else if (m_Angle < (2 * M_PI) * -1)
-		m_Angle += float(2 * M_PI);
+		m_Angle += static_cast<float>(2 * M_PI);
 }

@@ -4,14 +4,12 @@
 #include <stdexcept>
 #include <glm.hpp>
 
-#include "Transform.h"
 #include "BaseComponent.h"
 
 namespace dae
 {
 	class Texture2D;
 
-	// todo: this should become final.
 	class GameObject final
 	{
 	public:
@@ -53,7 +51,7 @@ namespace dae
 		// scenegraph function
 		void AddChild(GameObject* pChild);
 		void RemoveChild(GameObject* pChild);
-		bool IsChild(GameObject* pGameObject);
+		bool IsChild(GameObject* pParent);
 
 		// position member vars
 		bool m_IsPositionDirty{ false };

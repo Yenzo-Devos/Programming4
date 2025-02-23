@@ -4,7 +4,7 @@
 namespace dae
 {
 
-	class RotatingComponent final : BaseComponent
+	class RotatingComponent final : public BaseComponent
 	{
 	public:
 		RotatingComponent(GameObject* owner, glm::vec3 origin, float radius, float speed);

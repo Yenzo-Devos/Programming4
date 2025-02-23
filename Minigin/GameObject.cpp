@@ -69,15 +69,20 @@ void dae::GameObject::RemoveChild(GameObject* pChild)
 	if (!pChild)
 		return;
 
-	std::remove_if(m_pChildren.begin(), m_pChildren.end(),
-		[&](GameObject* child) {
-			return child == pChild;
+	auto lastValid = std::remove_if(std::begin(m_pChildren), std::end(m_pChildren),
+		[&](GameObject* algChild) {
+			return algChild == pChild;
 		});
 }
 
-bool dae::GameObject::IsChild(GameObject* pGameObject)
+bool dae::GameObject::IsChild(GameObject* pParent)
 {
-	return std::find_if(m_pChildren.begin(), m_pChildren.end(), pGameObject) != m_pChildren.end();
+	for (int index{ 0 }; index < pParent->GetChildCount(); ++index)
+	{
+		if (this == pParent->GetChildAt(index))
+			return true;
+	}
+	return false;
 }
 
 const glm::vec3& dae::GameObject::GetWorldPosition()
