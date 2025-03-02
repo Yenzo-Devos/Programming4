@@ -113,7 +113,7 @@ void dae::TrashTheCacheComponent::BenchmarkInts(int nrOfRuns)
 		for (int stepSize = 1; stepSize <= 1024; stepSize *= 2)
 		{
 			auto startTime = std::chrono::high_resolution_clock::now();
-			for (int i = 0; i < arr.size(); i += stepSize)
+			for (int i = 0; i < static_cast<int>(arr.size()); i += stepSize)
 				arr[i] *= 2;
 
 			auto endTime = std::chrono::high_resolution_clock::now();
@@ -163,7 +163,7 @@ void dae::TrashTheCacheComponent::BenchmarkTestObjects(int nrOfRuns)
 		for (int stepSize = 1; stepSize <= 1024; stepSize *= 2)
 		{
 			auto startTime = std::chrono::high_resolution_clock::now();
-			for (int i = 0; i < arr.size(); i += stepSize)
+			for (int i = 0; i < static_cast<int>(arr.size()); i += stepSize)
 				arr[i].id *= 2;
 			auto endTime = std::chrono::high_resolution_clock::now();
 			auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
@@ -185,7 +185,7 @@ void dae::TrashTheCacheComponent::BenchmarkAltTestObjects(int nrOfRuns)
 		for (int stepSize = 1; stepSize <= 1024; stepSize *= 2)
 		{
 			auto startTime = std::chrono::high_resolution_clock::now();
-			for (int i = 0; i < arr.size(); i += stepSize)
+			for (int i = 0; i < static_cast<int>(arr.size()); i += stepSize)
 				arr[i].id *= 2;
 
 			auto endTime = std::chrono::high_resolution_clock::now();
