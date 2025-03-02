@@ -2,6 +2,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#pragma warning(push)
+#pragma warning (disable: 4018)     //'<': signed / unsigned mismatch
+#pragma warning (disable: 4244)     // 'argument': conversion from 'int' to 'float', possible
+
 namespace ImGui {
 // [0..1] -> [0..1]
 static float rescale(float t, float min, float max, PlotConfig::Scale::Type type) {
