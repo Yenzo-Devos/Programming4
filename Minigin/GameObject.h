@@ -17,7 +17,7 @@ namespace dae
 		virtual void FixedUpdate(float fixedDeltaTime);
 		virtual void Render() const;
 
-		void SetDead() { m_IsDead = true; }
+		void SetDead();
 		bool GetIsDead() { return m_IsDead; }
 
 		// scenegraph function
