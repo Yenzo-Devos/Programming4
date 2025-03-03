@@ -87,9 +87,12 @@ void dae::GameObject::RemoveChild(GameObject* pChild)
 
 bool dae::GameObject::IsChild(GameObject* pParent)
 {
-	for (int index{ 0 }; index < pParent->GetChildCount(); ++index)
+	for (const auto& child : m_pChildren)
 	{
-		if (this == pParent->GetChildAt(index))
+		if (child == pParent)
+			return true;
+
+		if (child->IsChild(pParent))
 			return true;
 	}
 	return false;
