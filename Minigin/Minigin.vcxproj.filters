@@ -25,6 +25,18 @@
     <Filter Include="Source Files\Imgui">
       <UniqueIdentifier>{9b88c8a1-5f32-4719-814a-3fbd3be96fd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Command">
+      <UniqueIdentifier>{0fc1360b-66c1-433e-84fe-ea1244ea545b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Command">
+      <UniqueIdentifier>{4af4f4e5-c6cf-4b76-9276-9a70edbd7477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GamePad">
+      <UniqueIdentifier>{4516abbd-163d-42d6-8a89-b69e5d9ed9ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GamePad">
+      <UniqueIdentifier>{7ed90345-3834-41ae-b79a-458748d76b24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -102,6 +114,12 @@
     <ClInclude Include="TrashTheCacheComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePad.h">
+      <Filter>Header Files\GamePad</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -175,6 +193,12 @@
     </ClCompile>
     <ClCompile Include="TrashTheCacheComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePad.cpp">
+      <Filter>Source Files\GamePad</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,8 +4,6 @@
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"
 
-#include <Xinput.h>
-
 bool dae::InputManager::ProcessInput()
 {
 	SDL_Event e;
