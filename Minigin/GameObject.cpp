@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 
+#include <functional>
 
 dae::GameObject::~GameObject() = default;
 
@@ -32,6 +33,16 @@ void dae::GameObject::Render() const
 	for (const auto& comp : m_ComponentVec)
 	{
 		comp->Render();
+	}
+}
+
+void dae::GameObject::SetDead()
+{
+	m_IsDead = true;
+
+	for (auto& child : m_pChildren)
+	{
+		child->SetParent(nullptr, false);
 	}
 }
 
@@ -82,6 +93,12 @@ bool dae::GameObject::IsChild(GameObject* pParent)
 			return true;
 	}
 	return false;
+}
+
+void dae::GameObject::SetPositionDirty()
+{
+	m_IsPositionDirty = true;
+	std::for_each(m_pChildren.begin(), m_pChildren.end(), std::mem_fn(&dae::GameObject::SetPositionDirty));
 }
 
 const glm::vec3& dae::GameObject::GetWorldPosition()

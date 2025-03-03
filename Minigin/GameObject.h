@@ -59,7 +59,7 @@ namespace dae
 		glm::vec3 m_LocalPosition{};
 
 		// position function
-		void SetPositionDirty() { m_IsPositionDirty = true; }
+		void SetPositionDirty();
 	
 	// templated component functions
 	public:
