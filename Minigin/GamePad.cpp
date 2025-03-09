@@ -1,12 +1,15 @@
 #define WIN32_LEAN_AND_MEAN
 #include "GamePad.h"
+
+#include <Windows.h>
 #include <Xinput.h>
+#include <memory>
 
 class dae::GamePad::GamePadImpl
 {
 public:
     GamePadImpl(int id);
-    void Update(float deltaTime);
+    void Update(float);
 
     bool IsButtonDownThisFrame(GamePadButton button) const;
     bool IsButtonUpThisFrame(GamePadButton button) const;
@@ -63,13 +66,7 @@ int dae::GamePad::GamePadImpl::GetID() const
 
 dae::GamePad::GamePad(int id)
 {
-    m_pImpl = new GamePadImpl(id);
-}
-
-dae::GamePad::~GamePad()
-{
-    delete m_pImpl;
-    m_pImpl = nullptr;
+    m_pImpl = std::make_unique<GamePadImpl>(id);
 }
 
 void dae::GamePad::Update(float deltaTime)

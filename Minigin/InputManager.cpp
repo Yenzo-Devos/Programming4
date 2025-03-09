@@ -27,7 +27,7 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 		gamePad->Update(deltaTime);
 		for (const auto& command : m_pCommands)
 		{
-			if (command->controllerID != gamePad->GetID())
+			if (command->gamePadID != gamePad->GetID())
 				continue;
 
 			switch (command->state)

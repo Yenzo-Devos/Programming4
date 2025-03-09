@@ -18,7 +18,7 @@ namespace dae
 	struct CommandInfo
 	{
 		std::unique_ptr<Command> pCommand;
-		int controllerID;
+		int gamePadID;
 		InputState state;
 		GamePad::GamePadButton button;
 	};
