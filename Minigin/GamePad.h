@@ -7,13 +7,6 @@ namespace dae
 		class GamePadImpl;
 		GamePadImpl* m_pImpl;
 	public:
-		GamePad(int id);
-		~GamePad();
-
-		bool IsButtonDownThisFrame(unsigned int button) const;
-		bool IsButtonUpThisFrame(unsigned int button) const;
-		bool IsHeld(unsigned int button) const;
-
 		enum class GamePadButton
 		{
 			DPAD_UP = 0x0001,
@@ -29,8 +22,18 @@ namespace dae
 			BUTTON_A = 0x1000,
 			BUTTON_B = 0x2000,
 			BUTTON_X = 0x4000,
-			BUTTON_Y = 0x8000,
+			BUTTON_Y = 0x8000
 		};
+		
+		GamePad(int id);
+		~GamePad();
+
+		void Update(float);
+
+		bool IsButtonDownThisFrame(GamePadButton button) const;
+		bool IsButtonUpThisFrame(GamePadButton button) const;
+		bool IsButtonHeld(GamePadButton button) const;
+
+		int GetID() const;
 	};
 }
-

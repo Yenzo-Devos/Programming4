@@ -6,13 +6,13 @@
 
 static int M_NROFGAMEPADSET = 0;
 
-bool dae::InputManager::ProcessInput(float DeltaTime)
+bool dae::InputManager::ProcessInput(float deltaTime)
 {
-	//SDL_Event e;
-	//while (SDL_PollEvent(&e)) {
-	//	if (e.type == SDL_QUIT) {
-	//		return false;
-	//	}
+	SDL_Event e;
+	while (SDL_PollEvent(&e)) {
+		if (e.type == SDL_QUIT) {
+			return false;
+		}
 	//	if (e.type == SDL_KEYDOWN) {
 	//		
 	//	}
@@ -21,9 +21,39 @@ bool dae::InputManager::ProcessInput(float DeltaTime)
 	//	}
 	//	// process event for IMGUI
 	//	ImGui_ImplSDL2_ProcessEvent(&e);
-	//}
+	}
+	for (const auto& gamePad : m_pGamePads)
+	{
+		gamePad->Update(deltaTime);
+		for (const auto& command : m_pCommands)
+		{
+			if (command->controllerID != gamePad->GetID())
+				continue;
 
-	//return true;
+			switch (command->state)
+			{
+			case InputState::Pressed:
+				if (gamePad->IsButtonDownThisFrame(command->button))
+					command->pCommand->Execute(deltaTime);
+				break;
+			case InputState::Released:
+				if (gamePad->IsButtonUpThisFrame(command->button))
+					command->pCommand->Execute(deltaTime);
+				break;
+			case InputState::Held:
+				if (gamePad->IsButtonHeld(command->button))
+					command->pCommand->Execute(deltaTime);
+				break;
+			}
+		}
+	}
+	return true;
+}
+
+void dae::InputManager::BindCommand(std::unique_ptr<Command> pCommand, int controllerID, InputState state, GamePad::GamePadButton button)
+{
+	std::unique_ptr<CommandInfo> commandInfo = std::make_unique<CommandInfo>(std::move(pCommand), controllerID, state, button);
+	m_pCommands.emplace_back(std::move(commandInfo));
 }
 
 void dae::InputManager::AddController()

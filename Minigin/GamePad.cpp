@@ -8,9 +8,11 @@ public:
     GamePadImpl(int id);
     void Update(float deltaTime);
 
-    bool IsButtonDownThisFrame(unsigned int button) const;
-    bool IsButtonUpThisFrame(unsigned int button) const;
-    bool IsHeld(unsigned int button) const;
+    bool IsButtonDownThisFrame(GamePadButton button) const;
+    bool IsButtonUpThisFrame(GamePadButton button) const;
+    bool IsButtonHeld(GamePadButton button) const;
+
+    int GetID() const;
 private:
     int m_GamePadID;
 
@@ -28,7 +30,7 @@ dae::GamePad::GamePadImpl::GamePadImpl(int id)
     ZeroMemory(&m_PreviousState, sizeof(XINPUT_STATE));
 }
 
-void dae::GamePad::GamePadImpl::Update(float deltaTime)
+void dae::GamePad::GamePadImpl::Update(float)
 {
     CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
     ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
@@ -39,21 +41,25 @@ void dae::GamePad::GamePadImpl::Update(float deltaTime)
     m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 }
 
-bool dae::GamePad::GamePadImpl::IsButtonDownThisFrame(unsigned int button) const
+bool dae::GamePad::GamePadImpl::IsButtonDownThisFrame(GamePadButton button) const
 {
-    return m_ButtonsPressedThisFrame & button;
+    return m_ButtonsPressedThisFrame & static_cast<unsigned int>(button);
 }
 
-bool dae::GamePad::GamePadImpl::IsButtonUpThisFrame(unsigned int button) const
+bool dae::GamePad::GamePadImpl::IsButtonUpThisFrame(GamePadButton button) const
 {
-    return m_ButtonsReleasedThisFrame & button;
+    return m_ButtonsReleasedThisFrame & static_cast<unsigned int>(button);
 }
 
-bool dae::GamePad::GamePadImpl::IsHeld(unsigned int button) const
+bool dae::GamePad::GamePadImpl::IsButtonHeld(GamePadButton button) const
 {
-    return m_CurrentState.Gamepad.wButtons & button;
+    return m_CurrentState.Gamepad.wButtons & static_cast<unsigned int>(button);
 }
 
+int dae::GamePad::GamePadImpl::GetID() const
+{
+    return m_GamePadID;
+}
 
 dae::GamePad::GamePad(int id)
 {
@@ -66,17 +72,27 @@ dae::GamePad::~GamePad()
     m_pImpl = nullptr;
 }
 
-bool dae::GamePad::IsButtonDownThisFrame(unsigned int button) const
+void dae::GamePad::Update(float deltaTime)
+{
+    m_pImpl->Update(deltaTime);
+}
+
+bool dae::GamePad::IsButtonDownThisFrame(GamePadButton button) const
 {
     return m_pImpl->IsButtonDownThisFrame(button);
 }
 
-bool dae::GamePad::IsButtonUpThisFrame(unsigned int button) const
+bool dae::GamePad::IsButtonUpThisFrame(GamePadButton button) const
 {
     return m_pImpl->IsButtonUpThisFrame(button);
 }
 
-bool dae::GamePad::IsHeld(unsigned int button) const
+bool dae::GamePad::IsButtonHeld(GamePadButton button) const
 {
-    return m_pImpl->IsHeld(button);
+    return m_pImpl->IsButtonHeld(button);
+}
+
+int dae::GamePad::GetID() const
+{
+    return m_pImpl->GetID();
 }
