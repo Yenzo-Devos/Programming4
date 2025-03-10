@@ -7,7 +7,13 @@ namespace dae
 	{
 	public:
 		virtual ~Command() = default;
+		Command(const Command& other) = delete;
+		Command(Command&& other) = delete;
+		Command& operator=(const Command& other) = delete;
+		Command& operator=(Command&& other) = delete;
+
 		virtual void Execute(float) = 0;
+	
 	protected:
 		Command() = default;
 	};
@@ -15,9 +21,17 @@ namespace dae
 	// create derived command for get an owned object by a controller
 	class GameObjectCommand : public Command
 	{
+	public:
+		virtual ~GameObjectCommand() = default;
+		GameObjectCommand(const GameObjectCommand& other) = delete;
+		GameObjectCommand(GameObjectCommand&& other) = delete;
+		GameObjectCommand& operator=(const GameObjectCommand& other) = delete;
+		GameObjectCommand& operator=(GameObjectCommand&& other) = delete;
+	
 	protected:
 		GameObjectCommand(GameObject* pGameObject);
 		GameObject* GetGameObject() const { return m_pGameObject; }
+	
 	private:
 		GameObject* m_pGameObject;
 	};
@@ -26,7 +40,14 @@ namespace dae
 	{
 	public:
 		MoveCommand(GameObject* pGameObject, float speed, glm::vec3 direction);
+		~MoveCommand() = default;
+		
+		MoveCommand(const MoveCommand& other) = delete;
+		MoveCommand(MoveCommand&& other) = delete;
+		MoveCommand& operator=(const MoveCommand& other) = delete;
+		MoveCommand& operator=(MoveCommand&& other) = delete;
 		void Execute(float deltaTime) override;
+
 	private:
 		float m_Speed;
 		glm::vec3 m_Direction;
