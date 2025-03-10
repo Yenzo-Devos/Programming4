@@ -3,12 +3,18 @@
 
 #include <Windows.h>
 #include <Xinput.h>
-#include <memory>
 
 class dae::GamePad::GamePadImpl
 {
 public:
     GamePadImpl(int id);
+    ~GamePadImpl() = default;
+
+    GamePadImpl(const GamePadImpl& other) = delete;
+    GamePadImpl(GamePadImpl&& other) = delete;
+    GamePadImpl& operator=(const GamePadImpl& other) = delete;
+    GamePadImpl& operator=(GamePadImpl&& other) = delete;
+
     void Update(float);
 
     bool IsButtonDownThisFrame(GamePadButton button) const;
@@ -65,9 +71,12 @@ int dae::GamePad::GamePadImpl::GetID() const
 }
 
 dae::GamePad::GamePad(int id)
+    : m_pImpl{ std::make_unique<GamePadImpl>(id) }
 {
-    m_pImpl = std::make_unique<GamePadImpl>(id);
+    
 }
+
+dae::GamePad::~GamePad() = default;
 
 void dae::GamePad::Update(float deltaTime)
 {

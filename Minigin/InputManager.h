@@ -15,7 +15,7 @@ namespace dae
 		Held
 	};
 
-	struct CommandInfo
+	struct GamePadCommandInfo
 	{
 		std::unique_ptr<Command> pCommand;
 		int gamePadID;
@@ -23,18 +23,36 @@ namespace dae
 		GamePad::GamePadButton button;
 	};
 
+	struct KeyBoardCommandInfo
+	{
+		std::unique_ptr<Command> pCommand;
+		InputState state;
+		SDL_Scancode key;
+	};
+
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
+		InputManager();
+
 		bool ProcessInput(float DeltaTime);
 		void BindCommand(std::unique_ptr<Command> pCommand, int controllerID, InputState state, GamePad::GamePadButton button);
+		void BindCommand(std::unique_ptr<Command> pCommand, InputState state, SDL_Scancode key);
 		void AddController();
 
 	private:
 		const int m_MaxNrOfGamePad{ 4 };
 
-		std::vector<std::unique_ptr<CommandInfo>> m_pCommands{};
+		std::vector<std::unique_ptr<GamePadCommandInfo>> m_pGamePadCommands{};
+		std::vector<std::unique_ptr<KeyBoardCommandInfo>> m_pKeyBoardCommands{};
 		std::vector<std::unique_ptr<GamePad>> m_pGamePads{};
+
+		std::vector<Uint8> m_CurrentKeyboardState;
+		std::vector<Uint8> m_PreviousKeyboardState;
+
+		bool IsKeyDownThisFrame(SDL_Scancode key) const;
+		bool IsKeyUpThisFrame(SDL_Scancode key) const;
+		bool IsKeyHeld(SDL_Scancode key) const;
 	};
 
 }

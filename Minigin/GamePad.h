@@ -1,11 +1,10 @@
 #pragma once
+#include <memory>
+
 namespace dae
 {
 	class GamePad
 	{
-		class GamePadImpl;
-		std::unique_ptr<GamePadImpl> m_pImpl;
-
 	public:
 		enum class GamePadButton
 		{
@@ -26,7 +25,12 @@ namespace dae
 		};
 		
 		GamePad(int id);
-		~GamePad() = default;
+		~GamePad();
+
+		GamePad(const GamePad& other) = delete;
+		GamePad(GamePad&& other) = delete;
+		GamePad& operator=(const GamePad& other) = delete;
+		GamePad& operator=(GamePad&& other) = delete;
 
 		void Update(float deltaTime);
 
@@ -35,5 +39,10 @@ namespace dae
 		bool IsButtonHeld(GamePadButton button) const;
 
 		int GetID() const;
+
+	private:
+		class GamePadImpl;
+		std::unique_ptr<GamePadImpl> m_pImpl;
+
 	};
 }

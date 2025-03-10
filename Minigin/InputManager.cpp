@@ -6,26 +6,27 @@
 
 static int M_NROFGAMEPADSET = 0;
 
+dae::InputManager::InputManager()
+{
+	int keyCount;
+	SDL_GetKeyboardState(&keyCount);
+	m_PreviousKeyboardState.resize(keyCount, 0);
+	m_CurrentKeyboardState.resize(keyCount, 0);
+}
+
 bool dae::InputManager::ProcessInput(float deltaTime)
 {
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+		if (e.type == SDL_QUIT)
 			return false;
-		}
-	//	if (e.type == SDL_KEYDOWN) {
-	//		
-	//	}
-	//	if (e.type == SDL_MOUSEBUTTONDOWN) {
-	//		
-	//	}
-	//	// process event for IMGUI
-	//	ImGui_ImplSDL2_ProcessEvent(&e);
 	}
+
+	// process gamepads
 	for (const auto& gamePad : m_pGamePads)
 	{
 		gamePad->Update(deltaTime);
-		for (const auto& command : m_pCommands)
+		for (const auto& command : m_pGamePadCommands)
 		{
 			if (command->gamePadID != gamePad->GetID())
 				continue;
@@ -47,17 +48,64 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 			}
 		}
 	}
+
+	//update keyboard
+	m_PreviousKeyboardState = m_CurrentKeyboardState;
+
+	const Uint8* state = SDL_GetKeyboardState(nullptr);
+	m_CurrentKeyboardState.assign(state, state + m_CurrentKeyboardState.size());
+
+	// process keyboard
+	for (const auto& command : m_pKeyBoardCommands)
+	{
+		switch (command->state)
+		{
+		case InputState::Pressed:
+			if (IsKeyDownThisFrame(command->key))
+				command->pCommand->Execute(deltaTime);
+			break;
+		case InputState::Released:
+			if (IsKeyUpThisFrame(command->key))
+				command->pCommand->Execute(deltaTime);
+			break;
+		case InputState::Held:
+			if (IsKeyHeld(command->key))
+				command->pCommand->Execute(deltaTime);
+			break;
+		}
+	}
 	return true;
 }
 
 void dae::InputManager::BindCommand(std::unique_ptr<Command> pCommand, int controllerID, InputState state, GamePad::GamePadButton button)
 {
-	std::unique_ptr<CommandInfo> commandInfo = std::make_unique<CommandInfo>(std::move(pCommand), controllerID, state, button);
-	m_pCommands.emplace_back(std::move(commandInfo));
+	auto commandInfo = std::make_unique<GamePadCommandInfo>(std::move(pCommand), controllerID, state, button);
+	m_pGamePadCommands.emplace_back(std::move(commandInfo));
+}
+
+void dae::InputManager::BindCommand(std::unique_ptr<Command> pCommand, InputState state, SDL_Scancode key)
+{
+	auto commandInfo = std::make_unique<KeyBoardCommandInfo>(std::move(pCommand), state, key);
+	m_pKeyBoardCommands.emplace_back(std::move(commandInfo));
 }
 
 void dae::InputManager::AddController()
 {
 	if (M_NROFGAMEPADSET < m_MaxNrOfGamePad)
 		m_pGamePads.emplace_back(std::make_unique<GamePad>(M_NROFGAMEPADSET++));
+}
+
+bool dae::InputManager::IsKeyDownThisFrame(SDL_Scancode key) const
+{
+	return m_CurrentKeyboardState[key] && !m_PreviousKeyboardState[key];
+}
+
+bool dae::InputManager::IsKeyUpThisFrame(SDL_Scancode key) const
+{
+	return !m_CurrentKeyboardState[key] && m_PreviousKeyboardState[key];
+}
+
+bool dae::InputManager::IsKeyHeld(SDL_Scancode key) const
+{
+	return m_CurrentKeyboardState[key];
 }
