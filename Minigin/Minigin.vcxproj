@@ -193,6 +193,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="KeyBoard.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Renderer.cpp" />

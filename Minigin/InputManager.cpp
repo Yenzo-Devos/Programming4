@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include "SDL_scancode.h"
 #include "InputManager.h"
 
 #include "imgui.h"
@@ -8,19 +8,13 @@ static int M_NROFGAMEPADSET = 0;
 
 dae::InputManager::InputManager()
 {
-	int keyCount;
-	SDL_GetKeyboardState(&keyCount);
-	m_PreviousKeyboardState.resize(keyCount, 0);
-	m_CurrentKeyboardState.resize(keyCount, 0);
+	m_pKeyBoard = std::make_unique<KeyBoard>();
 }
 
 bool dae::InputManager::ProcessInput(float deltaTime)
 {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT)
-			return false;
-	}
+	if (!m_pKeyBoard->ProcessQuitGameInput())
+		return false;
 
 	// process gamepads
 	for (const auto& gamePad : m_pGamePads)
@@ -49,11 +43,7 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 		}
 	}
 
-	//update keyboard
-	m_PreviousKeyboardState = m_CurrentKeyboardState;
-
-	const Uint8* state = SDL_GetKeyboardState(nullptr);
-	m_CurrentKeyboardState.assign(state, state + m_CurrentKeyboardState.size());
+	m_pKeyBoard->Update(deltaTime);
 
 	// process keyboard
 	for (const auto& command : m_pKeyBoardCommands)
@@ -61,15 +51,15 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 		switch (command->state)
 		{
 		case InputState::Pressed:
-			if (IsKeyDownThisFrame(command->key))
+			if (m_pKeyBoard->IsKeyDownThisFrame(command->key))
 				command->pCommand->Execute(deltaTime);
 			break;
 		case InputState::Released:
-			if (IsKeyUpThisFrame(command->key))
+			if (m_pKeyBoard->IsKeyUpThisFrame(command->key))
 				command->pCommand->Execute(deltaTime);
 			break;
 		case InputState::Held:
-			if (IsKeyHeld(command->key))
+			if (m_pKeyBoard->IsKeyHeld(command->key))
 				command->pCommand->Execute(deltaTime);
 			break;
 		}
@@ -93,19 +83,4 @@ void dae::InputManager::AddController()
 {
 	if (M_NROFGAMEPADSET < m_MaxNrOfGamePad)
 		m_pGamePads.emplace_back(std::make_unique<GamePad>(M_NROFGAMEPADSET++));
-}
-
-bool dae::InputManager::IsKeyDownThisFrame(SDL_Scancode key) const
-{
-	return m_CurrentKeyboardState[key] && !m_PreviousKeyboardState[key];
-}
-
-bool dae::InputManager::IsKeyUpThisFrame(SDL_Scancode key) const
-{
-	return !m_CurrentKeyboardState[key] && m_PreviousKeyboardState[key];
-}
-
-bool dae::InputManager::IsKeyHeld(SDL_Scancode key) const
-{
-	return m_CurrentKeyboardState[key];
 }

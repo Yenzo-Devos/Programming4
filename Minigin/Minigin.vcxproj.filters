@@ -31,10 +31,10 @@
     <Filter Include="Source Files\Command">
       <UniqueIdentifier>{4af4f4e5-c6cf-4b76-9276-9a70edbd7477}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GamePad">
+    <Filter Include="Header Files\Input">
       <UniqueIdentifier>{4516abbd-163d-42d6-8a89-b69e5d9ed9ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GamePad">
+    <Filter Include="Source Files\Input">
       <UniqueIdentifier>{7ed90345-3834-41ae-b79a-458748d76b24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -49,9 +49,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -118,7 +115,13 @@
       <Filter>Header Files\Command</Filter>
     </ClInclude>
     <ClInclude Include="GamePad.h">
-      <Filter>Header Files\GamePad</Filter>
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyBoard.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +132,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -198,7 +198,13 @@
       <Filter>Source Files\Command</Filter>
     </ClCompile>
     <ClCompile Include="GamePad.cpp">
-      <Filter>Source Files\GamePad</Filter>
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyBoard.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

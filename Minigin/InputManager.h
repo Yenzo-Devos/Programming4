@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "Command.h"
 #include "GamePad.h"
+#include "KeyBoard.h"
 
 #include <vector>
 #include <memory>
@@ -46,13 +47,7 @@ namespace dae
 		std::vector<std::unique_ptr<GamePadCommandInfo>> m_pGamePadCommands{};
 		std::vector<std::unique_ptr<KeyBoardCommandInfo>> m_pKeyBoardCommands{};
 		std::vector<std::unique_ptr<GamePad>> m_pGamePads{};
-
-		std::vector<Uint8> m_CurrentKeyboardState;
-		std::vector<Uint8> m_PreviousKeyboardState;
-
-		bool IsKeyDownThisFrame(SDL_Scancode key) const;
-		bool IsKeyUpThisFrame(SDL_Scancode key) const;
-		bool IsKeyHeld(SDL_Scancode key) const;
+		std::unique_ptr<KeyBoard> m_pKeyBoard;
 	};
 
 }
