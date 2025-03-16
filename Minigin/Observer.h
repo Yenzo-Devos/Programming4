@@ -3,6 +3,14 @@
 
 namespace dae
 {
+	class GameObject;
+
+	enum class Event
+	{
+		OnPlayerDeath,
+		OnPlayerScored
+	};
+
 	class Observer
 	{
 		friend class Subject;
@@ -11,7 +19,7 @@ namespace dae
 		: m_pNextObserver{ nullptr }
 		{ }
 		virtual ~Observer() = default;
-		virtual void Broadcast() = 0;
+		virtual void Broadcast(GameObject* pGameObject, Event event) = 0;
 
 	private:
 		Observer* m_pNextObserver;

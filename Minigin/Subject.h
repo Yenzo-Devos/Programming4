@@ -1,7 +1,7 @@
 #pragma once
+#include "Observer.h"
 namespace dae
 {
-	class Observer;
 	class GameObject;
 	enum class Event;
 
