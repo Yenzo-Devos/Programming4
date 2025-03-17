@@ -1,6 +1,4 @@
 #pragma once
-#include "Subject.h"
-
 namespace dae
 {
 	class GameObject;

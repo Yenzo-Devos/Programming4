@@ -1,6 +1,6 @@
 #include "LivesComponent.h"
 
-dae::LivesComponent::LivesComponent(GameObject* owner, int maxLives, TextureComponent* pTexture)
+dae::LivesComponent::LivesComponent(GameObject* owner, int maxLives)
 	: BaseComponent(owner)
 	, Subject()
 	, m_MaxLives{ maxLives }

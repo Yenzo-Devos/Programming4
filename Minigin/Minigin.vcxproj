@@ -194,13 +194,17 @@
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyBoard.h" />
+    <ClInclude Include="LivesComponent.h" />
+    <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="Minigin.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RotatingComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />
@@ -223,6 +227,8 @@
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
+    <ClCompile Include="LivesComponent.cpp" />
+    <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -230,6 +236,7 @@
     <ClCompile Include="RotatingComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureComponent.cpp" />

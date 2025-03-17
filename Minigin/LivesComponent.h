@@ -1,14 +1,13 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Subject.h"
-#include "TextureComponent.h"
 
 namespace dae
 {
 	class LivesComponent : public BaseComponent, public Subject
 	{
 	public:
-		LivesComponent(GameObject* owner, int maxHealth, TextureComponent* pTexture);
+		LivesComponent(GameObject* owner, int maxHealth);
 		virtual ~LivesComponent() = default;
 
 		LivesComponent(const LivesComponent& other) = delete;
@@ -18,6 +17,8 @@ namespace dae
 
 		virtual void Update(float) override {};
 		void LoseLife(int amount);
+
+		int GetCurrentNrOfLives() const { return m_CurrentLives; }
 
 	private:
 		const int m_MaxLives;

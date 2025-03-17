@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{7ed90345-3834-41ae-b79a-458748d76b24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Observer/Event_Queue">
+      <UniqueIdentifier>{3e38ab83-367d-44cf-96fd-333acbdfa455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Observer/Event_Queue">
+      <UniqueIdentifier>{bdf9c55d-383a-4148-8f91-adbb3f6a1633}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -123,6 +129,18 @@
     <ClInclude Include="KeyBoard.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Header Files\Observer/Event_Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header Files\Observer/Event_Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplayComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -205,6 +223,15 @@
     </ClCompile>
     <ClCompile Include="KeyBoard.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source Files\Observer/Event_Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplayComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
