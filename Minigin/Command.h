@@ -52,5 +52,18 @@ namespace dae
 		float m_Speed;
 		glm::vec3 m_Direction;
 	};
+
+	class KillCommand : public GameObjectCommand
+	{
+	public:
+		KillCommand(GameObject* pGameObject);
+		~KillCommand() = default;
+
+		KillCommand(const KillCommand& other) = delete;
+		KillCommand(KillCommand&& other) = delete;
+		KillCommand& operator=(const KillCommand& other) = delete;
+		KillCommand& operator=(KillCommand&& other) = delete;
+		void Execute(float) override;
+	};
 }
 
