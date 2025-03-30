@@ -28,7 +28,7 @@ void dae::LivesDisplayComponent::UpdateLivesTexture(GameObject* pGameObject)
 	//if (!pGameObject->HasComponent<LivesComponent>())
 	//	return;
 
-	int nrOfLives = pGameObject->GetComponent<LivesComponent>()->GetCurrentNrOfLives();
+	int nrOfLives = pGameObject->GetComponent<game::LivesComponent>()->GetCurrentNrOfLives();
 	m_LifeText = std::to_string(nrOfLives);
 	if (nrOfLives == 1)
 		m_LifeText += " Life";

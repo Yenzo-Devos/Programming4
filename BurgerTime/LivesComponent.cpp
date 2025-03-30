@@ -1,6 +1,6 @@
 #include "LivesComponent.h"
 
-dae::LivesComponent::LivesComponent(GameObject* owner, int maxLives)
+game::LivesComponent::LivesComponent(dae::GameObject* owner, int maxLives)
 	: BaseComponent(owner)
 	, Subject()
 	, m_MaxLives{ maxLives }
@@ -8,7 +8,7 @@ dae::LivesComponent::LivesComponent(GameObject* owner, int maxLives)
 {
 }
 
-void dae::LivesComponent::LoseLife(int amount)
+void game::LivesComponent::LoseLife(int amount)
 {
 	if (m_CurrentLives > 0)
 	{

@@ -2,12 +2,12 @@
 #include "BaseComponent.h"
 #include "Subject.h"
 
-namespace dae
+namespace game
 {
-	class LivesComponent : public BaseComponent, public Subject
+	class LivesComponent : public dae::BaseComponent, public dae::Subject
 	{
 	public:
-		LivesComponent(GameObject* owner, int maxHealth);
+		LivesComponent(dae::GameObject* owner, int maxHealth);
 		virtual ~LivesComponent() = default;
 
 		LivesComponent(const LivesComponent& other) = delete;

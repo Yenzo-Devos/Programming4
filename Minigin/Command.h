@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
 #include "glm.hpp"
 namespace dae
 {
+	class GameObject;
 	class Command
 	{
 	public:
@@ -18,7 +18,6 @@ namespace dae
 		Command() = default;
 	};
 
-	// create derived command for get an owned object by a controller
 	class GameObjectCommand : public Command
 	{
 	public:
@@ -34,36 +33,6 @@ namespace dae
 	
 	private:
 		GameObject* m_pGameObject;
-	};
-
-	class MoveCommand : public GameObjectCommand
-	{
-	public:
-		MoveCommand(GameObject* pGameObject, float speed, glm::vec3 direction);
-		~MoveCommand() = default;
-		
-		MoveCommand(const MoveCommand& other) = delete;
-		MoveCommand(MoveCommand&& other) = delete;
-		MoveCommand& operator=(const MoveCommand& other) = delete;
-		MoveCommand& operator=(MoveCommand&& other) = delete;
-		void Execute(float deltaTime) override;
-
-	private:
-		float m_Speed;
-		glm::vec3 m_Direction;
-	};
-
-	class KillCommand : public GameObjectCommand
-	{
-	public:
-		KillCommand(GameObject* pGameObject);
-		~KillCommand() = default;
-
-		KillCommand(const KillCommand& other) = delete;
-		KillCommand(KillCommand&& other) = delete;
-		KillCommand& operator=(const KillCommand& other) = delete;
-		KillCommand& operator=(KillCommand&& other) = delete;
-		void Execute(float) override;
 	};
 }
 

@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Command.h"
+#include "GameCommand.h"
 
 // component includes
 #include "TextComponent.h"
@@ -73,7 +74,7 @@ void load()
 	chefObj->SetLocalPosition(glm::vec3{ 100.f, 100.f, 0.f });
 	chefObj->AddComponent<dae::TextureComponent>();
 	chefObj->GetComponent<dae::TextureComponent>()->LoadTexture("chef_texture.png");
-	chefObj->AddComponent<dae::LivesComponent>(3);
+	chefObj->AddComponent<game::LivesComponent>(3);
 
 	auto chefLivesObj = std::make_unique<dae::GameObject>();
 	chefLivesObj->SetLocalPosition(glm::vec3{ 20.f, 120.f, 0.f });
@@ -81,32 +82,32 @@ void load()
 	chefLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	chefLivesObj->AddComponent<dae::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextComponent>());
 
-	chefObj->GetComponent<dae::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<dae::LivesDisplayComponent>());
+	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<dae::LivesDisplayComponent>());
 	scene.Add(std::move(chefLivesObj));
 
 	auto pepperObj = std::make_unique<dae::GameObject>();
 	pepperObj->SetLocalPosition(glm::vec3{ 120.f, 120.f, 0.f });
 	pepperObj->AddComponent<dae::TextureComponent>();
 	pepperObj->GetComponent<dae::TextureComponent>()->LoadTexture("pepper_texture.png");
-	pepperObj->AddComponent<dae::LivesComponent>(3);
+	pepperObj->AddComponent<game::LivesComponent>(3);
 
 	auto pepperLivesObj = std::make_unique<dae::GameObject>();
 	pepperLivesObj->SetLocalPosition(glm::vec3{ 20.f, 140.f, 0.f });
 	pepperLivesObj->AddComponent<dae::TextComponent>();
 	pepperLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	pepperLivesObj->AddComponent<dae::LivesDisplayComponent>(pepperLivesObj->GetComponent<dae::TextComponent>());
-	pepperObj->GetComponent<dae::LivesComponent>()->AddObserver(pepperLivesObj->GetComponent<dae::LivesDisplayComponent>());
+	pepperObj->GetComponent<game::LivesComponent>()->AddObserver(pepperLivesObj->GetComponent<dae::LivesDisplayComponent>());
 	scene.Add(std::move(pepperLivesObj));
 
 	// adding controllers
 	dae::InputManager::GetInstance().AddController();
 
 	float speed = 100.f;
-	auto moveLeftCommand = std::make_unique<dae::MoveCommand>(chefObj.get(), speed, glm::vec3(-1, 0, 0));
-	auto moveRightCommand = std::make_unique<dae::MoveCommand>(chefObj.get(), speed, glm::vec3(1, 0, 0));
-	auto moveUpCommand = std::make_unique<dae::MoveCommand>(chefObj.get(), speed, glm::vec3(0, -1, 0));
-	auto moveDownCommand = std::make_unique<dae::MoveCommand>(chefObj.get(), speed, glm::vec3(0, 1, 0));
-	auto killChefCommand = std::make_unique<dae::KillCommand>(chefObj.get());
+	auto moveLeftCommand = std::make_unique<game::MoveCommand>(chefObj.get(), speed, glm::vec3(-1, 0, 0));
+	auto moveRightCommand = std::make_unique<game::MoveCommand>(chefObj.get(), speed, glm::vec3(1, 0, 0));
+	auto moveUpCommand = std::make_unique<game::MoveCommand>(chefObj.get(), speed, glm::vec3(0, -1, 0));
+	auto moveDownCommand = std::make_unique<game::MoveCommand>(chefObj.get(), speed, glm::vec3(0, 1, 0));
+	auto killChefCommand = std::make_unique<game::KillCommand>(chefObj.get());
 
 	dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_LEFT);
 	dae::InputManager::GetInstance().BindCommand(std::move(moveRightCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_RIGHT);
@@ -115,11 +116,11 @@ void load()
 	dae::InputManager::GetInstance().BindCommand(std::move(killChefCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
 
 	// adding keyboard movement
-	auto moveLeftCommandKeyBoard = std::make_unique<dae::MoveCommand>(pepperObj.get(), speed, glm::vec3(-1, 0, 0));
-	auto moveRightCommandKeyBoard = std::make_unique<dae::MoveCommand>(pepperObj.get(), speed, glm::vec3(1, 0, 0));
-	auto moveUpCommandKeyBoard = std::make_unique<dae::MoveCommand>(pepperObj.get(), speed, glm::vec3(0, -1, 0));
-	auto moveDownCommandKeyBoard = std::make_unique<dae::MoveCommand>(pepperObj.get(), speed, glm::vec3(0, 1, 0));
-	auto killPepperCommand = std::make_unique<dae::KillCommand>(pepperObj.get());
+	auto moveLeftCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj.get(), speed, glm::vec3(-1, 0, 0));
+	auto moveRightCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj.get(), speed, glm::vec3(1, 0, 0));
+	auto moveUpCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj.get(), speed, glm::vec3(0, -1, 0));
+	auto moveDownCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj.get(), speed, glm::vec3(0, 1, 0));
+	auto killPepperCommand = std::make_unique<game::KillCommand>(pepperObj.get());
 
 	dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommandKeyBoard), dae::InputState::Held, SDL_SCANCODE_A);
 	dae::InputManager::GetInstance().BindCommand(std::move(moveRightCommandKeyBoard), dae::InputState::Held, SDL_SCANCODE_D);
