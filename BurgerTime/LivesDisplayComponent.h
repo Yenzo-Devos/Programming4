@@ -1,14 +1,21 @@
 #pragma once
 #include "Observer.h"
 #include "BaseComponent.h"
-#include "TextComponent.h"
+
+#include <string>
 
 namespace dae
 {
-	class LivesDisplayComponent : public Observer, public BaseComponent
+	class TextComponent;
+	class GameObject;
+}
+
+namespace game
+{
+	class LivesDisplayComponent : public dae::Observer, public dae::BaseComponent
 	{
 	public:
-		LivesDisplayComponent(GameObject* owner, TextComponent* pTexture);
+		LivesDisplayComponent(dae::GameObject* owner, dae::TextComponent* pTexture);
 		virtual ~LivesDisplayComponent() = default;
 
 		LivesDisplayComponent(const LivesDisplayComponent& other) = delete;
@@ -17,13 +24,13 @@ namespace dae
 		LivesDisplayComponent& operator=(LivesDisplayComponent&& other) = delete;
 
 		void Update(float) override{};
-		void Broadcast(GameObject* pGameObject, Event event) override;
+		void Broadcast(dae::GameObject* pGameObject, dae::Event event) override;
 	
 	private:
-		TextComponent* m_pLivesText;
+		dae::TextComponent* m_pLivesText;
 		std::string m_LifeText;
 
-		void UpdateLivesTexture(GameObject* pGameObject);
+		void UpdateLivesTexture(dae::GameObject* pGameObject);
 	};
 }
 

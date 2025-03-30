@@ -52,7 +52,7 @@ void load()
 	fpsObj->SetLocalPosition(glm::vec3{ 10.f, 10.f, 0.f });
 	fpsObj->AddComponent<dae::TextComponent>();
 	fpsObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 24);
-	fpsObj->AddComponent<dae::FPSComponent>(fpsObj->GetComponent<dae::TextComponent>());
+	fpsObj->AddComponent<game::FPSComponent>(fpsObj->GetComponent<dae::TextComponent>());
 	scene.Add(std::move(fpsObj));
 
 	auto moveTextKeyboardObj = std::make_unique<dae::GameObject>();
@@ -80,9 +80,9 @@ void load()
 	chefLivesObj->SetLocalPosition(glm::vec3{ 20.f, 120.f, 0.f });
 	chefLivesObj->AddComponent<dae::TextComponent>();
 	chefLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
-	chefLivesObj->AddComponent<dae::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextComponent>());
+	chefLivesObj->AddComponent<game::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextComponent>());
 
-	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<dae::LivesDisplayComponent>());
+	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<game::LivesDisplayComponent>());
 	scene.Add(std::move(chefLivesObj));
 
 	auto pepperObj = std::make_unique<dae::GameObject>();
@@ -95,8 +95,8 @@ void load()
 	pepperLivesObj->SetLocalPosition(glm::vec3{ 20.f, 140.f, 0.f });
 	pepperLivesObj->AddComponent<dae::TextComponent>();
 	pepperLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
-	pepperLivesObj->AddComponent<dae::LivesDisplayComponent>(pepperLivesObj->GetComponent<dae::TextComponent>());
-	pepperObj->GetComponent<game::LivesComponent>()->AddObserver(pepperLivesObj->GetComponent<dae::LivesDisplayComponent>());
+	pepperLivesObj->AddComponent<game::LivesDisplayComponent>(pepperLivesObj->GetComponent<dae::TextComponent>());
+	pepperObj->GetComponent<game::LivesComponent>()->AddObserver(pepperLivesObj->GetComponent<game::LivesDisplayComponent>());
 	scene.Add(std::move(pepperLivesObj));
 
 	// adding controllers

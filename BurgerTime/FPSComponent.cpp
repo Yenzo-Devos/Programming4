@@ -1,14 +1,15 @@
 #include "FPSComponent.h"
+#include "TextComponent.h"
 #include <iomanip>
 #include <sstream>
 
-dae::FPSComponent::FPSComponent(GameObject* owner, TextComponent* textComp)
+game::FPSComponent::FPSComponent(dae::GameObject* owner, dae::TextComponent* textComp)
 	: BaseComponent(owner)
 {
 	m_pTextComp = textComp;
 }
 
-void dae::FPSComponent::Update(float deltaTime)
+void game::FPSComponent::Update(float deltaTime)
 {
 	++m_Counter;
 	m_AccuTime += deltaTime;

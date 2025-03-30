@@ -30,9 +30,6 @@
     <ClCompile Include="BurgerTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RotatingComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -47,9 +44,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RotatingComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="FPSComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>

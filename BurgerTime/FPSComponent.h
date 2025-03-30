@@ -1,16 +1,18 @@
 #pragma once
 #include "BaseComponent.h"
-#include "TextComponent.h"
 #include <memory>
-
 namespace dae
 {
 	class TextComponent;
+}
 
-	class FPSComponent final : public BaseComponent
+namespace game
+{
+
+	class FPSComponent final : public dae::BaseComponent
 	{
 	public:
-		FPSComponent(GameObject* owner, TextComponent* textComp);
+		FPSComponent(dae::GameObject* owner, dae::TextComponent* textComp);
 		~FPSComponent() = default;
 
 		FPSComponent(const FPSComponent& other) = delete;
@@ -21,7 +23,7 @@ namespace dae
 		virtual void Update(float deltaTime) override;
 
 	private:
-		TextComponent* m_pTextComp;
+		dae::TextComponent* m_pTextComp;
 
 		int m_Counter{ 0 };
 		float m_FPS{ };

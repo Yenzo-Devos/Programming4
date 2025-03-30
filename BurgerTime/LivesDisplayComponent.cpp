@@ -1,15 +1,16 @@
 #include "LivesDisplayComponent.h"
 #include "LivesComponent.h"
+#include "TextComponent.h"
 #include "GameObject.h"
 
-dae::LivesDisplayComponent::LivesDisplayComponent(GameObject* owner, TextComponent* pText)
+game::LivesDisplayComponent::LivesDisplayComponent(dae::GameObject* owner, dae::TextComponent* pText)
 	: BaseComponent(owner)
 	, m_pLivesText{pText}
 {
 	m_pLivesText->SetText("3 Lives");
 }
 
-void dae::LivesDisplayComponent::Broadcast(GameObject* pGameObject, Event event)
+void game::LivesDisplayComponent::Broadcast(dae::GameObject* pGameObject, dae::Event event)
 {
 	switch (event)
 	{
@@ -23,7 +24,7 @@ void dae::LivesDisplayComponent::Broadcast(GameObject* pGameObject, Event event)
 	}
 }
 
-void dae::LivesDisplayComponent::UpdateLivesTexture(GameObject* pGameObject)
+void game::LivesDisplayComponent::UpdateLivesTexture(dae::GameObject* pGameObject)
 {
 	//if (!pGameObject->HasComponent<LivesComponent>())
 	//	return;
