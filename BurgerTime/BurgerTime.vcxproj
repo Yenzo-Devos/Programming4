@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
+    <ClInclude Include="GameEvents.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
   </ItemGroup>

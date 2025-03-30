@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Commands">
       <UniqueIdentifier>{09bec310-18b0-4989-ba49-bc946a82345d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{3f813e64-fa28-49aa-8f94-f750f62c2a63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="GameCommand.h">
       <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvents.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
