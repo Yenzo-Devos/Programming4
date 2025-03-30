@@ -1,9 +1,6 @@
 #include "SDL_scancode.h"
 #include "InputManager.h"
 
-#include "imgui.h"
-#include "backends/imgui_impl_sdl2.h"
-
 static int M_NROFGAMEPADSET = 0;
 
 dae::InputManager::InputManager()
