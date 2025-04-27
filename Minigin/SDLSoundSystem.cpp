@@ -21,10 +21,12 @@ public:
 	void Pause();
 	void Resume();
 	void Stop();
+	void MuteAllSound();
 	void SetVolume(const std::string& soundID, const int volume);
 
 private:
 	std::unordered_map<std::string, Mix_Chunk*> m_pLoadedSounds;
+	bool m_IsMuted{ false };
 };
 
 dae::SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
@@ -75,6 +77,14 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::Stop()
 	Mix_HaltChannel(-1);
 }
 
+void dae::SDLSoundSystem::SDLSoundSystemImpl::MuteAllSound()
+{
+	if (m_IsMuted)
+		Mix_Volume(-1, 100);
+	else
+		Mix_Volume(-1, 0);
+}
+
 void dae::SDLSoundSystem::SDLSoundSystemImpl::SetVolume(const std::string& soundID, const int volume)
 {
 	Mix_VolumeChunk(m_pLoadedSounds[soundID], volume);
@@ -112,6 +122,11 @@ void dae::SDLSoundSystem::Resume()
 void dae::SDLSoundSystem::Stop()
 {
 	m_pImpl->Stop();
+}
+
+void dae::SDLSoundSystem::MuteAllSound()
+{
+	m_pImpl->MuteAllSound();
 }
 
 void dae::SDLSoundSystem::SetVolume(const std::string& soundID, const int volume)

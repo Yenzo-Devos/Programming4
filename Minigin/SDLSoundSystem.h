@@ -15,6 +15,7 @@ namespace dae
 		void Pause() override;
 		void Resume() override;
 		void Stop() override;
+		void MuteAllSound() override;
 		void SetVolume(const std::string& soundID, const int volume) override;
 
 	private:

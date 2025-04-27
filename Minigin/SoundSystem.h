@@ -12,6 +12,7 @@ public:
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
 	virtual void Stop() = 0;
+	virtual void MuteAllSound() = 0;
 	virtual void SetVolume(const std::string& soundID, const int volume) = 0;
 
 private:
