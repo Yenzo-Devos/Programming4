@@ -106,7 +106,7 @@
       <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="SDLSoundSystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +165,7 @@
       <Filter>Source Files\Services</Filter>
     </ClCompile>
     <ClCompile Include="SDLSoundSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Services</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

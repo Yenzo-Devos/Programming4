@@ -1,6 +1,8 @@
 #include "GameCommand.h"
 #include "LivesComponent.h"
 #include "GameObject.h"
+#include "ServiceLocator.h"
+#include "SDLSoundSystem.h"
 
 game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec3 direction)
 	: GameObjectCommand(pGameObject)
@@ -23,4 +25,7 @@ void game::KillCommand::Execute(float)
 {
 	//if (GetGameObject()->HasComponent<LivesComponent>())
 	GetGameObject()->GetComponent<LivesComponent>()->LoseLife(1);
+
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	ss.Play("Death", 100, 0);
 }

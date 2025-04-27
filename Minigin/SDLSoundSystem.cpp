@@ -5,6 +5,9 @@
 #include <iostream>
 #include <unordered_map>
 
+#include <thread>
+#include <mutex>
+
 class dae::SDLSoundSystem::SDLSoundSystemImpl
 {
 public:

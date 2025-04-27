@@ -15,6 +15,10 @@
 #include "Command.h"
 #include "GameCommand.h"
 
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
+#include "SDLSoundSystem.h"
+
 // component includes
 #include "TextComponent.h"
 #include "TextureComponent.h"
@@ -29,6 +33,14 @@
 void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
+
+	// creating and loading sound and soundsystem
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
+	auto& sdlSoundSystem = dae::ServiceLocator::GetSoundSystem();
+
+	sdlSoundSystem.Load("../Data/sounds/Death.wav", "Death");
+	sdlSoundSystem.Load("../Data/sounds/Coin.wav", "Coin");
+	sdlSoundSystem.Load("../Data/sounds/Bonus_Appear.wav", "BonusSpawned");
 
 	auto bgObj = std::make_unique<dae::GameObject>();
 	bgObj->AddComponent<dae::TextureComponent>();
