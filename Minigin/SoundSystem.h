@@ -3,6 +3,13 @@
 
 namespace dae
 {
+	struct AudioFile
+	{
+		std::string filePath;
+		std::string name;
+		int loops;
+	};
+
 	class SoundSystem
 	{
 	public:
@@ -16,10 +23,12 @@ namespace dae
 		virtual void Stop() = 0;
 		virtual void MuteAllSound() = 0;
 		virtual void SetVolume(const std::string& soundID, const int volume) = 0;
+		virtual void AddToQueue(AudioFile audio) = 0;
 	};
 
 	class NullSoundSystem final : public SoundSystem
 	{
+	public:
 		bool Load(const std::string&, const std::string&) override { return false; }
 		void Play(const std::string&, const int, int) override {}
 		void Pause() override {}
@@ -27,5 +36,6 @@ namespace dae
 		void Stop() override {}
 		void MuteAllSound() override {}
 		void SetVolume(const std::string&, const int) override {}
+		void AddToQueue(AudioFile) override {};
 	};
 }

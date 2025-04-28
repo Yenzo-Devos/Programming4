@@ -17,6 +17,7 @@ namespace dae
 		void Stop() override;
 		void MuteAllSound() override;
 		void SetVolume(const std::string& soundID, const int volume) override;
+		void AddToQueue(AudioFile audio);
 
 	private:
 		class SDLSoundSystemImpl;

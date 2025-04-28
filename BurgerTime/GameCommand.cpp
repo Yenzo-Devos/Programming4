@@ -27,5 +27,6 @@ void game::KillCommand::Execute(float)
 	GetGameObject()->GetComponent<LivesComponent>()->LoseLife(1);
 
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
-	ss.Play("Death", 100, 0);
+	dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };
+	ss.AddToQueue(deathAudio);
 }

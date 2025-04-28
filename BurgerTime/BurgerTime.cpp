@@ -36,11 +36,15 @@ void load()
 
 	// creating and loading sound and soundsystem
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
-	auto& sdlSoundSystem = dae::ServiceLocator::GetSoundSystem();
 
-	sdlSoundSystem.Load("../Data/sounds/Death.wav", "Death");
-	sdlSoundSystem.Load("../Data/sounds/Coin.wav", "Coin");
-	sdlSoundSystem.Load("../Data/sounds/Bonus_Appear.wav", "BonusSpawned");
+	//auto& sdlSoundSystem = dae::ServiceLocator::GetSoundSystem();
+	//dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };
+	//dae::AudioFile coinAudio{ "../Data/sounds/Coin.wav", "Coin",  0 };
+	//dae::AudioFile bonusSpawnedAudio{ "../Data/sounds/Bonus_Appear.wav", "BonusSpawned", 0 };
+	//
+	//sdlSoundSystem.Load("../Data/sounds/Death.wav", "Death");
+	//sdlSoundSystem.Load("../Data/sounds/Coin.wav", "Coin");
+	//sdlSoundSystem.Load("../Data/sounds/Bonus_Appear.wav", "BonusSpawned");
 
 	auto bgObj = std::make_unique<dae::GameObject>();
 	bgObj->AddComponent<dae::TextureComponent>();
@@ -67,17 +71,24 @@ void load()
 	fpsObj->AddComponent<game::FPSComponent>(fpsObj->GetComponent<dae::TextComponent>());
 	scene.Add(std::move(fpsObj));
 
+	auto killingSoundObj = std::make_unique<dae::GameObject>();
+	killingSoundObj->SetLocalPosition(glm::vec3{ 20.f, 60.f, 0.f });
+	killingSoundObj->AddComponent<dae::TextComponent>();
+	killingSoundObj->GetComponent<dae::TextComponent>()->SetText("Killing any player plays a sound");
+	killingSoundObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
+	scene.Add(std::move(killingSoundObj));
+
 	auto moveTextKeyboardObj = std::make_unique<dae::GameObject>();
 	moveTextKeyboardObj->SetLocalPosition(glm::vec3{ 20.f, 80.f, 0.f });
 	moveTextKeyboardObj->AddComponent<dae::TextComponent>();
-	moveTextKeyboardObj->GetComponent<dae::TextComponent>()->SetText("Press WASD to move mr. pepper");
+	moveTextKeyboardObj->GetComponent<dae::TextComponent>()->SetText("Press WASD to move mr. pepper, Press X to kill");
 	moveTextKeyboardObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	scene.Add(std::move(moveTextKeyboardObj));
 
 	auto moveTextControllerObj = std::make_unique<dae::GameObject>();
 	moveTextControllerObj->SetLocalPosition(glm::vec3{ 20.f, 100.f, 0.f });
 	moveTextControllerObj->AddComponent<dae::TextComponent>();
-	moveTextControllerObj->GetComponent<dae::TextComponent>()->SetText("Use D-Pad to move mr.chef");
+	moveTextControllerObj->GetComponent<dae::TextComponent>()->SetText("Use D-Pad to move mr.chef, Press A to kill");
 	moveTextControllerObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	scene.Add(std::move(moveTextControllerObj));
 
