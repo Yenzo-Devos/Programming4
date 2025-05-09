@@ -6,18 +6,10 @@
 
 namespace game
 {
-	struct Rect
-	{
-		int x;
-		int y;
-		int width;
-		int height;
-	};
-
 	class SpriteComponent : public dae::BaseComponent
 	{
 	public:
-		SpriteComponent(dae::GameObject* owner);
+		SpriteComponent(dae::GameObject* owner, int cellWidth, int cellHeight, int maxCols, int animFrames);
 		~SpriteComponent() = default;
 
 		SpriteComponent(const SpriteComponent& other) = delete;
@@ -29,24 +21,21 @@ namespace game
 		void Render() override;
 
 		void LoadTexture(const std::string& textureName);
-		void SetRow(int row) { }
+		void SetCol(int col) { m_CurrentCol = col; }
 		void SetAmountOfAnimFrames(int maxAnimFrames) { m_MaxAnimFrames = maxAnimFrames; }
 
 	private:
-		int m_Width{};
-		int m_Height{};
-		int m_CurrenCol{};
+		int m_CellWidth{};
+		int m_CellHeight{};
+		int m_CurrentCol{};
 		int m_CurrentRow{};
 		int m_MaxAnimFrames{};
-		const int m_MaxRow{};
+		const int m_MaxCols{};
 
-		Rect m_DstRect{};
-		Rect m_SrcRect{};
-
-		float m_AnimTime{};
+		float m_AnimTime{1.f};
 		float m_AccuAnimTime{};
 		
-		std::unique_ptr<dae::Texture2D> m_pTexture;
+		std::shared_ptr<dae::Texture2D> m_pTexture;
 	};
 }
 

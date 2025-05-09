@@ -22,6 +22,7 @@
 // component includes
 #include "TextComponent.h"
 #include "TextureComponent.h"
+#include "SpriteComponent.h"
 #include "FPSComponent.h"
 #include "LivesComponent.h"
 #include "LivesDisplayComponent.h"
@@ -95,8 +96,9 @@ void load()
 	// player objects
 	auto chefObj = std::make_unique<dae::GameObject>();
 	chefObj->SetLocalPosition(glm::vec3{ 100.f, 100.f, 0.f });
-	chefObj->AddComponent<dae::TextureComponent>();
-	chefObj->GetComponent<dae::TextureComponent>()->LoadTexture("chef_texture.png");
+	chefObj->AddComponent<game::SpriteComponent>(16, 16, 7, 5);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadTexture("player_sprite_sheet.png");
+	chefObj->GetComponent<game::SpriteComponent>()->SetCol(6);
 	chefObj->AddComponent<game::LivesComponent>(3);
 
 	auto chefLivesObj = std::make_unique<dae::GameObject>();
