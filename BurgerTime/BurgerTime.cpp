@@ -96,9 +96,17 @@ void load()
 	// player objects
 	auto chefObj = std::make_unique<dae::GameObject>();
 	chefObj->SetLocalPosition(glm::vec3{ 100.f, 100.f, 0.f });
-	chefObj->AddComponent<game::SpriteComponent>(16, 16, 7, 5);
+	chefObj->AddComponent<game::SpriteComponent>(16, 16);
 	chefObj->GetComponent<game::SpriteComponent>()->LoadTexture("player_sprite_sheet.png");
-	chefObj->GetComponent<game::SpriteComponent>()->SetCol(6);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("walkRight", 3, 2, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("walkUp", 3, 3, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
+	chefObj->GetComponent<game::SpriteComponent>()->SetCurrentAnimation("dying");
+	// chefObj->GetComponent<game::SpriteComponent>()->SetCol(6);
 	chefObj->AddComponent<game::LivesComponent>(3);
 
 	auto chefLivesObj = std::make_unique<dae::GameObject>();

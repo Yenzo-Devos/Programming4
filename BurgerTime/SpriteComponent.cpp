@@ -6,26 +6,24 @@
 #include <SDL.h>
 #include <iostream>
 
-game::SpriteComponent::SpriteComponent(dae::GameObject* owner, int cellWidth, int cellHeight, int maxCols, int animFrames)
+game::SpriteComponent::SpriteComponent(dae::GameObject* owner, int cellWidth, int cellHeight)
 	: BaseComponent(owner)
 	, m_pTexture{ nullptr }
 	, m_CellWidth{ cellWidth }
 	, m_CellHeight{ cellHeight }
-	, m_MaxCols{ maxCols }
-	, m_MaxAnimFrames{ animFrames }
 {
 }
 
 void game::SpriteComponent::Update(float deltaTime)
 {
 	// animation
-	if (m_MaxAnimFrames > 1)
+	if (m_CurrentAnimation.frames > 1)
 	{
 		m_AccuAnimTime += deltaTime;
-		if (m_AccuAnimTime > m_AnimTime)
+		if (m_AccuAnimTime > m_CurrentAnimation.animationSpeed)
 		{
-			++m_CurrentRow %= m_MaxAnimFrames;
-			m_AccuAnimTime -= m_AnimTime;
+			++m_CurrentFrame %= m_CurrentAnimation.frames;
+			m_AccuAnimTime -= m_CurrentAnimation.animationSpeed;
 		}
 	}
 }
@@ -45,8 +43,8 @@ void game::SpriteComponent::Render()
 	dstRect.h = m_CellHeight;
 
 	SDL_Rect srcRect;
-	srcRect.x = m_CurrentRow * m_CellWidth;
-	srcRect.y = m_CurrentCol * m_CellHeight;
+	srcRect.x = m_CurrentFrame * m_CellWidth;
+	srcRect.y = m_CurrentAnimation.row * m_CellHeight;
 	srcRect.w = m_CellWidth;
 	srcRect.h = m_CellHeight;
 
@@ -56,4 +54,20 @@ void game::SpriteComponent::Render()
 void game::SpriteComponent::LoadTexture(const std::string& textureName)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(textureName);
+}
+
+void game::SpriteComponent::LoadAnimationData(const std::string& animName, int frames, int row, float animSpeed)
+{
+	m_AnimationMap[animName] = { frames, row, animSpeed };
+}
+
+void game::SpriteComponent::SetCurrentAnimation(const std::string& animName)
+{
+	if (m_AnimationMap.empty())
+	{
+		std::cerr << "no animations loaded" << '\n';
+		return;
+	}
+	
+	m_CurrentAnimation = m_AnimationMap[animName];
 }
