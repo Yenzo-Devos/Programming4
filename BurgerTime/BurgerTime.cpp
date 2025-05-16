@@ -118,10 +118,16 @@ void load()
 	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<game::LivesDisplayComponent>());
 	scene.Add(std::move(chefLivesObj));
 
+	// enemy objects
 	auto pepperObj = std::make_unique<dae::GameObject>();
 	pepperObj->SetLocalPosition(glm::vec3{ 120.f, 120.f, 0.f });
-	pepperObj->AddComponent<dae::TextureComponent>();
-	pepperObj->GetComponent<dae::TextureComponent>()->LoadTexture("pepper_texture.png");
+	pepperObj->AddComponent<dae::SpriteComponent>(16, 16);
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadTexture("hotdog_sprite_sheet.png");
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 1, 1.f);
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 2, 1.f);
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 3, 1.f);
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 5, 1.f);
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 6, 1.f);
 	pepperObj->AddComponent<game::LivesComponent>(3);
 
 	auto pepperLivesObj = std::make_unique<dae::GameObject>();

@@ -70,4 +70,5 @@ void dae::SpriteComponent::SetCurrentAnimation(const std::string& animName)
 	}
 	
 	m_CurrentAnimation = m_AnimationMap[animName];
+	m_CurrentFrame = 0;
 }
