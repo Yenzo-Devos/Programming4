@@ -126,6 +126,7 @@ void load()
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 1, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 2, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 3, 1.f);
+	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 4, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 5, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 6, 1.f);
 	pepperObj->AddComponent<game::LivesComponent>(3);
