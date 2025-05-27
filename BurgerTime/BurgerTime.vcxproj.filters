@@ -25,6 +25,18 @@
     <Filter Include="Source Files\Commands">
       <UniqueIdentifier>{09bec310-18b0-4989-ba49-bc946a82345d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{ed501a2d-0d71-4fef-9614-14e4be409b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{0b09b1f8-104b-44f6-9904-6d947859e9fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States\Player">
+      <UniqueIdentifier>{ba27beeb-16f8-48f5-b0f2-535e04e263a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Player">
+      <UniqueIdentifier>{27060ee8-f035-48f0-b829-892a9ee256b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp">
@@ -42,8 +54,17 @@
     <ClCompile Include="GameCommand.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteComponent.cpp">
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>Source Files\States\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +80,17 @@
     <ClInclude Include="GameCommand.h">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteComponent.h">
+    <ClInclude Include="PlayerState.h">
+      <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>Header Files\States\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

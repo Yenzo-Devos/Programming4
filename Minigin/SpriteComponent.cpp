@@ -15,7 +15,7 @@ game::SpriteComponent::SpriteComponent(dae::GameObject* owner, dae::RenderCompon
 {
 }
 
-void game::SpriteComponent::Update(float deltaTime)
+void dae::SpriteComponent::Update(float deltaTime)
 {
 	// animation
 	if (m_CurrentAnimation.frames > 1)
@@ -29,7 +29,7 @@ void game::SpriteComponent::Update(float deltaTime)
 	}
 }
 
-void game::SpriteComponent::Render()
+void dae::SpriteComponent::Render()
 {
 	if (!m_pTexture)
 	{
@@ -52,17 +52,17 @@ void game::SpriteComponent::Render()
 	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, dstRect, srcRect);
 }
 
-void game::SpriteComponent::LoadTexture(const std::string& textureName)
+void dae::SpriteComponent::LoadTexture(const std::string& textureName)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(textureName);
 }
 
-void game::SpriteComponent::LoadAnimationData(const std::string& animName, int frames, int row, float animSpeed)
+void dae::SpriteComponent::LoadAnimationData(const std::string& animName, int frames, int row, float animSpeed)
 {
 	m_AnimationMap[animName] = { frames, row, animSpeed };
 }
 
-void game::SpriteComponent::SetCurrentAnimation(const std::string& animName)
+void dae::SpriteComponent::SetCurrentAnimation(const std::string& animName)
 {
 	if (m_AnimationMap.empty())
 	{
@@ -71,4 +71,5 @@ void game::SpriteComponent::SetCurrentAnimation(const std::string& animName)
 	}
 	
 	m_CurrentAnimation = m_AnimationMap[animName];
+	m_CurrentFrame = 0;
 }

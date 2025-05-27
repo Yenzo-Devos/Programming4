@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <memory>
 
-namespace game
+namespace dae
 {
 	class SpriteComponent : public dae::BaseComponent
 	{
