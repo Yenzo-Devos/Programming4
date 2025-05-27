@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "RenderComponent.h"
 #include "Texture2D.h"
 
 #include <unordered_map>
@@ -17,7 +18,7 @@ namespace game
 		};
 
 	public:
-		SpriteComponent(dae::GameObject* owner, int cellWidth, int cellHeight);
+		SpriteComponent(dae::GameObject* owner, dae::RenderComponent* renderComp, int cellWidth, int cellHeight);
 		~SpriteComponent() = default;
 
 		SpriteComponent(const SpriteComponent& other) = delete;
@@ -46,6 +47,7 @@ namespace game
 		AnimationData m_CurrentAnimation{};
 		std::unordered_map<std::string, AnimationData> m_AnimationMap;
 		std::shared_ptr<dae::Texture2D> m_pTexture;
+		dae::RenderComponent* m_pRenderComponent;
 	};
 }
 

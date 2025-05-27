@@ -6,8 +6,9 @@
 #include <SDL.h>
 #include <iostream>
 
-game::SpriteComponent::SpriteComponent(dae::GameObject* owner, int cellWidth, int cellHeight)
+game::SpriteComponent::SpriteComponent(dae::GameObject* owner, dae::RenderComponent* renderComp, int cellWidth, int cellHeight)
 	: BaseComponent(owner)
+	, m_pRenderComponent{ renderComp }
 	, m_pTexture{ nullptr }
 	, m_CellWidth{ cellWidth }
 	, m_CellHeight{ cellHeight }
