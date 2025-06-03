@@ -1,8 +1,9 @@
 #include "TextComponent.h"
 #include "GameObject.h"
 
-dae::TextComponent::TextComponent(GameObject* owner)
+dae::TextComponent::TextComponent(GameObject* owner, RenderComponent* renderComp)
 	: BaseComponent(owner)
+	, m_pRenderComponent{ renderComp }
 	, m_Text{ "no text give" }
 	, m_pTextTexture{ nullptr }
 	, m_IsTextChanged{ true }
@@ -28,14 +29,9 @@ void dae::TextComponent::Update(float deltaTime)
 		}
 		SDL_FreeSurface(surf);
 		m_pTextTexture = std::make_unique<Texture2D>(texture);
+		m_pRenderComponent->SetTexture(m_pTextTexture.get());
 		m_IsTextChanged = false;
 	}
-}
-
-void dae::TextComponent::Render()
-{
-	if (m_pTextTexture != nullptr)
-		Renderer::GetInstance().RenderTexture(*m_pTextTexture, m_pOwner->GetWorldPosition().x, m_pOwner->GetWorldPosition().y);
 }
 
 void dae::TextComponent::SetText(const std::string& text)

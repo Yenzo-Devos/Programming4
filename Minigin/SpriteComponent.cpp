@@ -3,16 +3,16 @@
 #include "Renderer.h"
 #include "GameObject.h"
 
-#include <SDL.h>
 #include <iostream>
 
-game::SpriteComponent::SpriteComponent(dae::GameObject* owner, dae::RenderComponent* renderComp, int cellWidth, int cellHeight)
+dae::SpriteComponent::SpriteComponent(dae::GameObject* owner, dae::RenderComponent* renderComp, int cellWidth, int cellHeight)
 	: BaseComponent(owner)
 	, m_pRenderComponent{ renderComp }
 	, m_pTexture{ nullptr }
 	, m_CellWidth{ cellWidth }
 	, m_CellHeight{ cellHeight }
 {
+	
 }
 
 void dae::SpriteComponent::Update(float deltaTime)
@@ -25,36 +25,21 @@ void dae::SpriteComponent::Update(float deltaTime)
 		{
 			++m_CurrentFrame %= m_CurrentAnimation.frames;
 			m_AccuAnimTime -= m_CurrentAnimation.animationSpeed;
+
+			dae::RenderComponent::Rect srcRect;
+			srcRect.left = m_CurrentFrame * m_CellWidth;
+			srcRect.bottom = m_CurrentAnimation.row * m_CellHeight;
+			srcRect.width = m_CellWidth;
+			srcRect.height = m_CellHeight;
+			m_pRenderComponent->SetSourceRect(srcRect);
 		}
 	}
-}
-
-void dae::SpriteComponent::Render()
-{
-	if (!m_pTexture)
-	{
-		std::cerr << "no texture to render!" << '\n';
-		return;
-	}
-
-	SDL_Rect dstRect;
-	dstRect.x = static_cast<int>(m_pOwner->GetWorldPosition().x);
-	dstRect.y = static_cast<int>(m_pOwner->GetWorldPosition().y);
-	dstRect.w = m_CellWidth;
-	dstRect.h = m_CellHeight;
-
-	SDL_Rect srcRect;
-	srcRect.x = m_CurrentFrame * m_CellWidth;
-	srcRect.y = m_CurrentAnimation.row * m_CellHeight;
-	srcRect.w = m_CellWidth;
-	srcRect.h = m_CellHeight;
-
-	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, dstRect, srcRect);
 }
 
 void dae::SpriteComponent::LoadTexture(const std::string& textureName)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(textureName);
+	m_pRenderComponent->SetTexture(m_pTexture.get(), m_CellWidth, m_CellHeight);
 }
 
 void dae::SpriteComponent::LoadAnimationData(const std::string& animName, int frames, int row, float animSpeed)

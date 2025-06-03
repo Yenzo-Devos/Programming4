@@ -15,7 +15,6 @@ namespace dae
 	public:
 		virtual void Update(float deltaTime);
 		virtual void FixedUpdate(float fixedDeltaTime);
-		virtual void Render() const;
 
 		void SetDead();
 		bool GetIsDead() { return m_IsDead; }
@@ -108,13 +107,11 @@ namespace dae
 		bool HasComponent()
 		{
 			Comp* tempComp;
-			for (auto comp : m_ComponentVec)
+			for (auto& comp : m_ComponentVec)
 			{
 				tempComp = dynamic_cast<Comp*>(comp.get());
 				if (tempComp)
 					return true;
-				else
-					return false;
 			}
 			return false;
 		}

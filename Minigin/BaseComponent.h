@@ -13,7 +13,7 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 		virtual void Update(float deltaTime) = 0;
-		virtual void Render() {};
+		//virtual void Render() {};
 
 		virtual void SetDead() { m_IsDead = true; }
 		virtual bool GetIsDead() { return m_IsDead; }

@@ -27,7 +27,7 @@ namespace dae
 		SpriteComponent& operator=(SpriteComponent&& other) = delete;
 
 		void Update(float deltaTime) override;
-		void Render() override;
+		//void Render() override;
 
 		void LoadTexture(const std::string& textureName);
 

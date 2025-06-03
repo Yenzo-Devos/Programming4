@@ -26,6 +26,7 @@
 #include "FPSComponent.h"
 #include "LivesComponent.h"
 #include "LivesDisplayComponent.h"
+#include "RenderComponent.h"
 //#include "RotatingComponent.h"
 //#include "TrashTheCacheComponent.h"
 
@@ -48,47 +49,54 @@ void load()
 	//sdlSoundSystem.Load("../Data/sounds/Bonus_Appear.wav", "BonusSpawned");
 
 	auto bgObj = std::make_unique<dae::GameObject>();
-	bgObj->AddComponent<dae::TextureComponent>();
+	bgObj->AddComponent<dae::RenderComponent>();
+	bgObj->AddComponent<dae::TextureComponent>(bgObj->GetComponent<dae::RenderComponent>());
 	bgObj->GetComponent<dae::TextureComponent>()->LoadTexture("background.tga");
 	scene.Add(std::move(bgObj));
 
 	auto logoObj = std::make_unique<dae::GameObject>();
 	logoObj->SetLocalPosition(glm::vec3{ 216.f, 180.f, 0.f });
-	logoObj->AddComponent<dae::TextureComponent>();
+	logoObj->AddComponent<dae::RenderComponent>();
+	logoObj->AddComponent<dae::TextureComponent>(logoObj->GetComponent<dae::RenderComponent>());
 	logoObj->GetComponent<dae::TextureComponent>()->LoadTexture("logo.tga");
 	scene.Add(std::move(logoObj));
 
 	auto textObj = std::make_unique<dae::GameObject>();
 	textObj->SetLocalPosition(glm::vec3{ 80.f, 20.f, 0.f });
-	textObj->AddComponent<dae::TextComponent>();
+	textObj->AddComponent<dae::RenderComponent>();
+	textObj->AddComponent<dae::TextComponent>(textObj->GetComponent<dae::RenderComponent>());
 	textObj->GetComponent<dae::TextComponent>()->SetText("Programming 4 Assignment");
 	textObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 36);
 	scene.Add(std::move(textObj));
 
 	auto fpsObj = std::make_unique<dae::GameObject>();
 	fpsObj->SetLocalPosition(glm::vec3{ 10.f, 10.f, 0.f });
-	fpsObj->AddComponent<dae::TextComponent>();
+	fpsObj->AddComponent<dae::RenderComponent>();
+	fpsObj->AddComponent<dae::TextComponent>(fpsObj->GetComponent<dae::RenderComponent>());
 	fpsObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 24);
 	fpsObj->AddComponent<game::FPSComponent>(fpsObj->GetComponent<dae::TextComponent>());
 	scene.Add(std::move(fpsObj));
 
 	auto killingSoundObj = std::make_unique<dae::GameObject>();
 	killingSoundObj->SetLocalPosition(glm::vec3{ 20.f, 60.f, 0.f });
-	killingSoundObj->AddComponent<dae::TextComponent>();
+	killingSoundObj->AddComponent<dae::RenderComponent>();
+	killingSoundObj->AddComponent<dae::TextComponent>(killingSoundObj->GetComponent<dae::RenderComponent>());
 	killingSoundObj->GetComponent<dae::TextComponent>()->SetText("Killing any player plays a sound");
 	killingSoundObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	scene.Add(std::move(killingSoundObj));
 
 	auto moveTextKeyboardObj = std::make_unique<dae::GameObject>();
 	moveTextKeyboardObj->SetLocalPosition(glm::vec3{ 20.f, 80.f, 0.f });
-	moveTextKeyboardObj->AddComponent<dae::TextComponent>();
+	moveTextKeyboardObj->AddComponent<dae::RenderComponent>();
+	moveTextKeyboardObj->AddComponent<dae::TextComponent>(moveTextKeyboardObj->GetComponent<dae::RenderComponent>());
 	moveTextKeyboardObj->GetComponent<dae::TextComponent>()->SetText("Press WASD to move mr. pepper, Press X to kill");
 	moveTextKeyboardObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	scene.Add(std::move(moveTextKeyboardObj));
 
 	auto moveTextControllerObj = std::make_unique<dae::GameObject>();
 	moveTextControllerObj->SetLocalPosition(glm::vec3{ 20.f, 100.f, 0.f });
-	moveTextControllerObj->AddComponent<dae::TextComponent>();
+	moveTextControllerObj->AddComponent<dae::RenderComponent>();
+	moveTextControllerObj->AddComponent<dae::TextComponent>(moveTextControllerObj->GetComponent<dae::RenderComponent>());
 	moveTextControllerObj->GetComponent<dae::TextComponent>()->SetText("Use D-Pad to move mr.chef, Press A to kill");
 	moveTextControllerObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	scene.Add(std::move(moveTextControllerObj));
@@ -96,7 +104,8 @@ void load()
 	// player objects
 	auto chefObj = std::make_unique<dae::GameObject>();
 	chefObj->SetLocalPosition(glm::vec3{ 100.f, 100.f, 0.f });
-	chefObj->AddComponent<dae::SpriteComponent>(16, 16);
+	chefObj->AddComponent<dae::RenderComponent>(true);
+	chefObj->AddComponent<dae::SpriteComponent>(chefObj->GetComponent<dae::RenderComponent>(), 16, 16);
 	chefObj->GetComponent<dae::SpriteComponent>()->LoadTexture("player_sprite_sheet.png");
 	chefObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
 	chefObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 1.f);
@@ -106,12 +115,12 @@ void load()
 	chefObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
 	chefObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
 	chefObj->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
-	// chefObj->GetComponent<game::SpriteComponent>()->SetCol(6);
 	chefObj->AddComponent<game::LivesComponent>(3);
 
 	auto chefLivesObj = std::make_unique<dae::GameObject>();
 	chefLivesObj->SetLocalPosition(glm::vec3{ 20.f, 120.f, 0.f });
-	chefLivesObj->AddComponent<dae::TextComponent>();
+	chefLivesObj->AddComponent<dae::RenderComponent>();
+	chefLivesObj->AddComponent<dae::TextComponent>(chefLivesObj->GetComponent<dae::RenderComponent>());
 	chefLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	chefLivesObj->AddComponent<game::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextComponent>());
 
@@ -121,7 +130,8 @@ void load()
 	// enemy objects
 	auto pepperObj = std::make_unique<dae::GameObject>();
 	pepperObj->SetLocalPosition(glm::vec3{ 120.f, 120.f, 0.f });
-	pepperObj->AddComponent<dae::SpriteComponent>(16, 16);
+	pepperObj->AddComponent<dae::RenderComponent>(true);
+	pepperObj->AddComponent<dae::SpriteComponent>(pepperObj->GetComponent<dae::RenderComponent>(), 16, 16);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadTexture("hotdog_sprite_sheet.png");
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 1, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 2, 1.f);
@@ -129,11 +139,13 @@ void load()
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 4, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 5, 1.f);
 	pepperObj->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 6, 1.f);
+	pepperObj->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	pepperObj->AddComponent<game::LivesComponent>(3);
 
 	auto pepperLivesObj = std::make_unique<dae::GameObject>();
 	pepperLivesObj->SetLocalPosition(glm::vec3{ 20.f, 140.f, 0.f });
-	pepperLivesObj->AddComponent<dae::TextComponent>();
+	pepperLivesObj->AddComponent<dae::RenderComponent>();
+	pepperLivesObj->AddComponent<dae::TextComponent>(pepperLivesObj->GetComponent<dae::RenderComponent>());
 	pepperLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
 	pepperLivesObj->AddComponent<game::LivesDisplayComponent>(pepperLivesObj->GetComponent<dae::TextComponent>());
 	pepperObj->GetComponent<game::LivesComponent>()->AddObserver(pepperLivesObj->GetComponent<game::LivesDisplayComponent>());

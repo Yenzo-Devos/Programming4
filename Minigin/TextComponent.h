@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "RenderComponent.h"
 #include "Font.h"
 #include "Texture2D.h"
 #include "ResourceManager.h"
@@ -14,7 +15,7 @@ namespace dae
 	class TextComponent final : public BaseComponent
 	{
 	public:
-		TextComponent(GameObject* owner);
+		TextComponent(GameObject* owner, RenderComponent* renderComp);
 		virtual ~TextComponent() = default;
 
 		TextComponent(const TextComponent& other) = delete;
@@ -23,7 +24,6 @@ namespace dae
 		TextComponent& operator=(TextComponent&& other) = delete;
 
 		virtual void Update(float deltaTime) override;
-		virtual void Render() override;
 
 		virtual void SetText(const std::string& text);
 		virtual void SetFont(const std::string& font, uint8_t fontSize);
@@ -32,6 +32,7 @@ namespace dae
 		bool m_IsTextChanged;
 
 		std::string m_Text{};
+		RenderComponent* m_pRenderComponent;
 		std::shared_ptr<Font> m_pFont;
 		std::unique_ptr<Texture2D> m_pTextTexture;
 	};

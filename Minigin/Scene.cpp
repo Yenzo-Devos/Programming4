@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "GameObject.h"
+#include "RenderComponent.h"
 
 #include <algorithm>
 
@@ -52,7 +53,8 @@ void Scene::Render() const
 {
 	for (const auto& object : m_objects)
 	{
-		object->Render();
+		if (object->HasComponent<RenderComponent>())
+		object->GetComponent<RenderComponent>()->Render();
 	}
 }
 

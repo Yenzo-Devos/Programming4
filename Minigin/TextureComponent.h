@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "RenderComponent.h"
 #include "Texture2D.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
@@ -11,7 +12,7 @@ namespace dae
 	class TextureComponent final : public BaseComponent
 	{
 	public:
-		TextureComponent(GameObject* owner);
+		TextureComponent(GameObject* owner, RenderComponent* pRenderComp);
 		~TextureComponent() = default;
 
 		TextureComponent(const TextureComponent& other) = delete;
@@ -20,10 +21,10 @@ namespace dae
 		TextureComponent& operator=(TextureComponent&& other) = delete;
 
 		virtual void Update(float) override {};
-		void Render() override;
 		void LoadTexture(const std::string& textureName);
 	
 	private:
+		RenderComponent* m_pRenderComponent;
 		std::shared_ptr<Texture2D> m_pTexture;
 	};
 }
