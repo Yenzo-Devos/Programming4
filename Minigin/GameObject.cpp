@@ -27,8 +27,6 @@ void dae::GameObject::Update(float deltaTime)
 	}
 }
 
-void dae::GameObject::FixedUpdate(float fixedDeltaTime) { fixedDeltaTime; }
-
 void dae::GameObject::SetDead()
 {
 	m_IsDead = true;

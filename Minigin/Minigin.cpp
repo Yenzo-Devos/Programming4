@@ -101,11 +101,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput(deltaTime);
 		sceneManager.Update(deltaTime);
-		while (lag >= m_FixedTimeStep)
-		{
-			sceneManager.FixedUpdate(m_FixedTimeStep);
-			lag -= m_FixedTimeStep;
-		}
+		// fixed update goes here but is not needed for this project
 
 		renderer.Render();
 		const auto sleepTime = currentTime + std::chrono::milliseconds(long long(msPerFrame)) - std::chrono::high_resolution_clock::now();

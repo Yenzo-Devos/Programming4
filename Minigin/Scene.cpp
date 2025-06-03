@@ -12,6 +12,11 @@ Scene::Scene(const std::string& name) : m_name(name) {}
 
 Scene::~Scene() = default;
 
+std::unique_ptr<GameObject> dae::Scene::CreateObject()
+{
+	return std::make_unique<GameObject>();
+}
+
 void Scene::Add(std::shared_ptr<GameObject> object)
 {
 	m_objects.emplace_back(std::move(object));
@@ -38,14 +43,6 @@ void Scene::Update(float deltaTime)
 	{
 		if (object->GetIsDead())
 			Remove(object);
-	}
-}
-
-void dae::Scene::FixedUpdate(float fixedDeltaTime)
-{
-	for (auto& object : m_objects)
-	{
-		object->FixedUpdate(fixedDeltaTime);
 	}
 }
 

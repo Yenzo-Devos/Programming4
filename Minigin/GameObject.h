@@ -14,7 +14,6 @@ namespace dae
 	{
 	public:
 		virtual void Update(float deltaTime);
-		virtual void FixedUpdate(float fixedDeltaTime);
 
 		void SetDead();
 		bool GetIsDead() { return m_IsDead; }
