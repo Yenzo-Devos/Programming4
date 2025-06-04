@@ -15,6 +15,9 @@ namespace dae
 	public:
 		virtual void Update(float deltaTime);
 
+		void GiveTag(const std::string& tagName) { m_Tag = tagName; }
+		std::string GetTag() { return m_Tag; }
+
 		void SetDead();
 		bool GetIsDead() { return m_IsDead; }
 
@@ -37,6 +40,7 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		std::string m_Tag{};
 		bool m_IsDead{ false };
 		bool m_HasDeadComponent{ false };
 

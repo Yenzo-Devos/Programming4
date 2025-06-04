@@ -31,6 +31,25 @@ void Scene::RemoveAll()
 	m_pObjects.clear();
 }
 
+GameObject* Scene::GetObjectByTag(const std::string& tag)
+{
+	auto it = std::find_if(m_pObjects.begin(), m_pObjects.end(),
+			  [&tag](const std::unique_ptr<GameObject>& obj)
+			  { return obj->GetTag() == tag; });
+
+	return (it != m_pObjects.end()) ? it->get() : nullptr;
+}
+
+std::vector<GameObject*> Scene::GetAllObjectByTag(const std::string& tag)
+{
+	std::vector<GameObject*> matchingObjects;
+	for (const auto& obj : m_pObjects)
+		if (obj->GetTag() == tag)
+			matchingObjects.emplace_back(obj.get());
+
+	return matchingObjects;
+}
+
 void Scene::Update(float deltaTime)
 {
 	for(auto& object : m_pObjects)
