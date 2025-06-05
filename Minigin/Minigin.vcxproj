@@ -198,6 +198,7 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePad.h" />
+    <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyBoard.h" />
     <ClInclude Include="Minigin.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePad.cpp" />
+    <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyBoard.cpp" />
     <ClCompile Include="Minigin.cpp" />
