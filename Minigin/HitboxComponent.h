@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseComponent.h"
-#include "box2d.h"
 
 #include <vector>
 #include <memory>
@@ -10,6 +9,13 @@ namespace dae
 	class HitboxComponent : public BaseComponent
 	{
 	public:
+		struct Box {
+			int left;
+			int top;
+			int width;
+			int height;
+		};
+
 		HitboxComponent(GameObject* owner);
 		~HitboxComponent() = default;
 		
@@ -18,11 +24,11 @@ namespace dae
 		HitboxComponent& operator=(const HitboxComponent& other) = delete;
 		HitboxComponent& operator=(HitboxComponent&& other) = delete;
 
-		void AddHitbox(float halfWidth, float halfHeight);
-		std::vector<b2Polygon*> GetAllHitboxes();
+		void AddHitbox(int left, int top, int width, int height);
+		std::vector<Box*> GetAllHitboxes();
 
 	private:
-		std::vector<std::unique_ptr<b2Polygon>> m_pHitboxVec{};
+		std::vector<std::unique_ptr<Box>> m_pHitboxVec{};
 	};
 }
 

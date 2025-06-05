@@ -1,4 +1,5 @@
 #include "HitboxComponent.h"
+#include "GameObject.h"
 #include <iostream>
 #include <algorithm>
 
@@ -7,15 +8,15 @@ dae::HitboxComponent::HitboxComponent(GameObject* owner)
 {
 }
 
-void dae::HitboxComponent::AddHitbox(float halfWidth, float halfHeight)
+void dae::HitboxComponent::AddHitbox(int left, int bottom, int width, int height)
 {
-	m_pHitboxVec.emplace_back(b2MakeBox(halfWidth, halfHeight));
+	m_pHitboxVec.emplace_back( Box{ left, bottom, width, height});
 }
 
-std::vector<b2Polygon*> dae::HitboxComponent::GetAllHitboxes()
+std::vector<dae::HitboxComponent::Box*> dae::HitboxComponent::GetAllHitboxes()
 {
-	std::vector<b2Polygon*> hitboxVec(m_pHitboxVec.size());
+	std::vector<Box*> hitboxVec(m_pHitboxVec.size());
 	std::transform(m_pHitboxVec.begin(), m_pHitboxVec.end(), std::back_inserter(hitboxVec), 
-				   [](const std::unique_ptr<b2Polygon>& ptr) { return ptr.get(); });
+				   [](const std::unique_ptr<Box>& ptr) { return ptr.get(); });
 	return hitboxVec;
 }
