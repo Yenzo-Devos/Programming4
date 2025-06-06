@@ -7,6 +7,13 @@
 #include "Scene.h"
 #include "HitboxComponent.h"
 #include "CollisionHandler.h"
+#include "PlayerComponent.h"
+#include "PlayerState.h"
+#include "PlayerIdleState.h"
+#include "PlayerMoveState.h"
+#include "PlayerPepperState.h"
+#include "PlayerDyingState.h"
+#include "PlayerWinningState.h"
 
 #include <ranges>
 
@@ -41,8 +48,14 @@ void game::MoveCommand::Climb(float deltaTime)
 			GetGameObject()->GetWorldPosition().x == ladder->GetWorldPosition().x)
 		{
 			GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
+			
+			if (GetGameObject()->HasComponent<game::PlayerComponent>())
+			{
+				auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
+				playerComp->ChangeState(&game::PlayerState::m_Move);
+				playerComp->GetState()->m_Move.ChangeDirection(m_Direction);
+			}
 			return;
-			// set ladder state if not there yet?
 		}
 	}
 }
@@ -63,13 +76,20 @@ void game::MoveCommand::Walk(float deltaTime)
 		if (dae::CollisionHandler::GetInstance().IsFullyOverlapping(bufferHitbox, hitbox))
 		{
 			GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
+			
+			if (GetGameObject()->HasComponent<game::PlayerComponent>())
+			{
+				auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
+				playerComp->ChangeState(&game::PlayerState::m_Move);
+				playerComp->GetState()->m_Move.ChangeDirection(m_Direction);
+			}
 			return;
 		}
 	}
 }
 
 game::KillCommand::KillCommand(dae::GameObject* pGameObject)
-	:GameObjectCommand(pGameObject)
+	: GameObjectCommand(pGameObject)
 {
 }
 
@@ -81,4 +101,22 @@ void game::KillCommand::Execute(float)
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
 	dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };
 	ss.AddToQueue(deathAudio);
+}
+
+game::ThrowPepperCommand::ThrowPepperCommand(dae::GameObject* pGameObject)
+	: GameObjectCommand(pGameObject)
+{
+}
+
+void game::ThrowPepperCommand::Execute(float)
+{
+	// get direction
+	auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
+	glm::vec3 direction = playerComp->GetDirection();
+
+
+	// create pepper Object
+
+	// set player to pepperState
+	playerComp->ChangeState(&game::PlayerState::m_Pepper);
 }

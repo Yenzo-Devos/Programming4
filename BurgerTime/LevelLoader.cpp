@@ -10,6 +10,7 @@
 #include "SpriteComponent.h"
 #include "LivesComponent.h"
 #include "HitboxComponent.h"
+#include "PlayerComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -166,6 +167,8 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayLeft", 1, 7, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
 	player->AddComponent<game::LivesComponent>(3);
 
@@ -173,6 +176,8 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->AddComponent<dae::HitboxComponent>();
 	player->GetComponent<dae::HitboxComponent>()->AddHitbox("body_hitbox", 0, 0, 32, 32);
 	player->GetComponent<dae::HitboxComponent>()->AddHitbox("feet_hitbox", 0, 32, 32, 6);
+
+	player->AddComponent<game::PlayerComponent>();
 
 	return player;
 }

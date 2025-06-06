@@ -42,4 +42,18 @@ namespace game
 		KillCommand& operator=(KillCommand&& other) = delete;
 		void Execute(float) override;
 	};
+
+	class ThrowPepperCommand : public dae::GameObjectCommand
+	{
+	public:
+		ThrowPepperCommand(dae::GameObject* pGameObject);
+		~ThrowPepperCommand() = default;
+
+		ThrowPepperCommand(const ThrowPepperCommand& other) = delete;
+		ThrowPepperCommand(ThrowPepperCommand&& other) = delete;
+		ThrowPepperCommand& operator=(const ThrowPepperCommand& other) = delete;
+		ThrowPepperCommand& operator=(ThrowPepperCommand&& other) = delete;
+
+		void Execute(float) override;
+	};
 }

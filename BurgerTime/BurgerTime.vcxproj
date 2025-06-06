@@ -166,24 +166,30 @@
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
-    <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
-    <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PlayerDyingState.cpp" />
+    <ClCompile Include="PlayerIdleState.cpp" />
+    <ClCompile Include="PlayerMoveState.cpp" />
+    <ClCompile Include="PlayerPepperState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="PlayerWinningState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
-    <ClInclude Include="IdleState.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
-    <ClInclude Include="MoveState.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerDyingState.h" />
+    <ClInclude Include="PlayerIdleState.h" />
+    <ClInclude Include="PlayerMoveState.h" />
+    <ClInclude Include="PlayerPepperState.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="PlayerWinningState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

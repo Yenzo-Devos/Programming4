@@ -54,20 +54,29 @@
     <ClCompile Include="GameCommand.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Source Files\States\Player</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="IdleState.cpp">
-      <Filter>Source Files\States\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveState.cpp">
-      <Filter>Source Files\States\Player</Filter>
-    </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPepperState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDyingState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWinningState.cpp">
+      <Filter>Source Files\States\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Source Files\States\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,14 +98,23 @@
     <ClInclude Include="PlayerComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="IdleState.h">
-      <Filter>Header Files\States\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveState.h">
-      <Filter>Header Files\States\Player</Filter>
-    </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPepperState.h">
+      <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDyingState.h">
+      <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWinningState.h">
+      <Filter>Header Files\States\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

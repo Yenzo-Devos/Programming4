@@ -5,7 +5,7 @@
 
 namespace game
 {
-	class PlayerComponent : dae::BaseComponent
+	class PlayerComponent : public dae::BaseComponent
 	{
 	public:
 		PlayerComponent(dae::GameObject* pOwner);
@@ -17,11 +17,17 @@ namespace game
 		PlayerComponent& operator=(PlayerComponent&& other) = delete;
 
 		void Update(float elapsedSec) override;
-		void HandleInput();
+		void HandleState();
+
+		PlayerState* GetState() const { return m_pState; }
+		void ChangeState(PlayerState* state);
+
+		glm::vec3 GetDirection() const { return m_Direction; }
+		void ChangeDiretion(glm::vec3 direction);
 
 		dae::GameObject* GetOwner() { return m_pOwner; }
 	private:
 		PlayerState* m_pState{};
+		glm::vec3 m_Direction{};
 	};
 }
-
