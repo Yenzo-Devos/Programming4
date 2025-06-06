@@ -14,7 +14,8 @@ namespace dae
 		CollisionHandler& operator=(const CollisionHandler& other) = delete;
 		CollisionHandler& operator=(CollisionHandler&& other) = delete;
 
-		bool IsOverlapping(const HitboxComponent::Box& hitbox, const HitboxComponent::Box& otherHitbox);
+		bool IsOverlapping(const HitboxComponent::Box& hitbox, const HitboxComponent::Box& otherHitbox) const;
+		bool IsFullyOverlapping(const HitboxComponent::Box& hitbox, const HitboxComponent::Box& otherHitbox) const;
 	
 	private:
 		friend class Singleton<CollisionHandler>;

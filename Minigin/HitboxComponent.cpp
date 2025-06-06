@@ -10,7 +10,7 @@ dae::HitboxComponent::HitboxComponent(GameObject* owner)
 
 void dae::HitboxComponent::AddHitbox(int left, int bottom, int width, int height)
 {
-	m_pHitboxVec.emplace_back( Box{ left, bottom, width, height});
+	m_pHitboxVec.emplace_back(std::make_unique<Box>(left, bottom, width, height));
 }
 
 std::vector<dae::HitboxComponent::Box*> dae::HitboxComponent::GetAllHitboxes()

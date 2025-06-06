@@ -24,6 +24,8 @@ namespace dae
 		HitboxComponent& operator=(const HitboxComponent& other) = delete;
 		HitboxComponent& operator=(HitboxComponent&& other) = delete;
 
+		virtual void Update(float) override {}
+
 		void AddHitbox(int left, int top, int width, int height);
 		std::vector<Box*> GetAllHitboxes();
 

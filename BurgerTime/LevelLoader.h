@@ -25,15 +25,15 @@ namespace game
 		LevelLoader() = default;
 
 		// static objects
-		std::unique_ptr<dae::GameObject> CreateLadder(float x, float y, int length);
-		std::unique_ptr<dae::GameObject> CreatePlatform(int idGroup, float x, float y);
-		std::unique_ptr<dae::GameObject> CreatePlate(int idGroup, float x, float y);
-		std::unique_ptr<dae::GameObject> CreateFloor(float x, float y);
+		std::unique_ptr<dae::GameObject> CreateLadder(int x, int y, int length);
+		std::unique_ptr<dae::GameObject> CreatePlatform(int idGroup, int x, int y);
+		std::unique_ptr<dae::GameObject> CreatePlate(int idGroup, int x, int y);
+		std::unique_ptr<dae::GameObject> CreateFloor(int x, int y);
 
 		// dynamic objects
-		std::unique_ptr<dae::GameObject> CreateIngredient(int type, int idGroup, float x, float y);
-		std::unique_ptr<dae::GameObject> CreatePlayer(int id, float x, float y);
-		std::unique_ptr<dae::GameObject> CreateEnemy(const std::string& type, float x, float y);
+		std::unique_ptr<dae::GameObject> CreateIngredient(int type, int idGroup, int x, int y);
+		std::unique_ptr<dae::GameObject> CreatePlayer(int id, int x, int y);
+		std::unique_ptr<dae::GameObject> CreateEnemy(const std::string& type, int x, int y);
 		
 	};
 }

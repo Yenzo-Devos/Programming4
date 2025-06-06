@@ -9,6 +9,7 @@
 #include "TextureComponent.h"
 #include "SpriteComponent.h"
 #include "LivesComponent.h"
+#include "HitboxComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -48,7 +49,7 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 	}
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreateLadder(float x, float y, int length)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreateLadder(int x, int y, int length)
 {
 	auto ladder = std::make_unique<dae::GameObject>();
 	ladder->GiveTag("ladder");
@@ -59,10 +60,12 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateLadder(float x, float 
 	ladder->AddComponent<dae::TextureComponent>(ladder->GetComponent<dae::RenderComponent>());
 	ladder->GetComponent<dae::TextureComponent>()->LoadTexture(textureFileName);
 	// add collision comp for ladder and if needed a ladder component
+	ladder->AddComponent<dae::HitboxComponent>();
+	ladder->GetComponent<dae::HitboxComponent>()->AddHitbox(x, y, 32, 32 * length);
 	return ladder;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlatform(int, float x, float y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlatform(int, int x, int y)
 {
 	auto platform = std::make_unique<dae::GameObject>();
 	platform->GiveTag("platform");
@@ -72,11 +75,13 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlatform(int, float x,
 	platform->AddComponent<dae::TextureComponent>(platform->GetComponent<dae::RenderComponent>());
 	platform->GetComponent<dae::TextureComponent>()->LoadTexture("static_objects/platform.png");
 	// add platformcompnent and collisionComp
+	platform->AddComponent<dae::HitboxComponent>();
+	platform->GetComponent<dae::HitboxComponent>()->AddHitbox(x, y, 64, 6);
 	
 	return platform;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int, float x, float y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int, int x, int y)
 {
 	auto plate = std::make_unique<dae::GameObject>();
 	plate->GiveTag("plate");
@@ -90,7 +95,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int, float x, fl
 	return plate;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreateFloor(float x, float y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreateFloor(int x, int y)
 {
 	auto floor = std::make_unique<dae::GameObject>();
 	floor->GiveTag("floor");
@@ -99,12 +104,15 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateFloor(float x, float y
 	floor->AddComponent<dae::RenderComponent>();
 	floor->AddComponent<dae::TextureComponent>(floor->GetComponent<dae::RenderComponent>());
 	floor->GetComponent<dae::TextureComponent>()->LoadTexture("static_objects/floor.png");
+	
 	// add collisionComp
+	floor->AddComponent<dae::HitboxComponent>();
+	floor->GetComponent<dae::HitboxComponent>()->AddHitbox(x, y, 32, 6);
 
 	return floor;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, int, float x, float y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, int, int x, int y)
 {
 	auto ingredient = std::make_unique<dae::GameObject>();
 	ingredient->GiveTag("ingredient");
@@ -119,7 +127,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	return ingredient;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, float x, float y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, int y)
 {
 	// check if game is single or multiplayer mode?
 	
@@ -140,7 +148,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, float x
 	else throw std::runtime_error("player id incorrect, failed to load player correctly");
 
 	player->AddComponent<dae::RenderComponent>(true);
-	player->AddComponent<dae::SpriteComponent>(player->GetComponent<dae::RenderComponent>(), 16, 16);
+	player->AddComponent<dae::SpriteComponent>(player->GetComponent<dae::RenderComponent>(), 32, 32);
 	player->GetComponent<dae::SpriteComponent>()->LoadTexture(spriteFileName);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 1.f);
@@ -153,11 +161,14 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, float x
 	player->AddComponent<game::LivesComponent>(3);
 
 	// add collisioncomp and playercomp
+	player->AddComponent<dae::HitboxComponent>();
+	player->GetComponent<dae::HitboxComponent>()->AddHitbox(x, y, 32, 32);
+	player->GetComponent<dae::HitboxComponent>()->AddHitbox(x, y - 32, 32, 2);
 
 	return player;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::string& type, float x, float y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::string& type, int x, int y)
 {
 	auto enemy = std::make_unique<dae::GameObject>();
 	enemy->GiveTag("enemy");
