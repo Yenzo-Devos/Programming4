@@ -3,6 +3,12 @@
 #include "GameObject.h"
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "HitboxComponent.h"
+#include "CollisionHandler.h"
+
+#include <ranges>
 
 game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec3 direction)
 	: GameObjectCommand(pGameObject)
@@ -13,7 +19,53 @@ game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::v
 
 void game::MoveCommand::Execute(float deltaTime)
 {
-	GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
+	if (m_Direction.y != 0)
+		Climb(deltaTime);
+	else if (m_Direction.x != 0)
+		Walk(deltaTime);
+}
+
+void game::MoveCommand::Climb(float deltaTime)
+{
+	// check if overlapping with ladder
+	auto ladderVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
+	auto playerHitboxComp = GetGameObject()->GetComponent<dae::HitboxComponent>();
+	
+	for (auto ladder : ladderVec)
+	{
+		// clean up by simplifying
+		auto ladderHitbox = ladder->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		if (dae::CollisionHandler::GetInstance().IsOverlapping(playerHitboxComp->GetHitbox("feet_hitbox"), ladderHitbox) and
+			GetGameObject()->GetWorldPosition().x == ladder->GetWorldPosition().x or
+			dae::CollisionHandler::GetInstance().IsOverlapping(playerHitboxComp->GetHitbox("body_hitbox"), ladderHitbox) and
+			GetGameObject()->GetWorldPosition().x == ladder->GetWorldPosition().x)
+		{
+			GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
+			return;
+			// set ladder state if not there yet?
+		}
+	}
+}
+
+void game::MoveCommand::Walk(float deltaTime)
+{
+	//GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime)
+	
+	// clean this up
+	auto playerHitbox = GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox");
+	auto bufferHitbox = playerHitbox;
+	bufferHitbox->left += static_cast<int>(m_Direction.x * m_Speed * deltaTime);
+	
+	auto walkableObjectVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("walkable_object");
+	for (auto walkableObject : walkableObjectVec)
+	{
+		auto hitbox = walkableObject->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		if (dae::CollisionHandler::GetInstance().IsFullyOverlapping(bufferHitbox, hitbox))
+		{
+			GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
+			return;
+		}
+	}
 }
 
 game::KillCommand::KillCommand(dae::GameObject* pGameObject)

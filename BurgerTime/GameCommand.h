@@ -18,11 +18,16 @@ namespace game
 		MoveCommand(MoveCommand&& other) = delete;
 		MoveCommand& operator=(const MoveCommand& other) = delete;
 		MoveCommand& operator=(MoveCommand&& other) = delete;
+		
 		void Execute(float deltaTime) override;
 
 	private:
 		float m_Speed;
 		glm::vec3 m_Direction;
+	
+		void Climb(float deltaTime);
+		void Walk(float deltaTime);
+	
 	};
 
 	class KillCommand : public dae::GameObjectCommand

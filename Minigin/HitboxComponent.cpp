@@ -8,15 +8,26 @@ dae::HitboxComponent::HitboxComponent(GameObject* owner)
 {
 }
 
-void dae::HitboxComponent::AddHitbox(int left, int bottom, int width, int height)
+void dae::HitboxComponent::UpdateHitboxPosition()
 {
-	m_pHitboxVec.emplace_back(std::make_unique<Box>(left, bottom, width, height));
+	for (const auto& [key, value] : m_pHitboxMap)
+	{
+		if (value)
+		{
+			value->left = static_cast<int>(m_pOwner->GetWorldPosition().x) + value->offsetLeft;
+			value->top = static_cast<int>(m_pOwner->GetWorldPosition().y) + value->offsetTop;
+		}
+	}
 }
 
-std::vector<dae::HitboxComponent::Box*> dae::HitboxComponent::GetAllHitboxes()
+void dae::HitboxComponent::AddHitbox(const std::string& identifier, int offsetLeft, int offsetTop, int width, int height)
 {
-	std::vector<Box*> hitboxVec(m_pHitboxVec.size());
-	std::transform(m_pHitboxVec.begin(), m_pHitboxVec.end(), std::back_inserter(hitboxVec), 
-				   [](const std::unique_ptr<Box>& ptr) { return ptr.get(); });
-	return hitboxVec;
+	m_pHitboxMap[identifier] = std::make_unique<Box>(static_cast<int>(m_pOwner->GetWorldPosition().x) + offsetLeft,
+													 static_cast<int>(m_pOwner->GetWorldPosition().y) + offsetTop,
+													 width, height, offsetLeft, offsetTop);
+}
+
+dae::HitboxComponent::Box* dae::HitboxComponent::GetHitbox(const std::string& identifier)
+{
+	return m_pHitboxMap[identifier].get();
 }

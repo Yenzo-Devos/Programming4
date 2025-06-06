@@ -1,8 +1,9 @@
 #pragma once
 #include "BaseComponent.h"
 
-#include <vector>
+#include <map>
 #include <memory>
+#include <string>
 
 namespace dae
 {
@@ -14,6 +15,8 @@ namespace dae
 			int top;
 			int width;
 			int height;
+			int offsetLeft;
+			int offsetTop;
 		};
 
 		HitboxComponent(GameObject* owner);
@@ -24,13 +27,14 @@ namespace dae
 		HitboxComponent& operator=(const HitboxComponent& other) = delete;
 		HitboxComponent& operator=(HitboxComponent&& other) = delete;
 
-		virtual void Update(float) override {}
+		virtual void Update(float) override {};
+		void UpdateHitboxPosition();
 
-		void AddHitbox(int left, int top, int width, int height);
-		std::vector<Box*> GetAllHitboxes();
+		void AddHitbox(const std::string& identifier, int offsetLeft, int offsetTop, int width, int height);
+		Box* GetHitbox(const std::string& identifier);
 
 	private:
-		std::vector<std::unique_ptr<Box>> m_pHitboxVec{};
+		std::map<std::string, std::unique_ptr<Box>> m_pHitboxMap{};
 	};
 }
 

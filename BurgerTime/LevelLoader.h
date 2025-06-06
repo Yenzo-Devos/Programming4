@@ -29,6 +29,7 @@ namespace game
 		std::unique_ptr<dae::GameObject> CreatePlatform(int idGroup, int x, int y);
 		std::unique_ptr<dae::GameObject> CreatePlate(int idGroup, int x, int y);
 		std::unique_ptr<dae::GameObject> CreateFloor(int x, int y);
+		std::unique_ptr<dae::GameObject> CreateWalkableObject(int x, int y, int width);
 
 		// dynamic objects
 		std::unique_ptr<dae::GameObject> CreateIngredient(int type, int idGroup, int x, int y);

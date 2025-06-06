@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
-#include "RenderComponent.h"
+#include "HitboxComponent.h"
 
 #include <functional>
 
@@ -118,4 +118,6 @@ void dae::GameObject::UpdateWorldPosition()
 			m_WorldPosition = m_pParent->GetWorldPosition() + m_LocalPosition;
 	}
 	m_IsPositionDirty = false;
+	if (this->HasComponent<dae::HitboxComponent>())
+		this->GetComponent<dae::HitboxComponent>()->UpdateHitboxPosition();
 }
