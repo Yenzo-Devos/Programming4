@@ -38,13 +38,35 @@ bool dae::CollisionHandler::IsNextClimbPossible(HitboxComponent::Box* hitbox)
 	return false;
 }
 
+std::vector<dae::GameObject*> dae::CollisionHandler::AreEnemiesHit(HitboxComponent::Box* hitbox)
+{
+	std::vector<dae::GameObject*> resultVec{};
+	for (const auto& enemy : m_pEnemyVec)
+	{
+		auto enemyHitbox = enemy->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		if (IsOverlapping(hitbox, enemyHitbox))
+			resultVec.emplace_back(enemy);
+	}
+	return resultVec;
+}
+
+dae::GameObject* dae::CollisionHandler::HasIngredientLanded(glm::vec2 pos)
+{
+	for (const auto& platform : m_pPlatformVec)
+	{
+		auto platformHitbox = platform->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		if (std::abs((platformHitbox->top + platformHitbox->height) - pos.y) <= .5f and
+			std::abs(platformHitbox->left - pos.x ) <= .5f)
+			return platform;
+	}
+	return nullptr;
+}
+
 std::vector<std::pair<dae::GameObject*, int>> dae::CollisionHandler::PerformIngredientCheck(HitboxComponent::Box* hitbox)
 {
 	std::vector<std::pair<dae::GameObject*, int>> resultVec{};
 	for (const auto& ingredient : m_pIngredientVec)
 	{
-		// check if it's not falling
-
 		int count{ 0 };
 		auto ingredientHitboxComp = ingredient->GetComponent<dae::HitboxComponent>();
 		for (const auto& ingredientHitbox : ingredientHitboxComp->GetAllHitboxes())

@@ -12,6 +12,7 @@
 #include "HitboxComponent.h"
 #include "PlayerComponent.h"
 #include "IngredientComponent.h"
+#include "FallComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -144,6 +145,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_middle_hitbox", 32, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_hitbox", 48, 0, 16, 16);
 	ingredient->AddComponent<game::IngredientComponent>();
+	ingredient->AddComponent<game::FallComponent>(15.f);
 
 	return ingredient;
 }

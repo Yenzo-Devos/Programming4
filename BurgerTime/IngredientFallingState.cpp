@@ -1,9 +1,46 @@
 #include "IngredientFallingState.h"
+#include "IngredientIdleState.h"
+#include "IngredientComponent.h"
+#include "CollisionHandler.h"
+#include "HitboxComponent.h"
+#include "RenderComponent.h"
+#include "FallComponent.h"
 
-std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(IngredientComponent&)
+void game::IngredientFallingState::Update(float deltaTime)
 {
+    if (!m_GracePeriodOver)
+    {
+        m_AccuGraceTimer += deltaTime;
+        if (m_AccuGraceTimer >= m_GraceTime)
+            m_GracePeriodOver = true;
+    }
+}
+
+std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(dae::GameObject& owner)
+{
+    if (!m_GracePeriodOver)
+        return nullptr;
+
     // if it collides with a new platform then go to Idle
+    auto pos = owner.GetWorldPosition();
+    auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
+    if (platformObj)
+    {
+        for (int index{0}; index < 4; ++index)
+            owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
+        return std::make_unique<IngredientIdleState>();
+    }
     // if it collides with a plate then go to OnPlate
     // return std::unique_ptr<IngredientState>();
     return nullptr;
+}
+
+void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
+{
+    owner.GetComponent<game::FallComponent>()->Activate(true);
+}
+
+void game::IngredientFallingState::OnExit(dae::GameObject& owner)
+{
+    owner.GetComponent<game::FallComponent>()->Activate(false);
 }

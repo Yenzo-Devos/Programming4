@@ -1,6 +1,9 @@
 #include "IngredientComponent.h"
 #include "IngredientIdleState.h"
+#include "IngredientFallingState.h"
 #include "RenderComponent.h"
+#include "FallComponent.h"
+#include <algorithm>
 
 game::IngredientComponent::IngredientComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
@@ -16,25 +19,18 @@ void game::IngredientComponent::Update(float elapsedSec)
 
 void game::IngredientComponent::HandleState()
 {
-	auto newState = m_pState->HandleState(*this);
+	auto newState = m_pState->HandleState(*m_pOwner);
 	if (newState != nullptr)
 	{
-		m_pState->OnExit(*this);
+		m_pState->OnExit(*m_pOwner);
 		m_pState = std::move(newState);
-		m_pState->OnEnter(*this);
+		m_pState->OnEnter(*m_pOwner);
 	}
-}
-
-void game::IngredientComponent::Drop()
-{
-	
 }
 
 void game::IngredientComponent::Hit(int index)
 {
-	if (m_IsLowered[index] == false)
-	{
-		m_IsLowered[index] = true;
-		m_pOwner->GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16, 2);
-	}
+	auto state = dynamic_cast<IngredientIdleState*>(m_pState.get());
+	if (state)
+		state->Hit(index, *m_pOwner);
 }

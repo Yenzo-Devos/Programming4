@@ -20,7 +20,6 @@ namespace game
 		void Update(float elapsedSec) override;
 		void HandleState();
 
-		void Drop();
 		void Hit(int index);
 
 	private:

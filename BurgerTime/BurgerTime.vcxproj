@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp" />
+    <ClCompile Include="FallComponent.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
     <ClCompile Include="IngredientComponent.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="PlayerWinningState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FallComponent.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
     <ClInclude Include="IngredientComponent.h" />

@@ -21,6 +21,9 @@ namespace dae
 		bool IsNextWalkPossible(HitboxComponent::Box* hitbox);
 		bool IsNextClimbPossible(HitboxComponent::Box* hitbox);
 
+		std::vector<GameObject*> AreEnemiesHit(HitboxComponent::Box* hitbox);
+		GameObject* HasIngredientLanded(glm::vec2 pos);
+
 		std::vector<std::pair<GameObject*, int>> PerformIngredientCheck(HitboxComponent::Box* hitbox);
 
 	private:

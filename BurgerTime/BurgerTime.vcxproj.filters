@@ -93,6 +93,9 @@
     <ClCompile Include="IngredientOnPlateState.cpp">
       <Filter>Source Files\States\Ingredient</Filter>
     </ClCompile>
+    <ClCompile Include="FallComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSComponent.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="IngredientOnPlateState.h">
       <Filter>Header Files\States\Ingredient</Filter>
+    </ClInclude>
+    <ClInclude Include="FallComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
