@@ -53,7 +53,7 @@ std::vector<dae::GameObject*> dae::CollisionHandler::AreEnemiesHit(HitboxCompone
 dae::GameObject* dae::CollisionHandler::HasIngredientLanded(glm::vec2 pos)
 {
 	for (const auto& platform : m_pPlatformVec)
-	{
+	{		
 		auto platformHitbox = platform->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
 		if (std::abs((platformHitbox->top + platformHitbox->height) - pos.y) <= .5f and
 			std::abs(platformHitbox->left - pos.x ) <= .5f)

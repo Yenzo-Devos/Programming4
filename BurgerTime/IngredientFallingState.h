@@ -16,6 +16,8 @@ namespace game
 		const float m_GraceTime{ 2.f };
 		float m_AccuGraceTimer{ 0.f };
 		bool m_GracePeriodOver{ false };
+
+		void EmptyLandingPlatform(dae::GameObject& owner);
 	};
 }
 

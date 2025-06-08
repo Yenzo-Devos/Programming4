@@ -21,7 +21,9 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
     if (!m_GracePeriodOver)
         return nullptr;
 
-    // if it collides with a new platform then go to Idle
+    EmptyLandingPlatform(owner);
+
+    // land on a platform
     auto pos = owner.GetWorldPosition();
     auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
     if (platformObj)
@@ -30,6 +32,9 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
             owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
         return std::make_unique<IngredientIdleState>();
     }
+
+    // land on a plate
+    
     // if it collides with a plate then go to OnPlate
     // return std::unique_ptr<IngredientState>();
     return nullptr;
@@ -43,4 +48,14 @@ void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
 void game::IngredientFallingState::OnExit(dae::GameObject& owner)
 {
     owner.GetComponent<game::FallComponent>()->Activate(false);
+}
+
+void game::IngredientFallingState::EmptyLandingPlatform(dae::GameObject& owner)
+{
+    auto hitbox = owner.GetComponent<dae::HitboxComponent>()->GetHitbox("left_hitbox");
+    auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(hitbox);
+    if (!ingredientVec.empty())
+        for (const auto& ingredient : ingredientVec)
+            for (int index{ 0 }; index < 4; ++index)
+                ingredient.first->GetComponent<IngredientComponent>()->Hit(index);
 }
