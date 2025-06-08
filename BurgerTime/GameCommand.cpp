@@ -49,6 +49,11 @@ void game::MoveCommand::Climb(float deltaTime)
 		{
 			auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
 			playerComp->ChangeDirection(m_Direction);
+
+			auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(playerHitboxComp->GetHitbox("body_hitbox"));
+			if (!ingredientVec.empty())
+				for (const auto& ingredient : ingredientVec)
+					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second);
 		}
 	}
 }
@@ -69,9 +74,10 @@ void game::MoveCommand::Walk(float deltaTime)
 			playerComp->ChangeDirection(m_Direction);
 			
 			// check for ingredient overlap
-			auto Ingredient = dae::CollisionHandler::GetInstance().PerformIngredientCheck(bufferHitbox);
-			if (Ingredient.second != -1)
-				Ingredient.first->GetComponent<IngredientComponent>()->Hit(Ingredient.second);
+			auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(bufferHitbox);
+			if (!ingredientVec.empty())
+				for (const auto& ingredient : ingredientVec)
+					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second);
 		}
 		return;
 	}

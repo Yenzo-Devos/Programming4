@@ -38,8 +38,9 @@ bool dae::CollisionHandler::IsNextClimbPossible(HitboxComponent::Box* hitbox)
 	return false;
 }
 
-std::pair<dae::GameObject*, int> dae::CollisionHandler::PerformIngredientCheck(HitboxComponent::Box* hitbox)
+std::vector<std::pair<dae::GameObject*, int>> dae::CollisionHandler::PerformIngredientCheck(HitboxComponent::Box* hitbox)
 {
+	std::vector<std::pair<dae::GameObject*, int>> resultVec{};
 	for (const auto& ingredient : m_pIngredientVec)
 	{
 		// check if it's not falling
@@ -50,12 +51,12 @@ std::pair<dae::GameObject*, int> dae::CollisionHandler::PerformIngredientCheck(H
 		{
 			if (IsOverlapping(hitbox, ingredientHitbox))
 			{
-				return { ingredient, count };
+				resultVec.emplace_back(std::make_pair(ingredient, count));
 			}
 			++count;
 		}
 	}
-	return { nullptr, -1 };
+	return resultVec;
 }
 
 bool dae::CollisionHandler::IsOverlapping(HitboxComponent::Box* hitbox, HitboxComponent::Box* otherHitbox) const

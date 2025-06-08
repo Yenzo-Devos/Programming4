@@ -21,7 +21,7 @@ namespace dae
 		bool IsNextWalkPossible(HitboxComponent::Box* hitbox);
 		bool IsNextClimbPossible(HitboxComponent::Box* hitbox);
 
-		std::pair<GameObject*, int> PerformIngredientCheck(HitboxComponent::Box* hitbox);
+		std::vector<std::pair<GameObject*, int>> PerformIngredientCheck(HitboxComponent::Box* hitbox);
 
 	private:
 		friend class Singleton<CollisionHandler>;
