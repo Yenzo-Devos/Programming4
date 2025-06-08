@@ -59,6 +59,13 @@ dae::GameObject* dae::CollisionHandler::HasIngredientLanded(glm::vec2 pos)
 			std::abs(platformHitbox->left - pos.x ) <= .5f)
 			return platform;
 	}
+	for (const auto& plate : m_pPlateVec)
+	{
+		auto plateHitbox = plate->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		if (std::abs((plateHitbox->top + 2) - pos.y) <= .5f and
+			std::abs(plateHitbox->left - pos.x) <= 7.f)
+			return plate;
+	}
 	return nullptr;
 }
 

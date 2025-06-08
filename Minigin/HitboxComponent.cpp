@@ -37,6 +37,26 @@ dae::HitboxComponent::Box* dae::HitboxComponent::GetHitbox(const std::string& id
 	return (it != m_pHitboxVec.end()) ? it->second.get() : nullptr;
 }
 
+std::pair<int, int> dae::HitboxComponent::GetHitboxSize(const std::string& identifier)
+{
+	for (const auto& [key, value] : m_pHitboxVec)
+		if (key == identifier)
+			return { value->width, value->height };
+	return { 0, 0 };
+}
+
+void dae::HitboxComponent::ResizeHitbox(const std::string& identifier, int width, int height)
+{
+	for (const auto& [key, value] : m_pHitboxVec)
+	{
+		if (key == identifier)
+		{
+			value->width = width;
+			value->height = height;
+		}
+	}
+}
+
 std::vector<dae::HitboxComponent::Box*> dae::HitboxComponent::GetAllHitboxes()
 {
 	std::vector<Box*> ptrs{};

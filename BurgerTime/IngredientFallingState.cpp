@@ -1,5 +1,6 @@
 #include "IngredientFallingState.h"
 #include "IngredientIdleState.h"
+#include "IngredientOnPlateState.h"
 #include "IngredientComponent.h"
 #include "CollisionHandler.h"
 #include "HitboxComponent.h"
@@ -23,20 +24,23 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
 
     EmptyLandingPlatform(owner);
 
-    // land on a platform
     auto pos = owner.GetWorldPosition();
     auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
-    if (platformObj)
+    if (!platformObj)
+        return nullptr;
+
+    if (platformObj->GetTag() == "platform")
     {
         for (int index{0}; index < 4; ++index)
             owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
         return std::make_unique<IngredientIdleState>();
     }
-
-    // land on a plate
-    
-    // if it collides with a plate then go to OnPlate
-    // return std::unique_ptr<IngredientState>();
+    else if (platformObj->GetTag() == "plate")
+    {
+        for (int index{0}; index < 4; ++index)
+            owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
+        return std::make_unique<IngredientOnPlateState>();
+    }
     return nullptr;
 }
 

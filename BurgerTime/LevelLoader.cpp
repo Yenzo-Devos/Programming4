@@ -95,7 +95,9 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int, int x, int 
 	plate->AddComponent<dae::RenderComponent>();
 	plate->AddComponent<dae::TextureComponent>(plate->GetComponent<dae::RenderComponent>());
 	plate->GetComponent<dae::TextureComponent>()->LoadTexture("static_objects/plate.png");
-	// add plateComponent and collisionComp
+	
+	plate->AddComponent<dae::HitboxComponent>();
+	plate->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 76, 10);
 
 	return plate;
 }

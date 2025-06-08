@@ -32,6 +32,10 @@ namespace dae
 
 		void AddHitbox(const std::string& identifier, int offsetLeft, int offsetTop, int width, int height);
 		Box* GetHitbox(const std::string& identifier);
+
+		std::pair<int, int> GetHitboxSize(const std::string& identifier);
+		void ResizeHitbox(const std::string& identifier, int width, int height);
+
 		std::vector<Box*> GetAllHitboxes();
 
 	private:
