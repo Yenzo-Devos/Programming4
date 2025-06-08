@@ -7,8 +7,8 @@ namespace game
 	class PlayerState
 	{
 	public:
-		virtual ~PlayerState() {};
-		virtual void Update(float) {};
+		virtual ~PlayerState() {}
+		virtual void Update(float) {}
 		virtual std::unique_ptr<PlayerState> HandleState(PlayerComponent&) { return nullptr; }
 		virtual void OnEnter(PlayerComponent&) {}
 		virtual void OnExit(PlayerComponent&) {}
