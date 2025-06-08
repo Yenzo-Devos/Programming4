@@ -4,8 +4,8 @@ game::LivesComponent::LivesComponent(dae::GameObject* owner, int maxLives)
 	: BaseComponent(owner)
 	, m_MaxLives{ maxLives }
 	, m_CurrentLives{ maxLives }
+	, m_pPlayerDiedEvent{ std::make_unique<dae::Subject>() }
 {
-	m_pPlayerDiedEvent = std::make_unique<dae::Subject>();
 }
 
 void game::LivesComponent::LoseLife(int amount)

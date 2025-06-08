@@ -8,7 +8,7 @@ namespace game
 		IngredientOnPlateState() = default;
 		//virtual void Update(float) {}
 		//virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&);
-		// void OnEnter(dae::GameObject& owner) override;
+		void OnEnter(dae::GameObject& owner) override;
 		//virtual void OnExit(dae::GameObject&) {}
 	};
 }

@@ -8,6 +8,7 @@
 game::IngredientComponent::IngredientComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
 	, m_pState{ std::make_unique<IngredientIdleState>() }
+	, m_pIngredientFellOnPlateEvent{ std::make_unique<dae::Subject>() }
 {
 }
 
@@ -33,4 +34,20 @@ void game::IngredientComponent::Hit(int index)
 	auto state = dynamic_cast<IngredientIdleState*>(m_pState.get());
 	if (state)
 		state->Hit(index, *m_pOwner);
+}
+
+void game::IngredientComponent::AddObserver(dae::Observer* pObserver)
+{
+	m_pIngredientFellOnPlateEvent->AddObserver(pObserver);
+}
+
+void game::IngredientComponent::RemoveObserver(dae::Observer* pObserver)
+{
+	m_pIngredientFellOnPlateEvent->AddObserver(pObserver);
+}
+
+void game::IngredientComponent::FellOnPlate()
+{
+	// check type to check for ending of game
+	m_pIngredientFellOnPlateEvent->Broadcast(m_pOwner, dae::Event::OnIngredientFallOnPlate);
 }

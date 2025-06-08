@@ -23,6 +23,7 @@ namespace game
 
 		virtual void Update(float) override {};
 		void LoseLife(int amount);
+		
 		void AddObserver(dae::Observer* pObserver);
 		void RemoveObserver(dae::Observer* pObserver);
 

@@ -34,7 +34,7 @@ namespace dae
 		Box* GetHitbox(const std::string& identifier);
 
 		std::pair<int, int> GetHitboxSize(const std::string& identifier);
-		void ResizeHitbox(const std::string& identifier, int width, int height);
+		void MoveHitbox(const std::string& identifier, int left, int top);
 
 		std::vector<Box*> GetAllHitboxes();
 

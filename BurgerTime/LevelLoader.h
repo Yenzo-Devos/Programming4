@@ -32,7 +32,7 @@ namespace game
 		std::unique_ptr<dae::GameObject> CreateWalkableObject(int x, int y, int width);
 
 		// dynamic objects
-		std::unique_ptr<dae::GameObject> CreateIngredient(int type, int idGroup, int x, int y);
+		std::unique_ptr<dae::GameObject> CreateIngredient(int type, int idGroup, int x, int y, std::vector<dae::GameObject*> plateVec);
 		std::unique_ptr<dae::GameObject> CreatePlayer(int id, int x, int y);
 		std::unique_ptr<dae::GameObject> CreateEnemy(const std::string& type, int x, int y);
 		

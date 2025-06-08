@@ -45,14 +45,14 @@ std::pair<int, int> dae::HitboxComponent::GetHitboxSize(const std::string& ident
 	return { 0, 0 };
 }
 
-void dae::HitboxComponent::ResizeHitbox(const std::string& identifier, int width, int height)
+void dae::HitboxComponent::MoveHitbox(const std::string& identifier, int left, int top)
 {
 	for (const auto& [key, value] : m_pHitboxVec)
 	{
 		if (key == identifier)
 		{
-			value->width = width;
-			value->height = height;
+			value->left = left + value->offsetLeft;
+			value->top = top + value->offsetTop;
 		}
 	}
 }

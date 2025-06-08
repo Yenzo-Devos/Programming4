@@ -6,7 +6,8 @@ namespace dae
 	enum class Event
 	{
 		OnPlayerDeath,
-		OnPlayerScored
+		OnPlayerScored,
+		OnIngredientFallOnPlate
 	};
 
 	class Observer

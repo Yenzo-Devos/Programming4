@@ -13,6 +13,7 @@
 #include "PlayerComponent.h"
 #include "IngredientComponent.h"
 #include "FallComponent.h"
+#include "PlateComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -42,7 +43,7 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 
 		auto dynamicObject = jsonData["dynamicObjects"];
 		for (const auto& ingredient : dynamicObject["ingredient"])
-			scene.Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"]));
+			scene.Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"], scene.GetAllObjectByTag("plate")));
 		for (const auto& player : dynamicObject["player"])
 			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
 		//for (const auto& enemy : dynamicObject["enemy"])
@@ -86,7 +87,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlatform(int, int x, i
 	return platform;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int, int x, int y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int idGroup, int x, int y)
 {
 	auto plate = std::make_unique<dae::GameObject>();
 	plate->GiveTag("plate");
@@ -99,6 +100,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int, int x, int 
 	plate->AddComponent<dae::HitboxComponent>();
 	plate->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 76, 10);
 
+	plate->AddComponent<game::PlateComponent>(idGroup);
 	return plate;
 }
 
@@ -126,8 +128,8 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateWalkableObject(int x, 
 	return walkableObj;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, int, int x, int y)
-{
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, int idGroup, int x, int y, std::vector<dae::GameObject*> plateVec)
+{	
 	auto ingredient = std::make_unique<dae::GameObject>();
 	ingredient->GiveTag("ingredient");
 	ingredient->SetLocalPosition(glm::vec3(x, y, 0.f));
@@ -148,6 +150,10 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_hitbox", 48, 0, 16, 16);
 	ingredient->AddComponent<game::IngredientComponent>();
 	ingredient->AddComponent<game::FallComponent>(15.f);
+
+	for (const auto& plate : plateVec)
+		if (idGroup == plate->GetComponent<PlateComponent>()->GetID())
+			ingredient->GetComponent<game::IngredientComponent>()->AddObserver(plate->GetComponent<PlateComponent>());
 
 	return ingredient;
 }

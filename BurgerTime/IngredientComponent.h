@@ -2,7 +2,13 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 #include "IngredientState.h"
+#include "Subject.h"
 #include <array>
+
+namespace dae
+{
+	class Observer;
+}
 
 namespace game
 {
@@ -22,8 +28,14 @@ namespace game
 
 		void Hit(int index);
 
+		void AddObserver(dae::Observer* pObserver);
+		void RemoveObserver(dae::Observer* pObserver);
+		void FellOnPlate();
+
 	private:
 		std::unique_ptr<game::IngredientState> m_pState;
 		std::array<bool, 4> m_IsLowered{};
+
+		std::unique_ptr<dae::Subject> m_pIngredientFellOnPlateEvent;
 	};
 }
