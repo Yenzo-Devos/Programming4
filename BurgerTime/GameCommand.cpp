@@ -63,8 +63,6 @@ void game::MoveCommand::Climb(float deltaTime)
 
 void game::MoveCommand::Walk(float deltaTime)
 {
-	//GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime)
-	
 	// clean this up
 	auto playerHitbox = GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox");
 	auto bufferHitbox = playerHitbox;

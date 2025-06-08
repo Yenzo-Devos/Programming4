@@ -1,7 +1,10 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Texture2D.h"
+
 #include <memory>
+#include <vector>
+#include <glm.hpp>
 
 namespace dae
 {
@@ -15,7 +18,7 @@ namespace dae
 		RenderComponent(RenderComponent&& other) = delete;
 		RenderComponent& operator=(const RenderComponent& other) = delete;
 		RenderComponent& operator=(RenderComponent&& other) = delete;
-	
+		
 		struct Rect
 		{
 			int left;
@@ -24,18 +27,26 @@ namespace dae
 			int height;
 		};
 
+		struct RenderObject
+		{
+			Rect dstRect;
+			Rect srcRect;
+			int offsetX;
+			int offsetY;
+		};
+
 		void Render();
 		void Update(float) override {};
 
-		void SetTexture(Texture2D* pTexture, int width = 0, int height = 0);
-		void SetSourceRect(const Rect& srcRect) { m_SrcRect = srcRect; }
+		void SetTexture(Texture2D* pTexture);
+		
+		void AddObjectToRender(const Rect& dstRect, const Rect& srcRect = Rect{0,0,0,0}, int offsetX = 0, int offsetY = 0);
+		void SetSourceRect(int index, const Rect& srcRect) { m_ObjectToRender[index].srcRect = srcRect; }
 
 	private:
 		bool m_SourceRectEnabled;
-		int m_Width;
-		int m_Height;
-		Rect m_SrcRect;
 
-		dae::Texture2D* m_pTexture;
+		std::vector<RenderObject> m_ObjectToRender;
+		dae::Texture2D* m_pTexture{};
 	};
 }

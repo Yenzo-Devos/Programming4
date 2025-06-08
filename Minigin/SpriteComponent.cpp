@@ -31,7 +31,7 @@ void dae::SpriteComponent::Update(float deltaTime)
 			srcRect.bottom = m_CurrentAnimation.row * m_CellHeight;
 			srcRect.width = m_CellWidth;
 			srcRect.height = m_CellHeight;
-			m_pRenderComponent->SetSourceRect(srcRect);
+			m_pRenderComponent->SetSourceRect(0, srcRect);
 		}
 	}
 	else
@@ -41,14 +41,14 @@ void dae::SpriteComponent::Update(float deltaTime)
 		srcRect.bottom = m_CurrentAnimation.row * m_CellHeight;
 		srcRect.width = m_CellWidth;
 		srcRect.height = m_CellHeight;
-		m_pRenderComponent->SetSourceRect(srcRect);
+		m_pRenderComponent->SetSourceRect(0, srcRect);
 	}
 }
 
 void dae::SpriteComponent::LoadTexture(const std::string& textureName)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(textureName);
-	m_pRenderComponent->SetTexture(m_pTexture.get(), m_CellWidth, m_CellHeight);
+	m_pRenderComponent->SetTexture(m_pTexture.get());
 }
 
 void dae::SpriteComponent::LoadAnimationData(const std::string& animName, int frames, int row, float animSpeed)

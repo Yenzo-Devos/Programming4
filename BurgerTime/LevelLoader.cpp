@@ -129,10 +129,19 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->SetLocalPosition(glm::vec3(x, y, 0.f));
 
 	const std::string textureFileName = "dynamic_objects/ingredient" + std::to_string(type) + ".png";
-	ingredient->AddComponent<dae::RenderComponent>();
+	ingredient->AddComponent<dae::RenderComponent>(true);
+	ingredient->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x,    y, 16, 14}, dae::RenderComponent::Rect{0, 0, 16, 14});
+	ingredient->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x+16, y, 16, 14}, dae::RenderComponent::Rect{16, 0, 16, 14}, 16);
+	ingredient->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x+32, y, 16, 14}, dae::RenderComponent::Rect{32, 0, 16, 14}, 32);
+	ingredient->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x+48, y, 16, 14}, dae::RenderComponent::Rect{48, 0, 16, 14}, 48);
 	ingredient->AddComponent<dae::TextureComponent>(ingredient->GetComponent<dae::RenderComponent>());
 	ingredient->GetComponent<dae::TextureComponent>()->LoadTexture(textureFileName);
 	// add collisionComp and ingredientComp
+	ingredient->AddComponent<dae::HitboxComponent>();
+	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("left_hitbox", 0, 0, 16, 16);
+	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("left_middle_hitbox", 16, 0, 16, 16);
+	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_middle_hitbox", 32, 0, 16, 16);
+	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_hitbox", 48, 0, 16, 16);
 
 	return ingredient;
 }
@@ -158,6 +167,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	else throw std::runtime_error("player id incorrect, failed to load player correctly");
 
 	player->AddComponent<dae::RenderComponent>(true);
+	player->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x, y, 32, 32});
 	player->AddComponent<dae::SpriteComponent>(player->GetComponent<dae::RenderComponent>(), 32, 32);
 	player->GetComponent<dae::SpriteComponent>()->LoadTexture(spriteFileName);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
@@ -190,7 +200,8 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 
 	const std::string textureFileName = "dynamic_objects/" + type + "_sprite_sheet.png";
 	enemy->AddComponent<dae::RenderComponent>(true);
-	enemy->AddComponent<dae::SpriteComponent>(enemy->GetComponent<dae::RenderComponent>(), 16, 16);
+	enemy->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ x, y, 32, 32 });
+	enemy->AddComponent<dae::SpriteComponent>(enemy->GetComponent<dae::RenderComponent>(), 32, 32);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadTexture(textureFileName);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 1, 1.f);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 2, 1.f);
