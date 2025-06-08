@@ -19,6 +19,7 @@
 #include "SoundSystem.h"
 #include "SDLSoundSystem.h"
 #include "LevelLoader.h"
+#include "CollisionHandler.h"
 
 // component includes
 #include "TextComponent.h"
@@ -40,6 +41,7 @@ void load()
 	// creating and loading sound and soundsystem
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
 	levelLoader.LoadLevel("../Data/", "levels/level1.json", scene);
+	dae::CollisionHandler::GetInstance().Init();
 
 	//auto& sdlSoundSystem = dae::ServiceLocator::GetSoundSystem();
 	//dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };

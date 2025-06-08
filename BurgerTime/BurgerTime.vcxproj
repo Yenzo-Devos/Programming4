@@ -166,6 +166,10 @@
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
+    <ClCompile Include="IngredientComponent.cpp" />
+    <ClCompile Include="IngredientFallingState.cpp" />
+    <ClCompile Include="IngredientIdleState.cpp" />
+    <ClCompile Include="IngredientOnPlateState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
@@ -179,6 +183,11 @@
   <ItemGroup>
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
+    <ClInclude Include="IngredientComponent.h" />
+    <ClInclude Include="IngredientFallingState.h" />
+    <ClInclude Include="IngredientIdleState.h" />
+    <ClInclude Include="IngredientOnPlateState.h" />
+    <ClInclude Include="IngredientState.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />

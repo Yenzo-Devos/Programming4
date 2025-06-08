@@ -4,6 +4,7 @@ namespace game
 {
 	class IngredientIdleState : public IngredientState
 	{
+	public:
 		IngredientIdleState() = default;
 		virtual void Update(float) {}
 		virtual std::unique_ptr<IngredientState> HandleState(IngredientComponent&);

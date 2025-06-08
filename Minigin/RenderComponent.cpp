@@ -51,3 +51,9 @@ void dae::RenderComponent::AddObjectToRender(const Rect& dstRect, const Rect& sr
 {
 	m_ObjectToRender.emplace_back(RenderObject{dstRect, srcRect, offsetX, offsetY});
 }
+
+void dae::RenderComponent::ChangeOffset(int index, int offsetX, int offsetY)
+{
+	m_ObjectToRender[index].offsetX = offsetX;
+	m_ObjectToRender[index].offsetY = offsetY;
+}

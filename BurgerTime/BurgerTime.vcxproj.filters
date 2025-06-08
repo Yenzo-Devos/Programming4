@@ -37,6 +37,12 @@
     <Filter Include="Source Files\States\Player">
       <UniqueIdentifier>{27060ee8-f035-48f0-b829-892a9ee256b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States\Ingredient">
+      <UniqueIdentifier>{416d9711-99e3-47cb-a341-603556056e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Ingredient">
+      <UniqueIdentifier>{c1bcfa47-7aa7-404c-99a1-88a2e987bc71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp">
@@ -75,6 +81,18 @@
     <ClCompile Include="PlayerWinningState.cpp">
       <Filter>Source Files\States\Player</Filter>
     </ClCompile>
+    <ClCompile Include="IngredientComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="IngredientFallingState.cpp">
+      <Filter>Source Files\States\Ingredient</Filter>
+    </ClCompile>
+    <ClCompile Include="IngredientIdleState.cpp">
+      <Filter>Source Files\States\Ingredient</Filter>
+    </ClCompile>
+    <ClCompile Include="IngredientOnPlateState.cpp">
+      <Filter>Source Files\States\Ingredient</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSComponent.h">
@@ -112,6 +130,21 @@
     </ClInclude>
     <ClInclude Include="PlayerWinningState.h">
       <Filter>Header Files\States\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientState.h">
+      <Filter>Header Files\States\Ingredient</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientFallingState.h">
+      <Filter>Header Files\States\Ingredient</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientIdleState.h">
+      <Filter>Header Files\States\Ingredient</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientOnPlateState.h">
+      <Filter>Header Files\States\Ingredient</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

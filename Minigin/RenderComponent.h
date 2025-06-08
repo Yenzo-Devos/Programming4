@@ -42,6 +42,7 @@ namespace dae
 		
 		void AddObjectToRender(const Rect& dstRect, const Rect& srcRect = Rect{0,0,0,0}, int offsetX = 0, int offsetY = 0);
 		void SetSourceRect(int index, const Rect& srcRect) { m_ObjectToRender[index].srcRect = srcRect; }
+		void ChangeOffset(int index, int offsetX = 0, int offsetY = 0);
 
 	private:
 		bool m_SourceRectEnabled;

@@ -1,9 +1,9 @@
 #pragma once
 #include "BaseComponent.h"
 
-#include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace dae
 {
@@ -32,9 +32,10 @@ namespace dae
 
 		void AddHitbox(const std::string& identifier, int offsetLeft, int offsetTop, int width, int height);
 		Box* GetHitbox(const std::string& identifier);
+		std::vector<Box*> GetAllHitboxes();
 
 	private:
-		std::map<std::string, std::unique_ptr<Box>> m_pHitboxMap{};
+		std::vector<std::pair<std::string, std::unique_ptr<Box>>> m_pHitboxVec{};
 	};
 }
 
