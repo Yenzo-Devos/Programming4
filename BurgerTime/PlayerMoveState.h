@@ -8,7 +8,7 @@ namespace game
 	public:
 		PlayerMoveState() = default;
 		void Update(float) override {};
-		PlayerState* HandleState(PlayerComponent& playerComp) override;
+		std::unique_ptr<PlayerState> HandleState(PlayerComponent& playerComp) override;
 		void OnEnter(PlayerComponent& playerComp) override;
 		void ChangeDirection(glm::vec3 direction);
 	private:

@@ -174,7 +174,6 @@
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerPepperState.cpp" />
-    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerWinningState.cpp" />
   </ItemGroup>
   <ItemGroup>

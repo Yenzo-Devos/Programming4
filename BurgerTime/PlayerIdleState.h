@@ -10,7 +10,7 @@ namespace game
 	public:
 		PlayerIdleState() = default;
 		void Update(float) override {};
-		PlayerState* HandleState(PlayerComponent& playerComp) override;
+		std::unique_ptr<PlayerState> HandleState(PlayerComponent& playerComp) override;
 		void OnEnter(PlayerComponent& playerComp) override;
 		//void OnExit(PlayerComponent* playerComp) override {};
 	private:

@@ -21,10 +21,10 @@ void dae::SpriteComponent::Update(float deltaTime)
 	if (m_CurrentAnimation.frames > 1)
 	{
 		m_AccuAnimTime += deltaTime;
-		if (m_AccuAnimTime > m_CurrentAnimation.animationSpeed)
+		if (m_AccuAnimTime > 1.f / m_CurrentAnimation.animationSpeed)
 		{
 			++m_CurrentFrame %= m_CurrentAnimation.frames;
-			m_AccuAnimTime -= m_CurrentAnimation.animationSpeed;
+			m_AccuAnimTime -= 1.f / m_CurrentAnimation.animationSpeed;
 
 			dae::RenderComponent::Rect srcRect;
 			srcRect.left = m_CurrentFrame * m_CellWidth;
@@ -33,6 +33,15 @@ void dae::SpriteComponent::Update(float deltaTime)
 			srcRect.height = m_CellHeight;
 			m_pRenderComponent->SetSourceRect(srcRect);
 		}
+	}
+	else
+	{
+		dae::RenderComponent::Rect srcRect;
+		srcRect.left = 0;
+		srcRect.bottom = m_CurrentAnimation.row * m_CellHeight;
+		srcRect.width = m_CellWidth;
+		srcRect.height = m_CellHeight;
+		m_pRenderComponent->SetSourceRect(srcRect);
 	}
 }
 
@@ -57,4 +66,5 @@ void dae::SpriteComponent::SetCurrentAnimation(const std::string& animName)
 	
 	m_CurrentAnimation = m_AnimationMap[animName];
 	m_CurrentFrame = 0;
+	m_AccuAnimTime = 0.f;
 }

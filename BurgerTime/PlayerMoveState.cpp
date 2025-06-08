@@ -3,10 +3,10 @@
 #include "PlayerIdleState.h"
 #include "SpriteComponent.h"
 
-game::PlayerState* game::PlayerMoveState::HandleState(PlayerComponent& playerComp)
+std::unique_ptr<game::PlayerState> game::PlayerMoveState::HandleState(PlayerComponent& playerComp)
 {
 	if (playerComp.GetOwner()->GetWorldPosition() == m_LastPos)
-		return new PlayerIdleState();
+		return std::make_unique<PlayerIdleState>();
 
 	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
 	return nullptr;
@@ -14,7 +14,8 @@ game::PlayerState* game::PlayerMoveState::HandleState(PlayerComponent& playerCom
 
 void game::PlayerMoveState::OnEnter(PlayerComponent& playerComp)
 {
-	// change animation based on direction 
+	// change animation based on direction
+	ChangeDirection(playerComp.GetDirection());
 	if (m_Direction.x == 1.f)
 		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkRight");
 	else if (m_Direction.x == -1.f)

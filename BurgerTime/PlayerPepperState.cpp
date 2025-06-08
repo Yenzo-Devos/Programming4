@@ -9,10 +9,10 @@ void game::PlayerPepperState::Update(float deltaTime)
 		m_TimerDone = true;
 }
 
-game::PlayerState* game::PlayerPepperState::HandleState(PlayerComponent&)
+std::unique_ptr<game::PlayerState> game::PlayerPepperState::HandleState(PlayerComponent&)
 {
 	if (m_TimerDone)
-		return new PlayerIdleState();
+		return std::make_unique<PlayerIdleState>();
 	return nullptr;
 }
 

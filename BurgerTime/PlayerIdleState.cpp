@@ -1,16 +1,17 @@
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
+#include "SpriteComponent.h"
 
-game::PlayerState* game::PlayerIdleState::HandleState(PlayerComponent& playerComp)
+std::unique_ptr<game::PlayerState> game::PlayerIdleState::HandleState(PlayerComponent& playerComp)
 {
 	if (playerComp.GetOwner()->GetWorldPosition() != m_LastPos)
-		return new PlayerMoveState();
+		return std::make_unique<PlayerMoveState>();
 
-	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
 	return nullptr;
 }
 
 void game::PlayerIdleState::OnEnter(PlayerComponent& playerComp)
 {
 	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
+	playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("idle");
 }

@@ -75,9 +75,6 @@
     <ClCompile Include="PlayerWinningState.cpp">
       <Filter>Source Files\States\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Source Files\States\Player</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSComponent.h">

@@ -43,8 +43,8 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 			scene.Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"]));
 		for (const auto& player : dynamicObject["player"])
 			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
-		for (const auto& enemy : dynamicObject["enemy"])
-			scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
+		//for (const auto& enemy : dynamicObject["enemy"])
+			//scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
 	}
 	catch (const std::exception& e)
 	{
@@ -161,10 +161,10 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->AddComponent<dae::SpriteComponent>(player->GetComponent<dae::RenderComponent>(), 32, 32);
 	player->GetComponent<dae::SpriteComponent>()->LoadTexture(spriteFileName);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 3, 2, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 3, 3, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 3, 2, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 3, 3, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 10.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayLeft", 1, 7, 1.f);

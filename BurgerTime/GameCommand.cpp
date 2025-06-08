@@ -16,6 +16,7 @@
 #include "PlayerWinningState.h"
 
 #include <ranges>
+#include <memory>
 
 game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec3 direction)
 	: GameObjectCommand(pGameObject)
@@ -52,8 +53,8 @@ void game::MoveCommand::Climb(float deltaTime)
 			if (GetGameObject()->HasComponent<game::PlayerComponent>())
 			{
 				auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
-				playerComp->ChangeState(&game::PlayerState::m_Move);
-				playerComp->GetState()->m_Move.ChangeDirection(m_Direction);
+				// change state to move and give direction
+				playerComp->ChangeDirection(m_Direction);
 			}
 			return;
 		}
@@ -80,8 +81,8 @@ void game::MoveCommand::Walk(float deltaTime)
 			if (GetGameObject()->HasComponent<game::PlayerComponent>())
 			{
 				auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
-				playerComp->ChangeState(&game::PlayerState::m_Move);
-				playerComp->GetState()->m_Move.ChangeDirection(m_Direction);
+				// change state to move and give direction
+				playerComp->ChangeDirection(m_Direction);
 			}
 			return;
 		}
@@ -118,5 +119,6 @@ void game::ThrowPepperCommand::Execute(float)
 	// create pepper Object
 
 	// set player to pepperState
-	playerComp->ChangeState(&game::PlayerState::m_Pepper);
+	// change state to pepper and give direction
+	//playerComp->ChangeState(&game::PlayerState::m_Pepper);
 }

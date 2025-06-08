@@ -3,7 +3,7 @@
 
 game::PlayerComponent::PlayerComponent(dae::GameObject* pOwner)
 	: BaseComponent( pOwner )
-	, m_pState{ new PlayerIdleState() }
+	, m_pState{ std::make_unique<PlayerIdleState>() }
 {
 }
 
@@ -15,23 +15,30 @@ void game::PlayerComponent::Update(float elapsedSec)
 
 void game::PlayerComponent::HandleState()
 {
-	PlayerState* newState = m_pState->HandleState(*this);
+	auto newState = m_pState->HandleState(*this);
 	if (newState != nullptr)
 	{
 		m_pState->OnExit(*this);
-		m_pState = newState;
+		m_pState = std::move(newState);
 		m_pState->OnEnter(*this);
 	}
 }
 
-void game::PlayerComponent::ChangeState(PlayerState* state)
+void game::PlayerComponent::ChangeState(std::unique_ptr<PlayerState> state)
 {
 	if (m_pState != state)
-		m_pState = state;
+		m_pState = std::move(state);
 }
 
-void game::PlayerComponent::ChangeDiretion(glm::vec3 direction)
+void game::PlayerComponent::ChangeDirection(glm::vec3 direction)
 {
 	if (m_Direction != direction)
 		m_Direction = direction;
+}
+
+bool game::PlayerComponent::CheckIfPlayerMoved() const
+{
+	if (m_pOwner->GetWorldPosition() != m_LastPos) 
+		return true;
+	return false;
 }

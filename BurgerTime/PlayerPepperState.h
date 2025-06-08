@@ -9,7 +9,7 @@ namespace game
 	public:
 		PlayerPepperState() = default;
 		void Update(float deltaTime) override;
-		PlayerState* HandleState(PlayerComponent&) override;
+		std::unique_ptr<PlayerState> HandleState(PlayerComponent&) override;
 		void OnEnter(PlayerComponent& playerComp) override;
 		void ChangeDirection(glm::vec3 direction);
 	private:

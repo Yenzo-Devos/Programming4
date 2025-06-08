@@ -9,7 +9,7 @@ namespace game
 	{
 	public:
 		PlayerComponent(dae::GameObject* pOwner);
-		virtual ~PlayerComponent() = default;
+		~PlayerComponent() = default;
 
 		PlayerComponent(const PlayerComponent& other) = delete;
 		PlayerComponent(PlayerComponent&& other) = delete;
@@ -19,15 +19,18 @@ namespace game
 		void Update(float elapsedSec) override;
 		void HandleState();
 
-		PlayerState* GetState() const { return m_pState; }
-		void ChangeState(PlayerState* state);
+		PlayerState* GetState() const { return m_pState.get(); }
+		void ChangeState(std::unique_ptr<PlayerState> state);
 
 		glm::vec3 GetDirection() const { return m_Direction; }
-		void ChangeDiretion(glm::vec3 direction);
+		void ChangeDirection(glm::vec3 direction);
+
+		bool CheckIfPlayerMoved() const;
 
 		dae::GameObject* GetOwner() { return m_pOwner; }
 	private:
-		PlayerState* m_pState{};
+		std::unique_ptr<PlayerState> m_pState{};
 		glm::vec3 m_Direction{};
+		glm::vec3 m_LastPos{};
 	};
 }
