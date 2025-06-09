@@ -164,6 +164,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp" />
+    <ClCompile Include="EnemyComponent.cpp" />
+    <ClCompile Include="EnemyDeadState.cpp" />
+    <ClCompile Include="EnemyMovingState.cpp" />
+    <ClCompile Include="EnemySquishedState.cpp" />
+    <ClCompile Include="EnemyState.cpp" />
+    <ClCompile Include="EnemyStunnedState.cpp" />
     <ClCompile Include="FallComponent.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
@@ -181,8 +187,15 @@
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerPepperState.cpp" />
     <ClCompile Include="PlayerWinningState.cpp" />
+    <ClCompile Include="RespawnComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyComponent.h" />
+    <ClInclude Include="EnemyDeadState.h" />
+    <ClInclude Include="EnemyMovingState.h" />
+    <ClInclude Include="EnemySquishedState.h" />
+    <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="EnemyStunnedState.h" />
     <ClInclude Include="FallComponent.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
@@ -202,6 +215,7 @@
     <ClInclude Include="PlayerPepperState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerWinningState.h" />
+    <ClInclude Include="RespawnComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

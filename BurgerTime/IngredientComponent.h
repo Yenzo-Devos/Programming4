@@ -23,7 +23,7 @@ namespace game
 		IngredientComponent& operator=(const IngredientComponent& other) = delete;
 		IngredientComponent& operator=(IngredientComponent&& other) = delete;
 
-		void Update(float elapsedSec) override;
+		void Update(float deltaTime) override;
 		void HandleState();
 
 		void Hit(int index);

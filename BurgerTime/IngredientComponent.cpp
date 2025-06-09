@@ -12,9 +12,9 @@ game::IngredientComponent::IngredientComponent(dae::GameObject* pOwner)
 {
 }
 
-void game::IngredientComponent::Update(float elapsedSec)
+void game::IngredientComponent::Update(float deltaTime)
 {
-	m_pState->Update(elapsedSec);
+	m_pState->Update(deltaTime);
 	HandleState();
 }
 

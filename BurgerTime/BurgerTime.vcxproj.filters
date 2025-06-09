@@ -43,6 +43,12 @@
     <Filter Include="Source Files\States\Ingredient">
       <UniqueIdentifier>{c1bcfa47-7aa7-404c-99a1-88a2e987bc71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States\Enemy">
+      <UniqueIdentifier>{3047964d-bc85-4825-b2b0-7b87dcbc12ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Enemy">
+      <UniqueIdentifier>{f9d56fbd-1f04-4eaf-a512-304eae9bbbc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp">
@@ -98,6 +104,27 @@
     </ClCompile>
     <ClCompile Include="PlateComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMovingState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStunnedState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySquishedState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDeadState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +184,27 @@
     </ClInclude>
     <ClInclude Include="PlateComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMovingState.h">
+      <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStunnedState.h">
+      <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySquishedState.h">
+      <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDeadState.h">
+      <Filter>Header Files\States\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
