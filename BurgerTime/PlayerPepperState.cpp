@@ -18,14 +18,9 @@ std::unique_ptr<game::PlayerState> game::PlayerPepperState::HandleState(PlayerCo
 
 void game::PlayerPepperState::OnEnter(PlayerComponent& playerComp)
 {
-	if (m_Direction.x == 1.f)
+	auto dir = playerComp.GetDirection();
+	if (dir.x == 1.f)
 		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayRight");
-	if (m_Direction.x == -1.f)
+	if (dir.x == -1.f)
 		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayLeft");
-}
-
-void game::PlayerPepperState::ChangeDirection(glm::vec3 direction)
-{
-	if (m_Direction != direction)
-		m_Direction = direction;
 }

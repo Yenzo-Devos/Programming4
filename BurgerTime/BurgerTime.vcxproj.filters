@@ -114,9 +114,6 @@
     <ClCompile Include="EnemyComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyMovingState.cpp">
-      <Filter>Source Files\States\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyStunnedState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
     </ClCompile>
@@ -125,6 +122,15 @@
     </ClCompile>
     <ClCompile Include="EnemyDeadState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyChaseState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFallState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="PepperComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +200,6 @@
     <ClInclude Include="EnemyComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyMovingState.h">
-      <Filter>Header Files\States\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyStunnedState.h">
       <Filter>Header Files\States\Enemy</Filter>
     </ClInclude>
@@ -205,6 +208,15 @@
     </ClInclude>
     <ClInclude Include="EnemyDeadState.h">
       <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyChaseState.h">
+      <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFallState.h">
+      <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PepperComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

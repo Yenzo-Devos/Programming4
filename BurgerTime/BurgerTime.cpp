@@ -167,12 +167,14 @@ void load()
 	auto moveUpCommand = std::make_unique<game::MoveCommand>(chefObj, speed, glm::vec3(0, -1, 0));
 	auto moveDownCommand = std::make_unique<game::MoveCommand>(chefObj, speed, glm::vec3(0, 1, 0));
 	auto killChefCommand = std::make_unique<game::KillCommand>(chefObj);
+	auto ThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(chefObj);
 
 	dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_LEFT);
 	dae::InputManager::GetInstance().BindCommand(std::move(moveRightCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_RIGHT);
 	dae::InputManager::GetInstance().BindCommand(std::move(moveUpCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_UP);
 	dae::InputManager::GetInstance().BindCommand(std::move(moveDownCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_DOWN);
 	dae::InputManager::GetInstance().BindCommand(std::move(killChefCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
+	dae::InputManager::GetInstance().BindCommand(std::move(ThrowPepperCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_B);
 
 	// adding keyboard movement
 	auto moveLeftCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj, speed, glm::vec3(-1, 0, 0));

@@ -1,12 +1,16 @@
 #include "PlayerMoveState.h"
 #include "PlayerComponent.h"
 #include "PlayerIdleState.h"
+#include "PlayerPepperState.h"
 #include "SpriteComponent.h"
 
 std::unique_ptr<game::PlayerState> game::PlayerMoveState::HandleState(PlayerComponent& playerComp)
 {
 	if (playerComp.GetOwner()->GetWorldPosition() == m_LastPos)
 		return std::make_unique<PlayerIdleState>();
+
+	if (m_Throw)
+		return std::make_unique<PlayerPepperState>();
 
 	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
 	return nullptr;
@@ -32,4 +36,9 @@ void game::PlayerMoveState::ChangeDirection(glm::vec3 direction)
 {
 	if (m_Direction != direction)
 		m_Direction = direction;
+}
+
+void game::PlayerMoveState::Throw()
+{
+	m_Throw = true;
 }

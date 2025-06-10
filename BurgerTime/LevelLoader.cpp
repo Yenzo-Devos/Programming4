@@ -14,6 +14,7 @@
 #include "IngredientComponent.h"
 #include "FallComponent.h"
 #include "PlateComponent.h"
+#include "PepperComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -44,10 +45,10 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 		auto dynamicObject = jsonData["dynamicObjects"];
 		for (const auto& ingredient : dynamicObject["ingredient"])
 			scene.Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"], scene.GetAllObjectByTag("plate")));
-		for (const auto& player : dynamicObject["player"])
-			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
 		//for (const auto& enemy : dynamicObject["enemy"])
 			//scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
+		for (const auto& player : dynamicObject["player"])
+			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
 	}
 	catch (const std::exception& e)
 	{
@@ -128,8 +129,6 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateWalkableObject(int x, 
 	walkableObj->SetLocalPosition(glm::vec3(x, y, 0.f));
 	walkableObj->SetDimensions(width, 6);
 	
-	//walkableObj->AddComponent<dae::HitboxComponent>();
-	//walkableObj->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, width, 6);
 	return walkableObj;
 }
 
@@ -164,53 +163,6 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	return ingredient;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, int y)
-{
-	// check if game is single or multiplayer mode?
-	
-	auto player = std::make_unique<dae::GameObject>();
-	player->SetLocalPosition(glm::vec3(x, y, 0.f));
-	player->SetDimensions(32, 32);
-
-	std::string spriteFileName;
-	if (id == 0)
-	{
-		spriteFileName = "dynamic_objects/player0_sprite_sheet.png";
-		player->GiveTag("player0");
-	}
-	else if (id == 1)
-	{
-		spriteFileName = "dynamic_objects/player0_sprite_sheet.png";
-		player->GiveTag("player1");
-	}
-	else throw std::runtime_error("player id incorrect, failed to load player correctly");
-
-	player->AddComponent<dae::RenderComponent>(true);
-	player->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x, y, 32, 32});
-	player->AddComponent<dae::SpriteComponent>(player->GetComponent<dae::RenderComponent>(), 32, 32);
-	player->GetComponent<dae::SpriteComponent>()->LoadTexture(spriteFileName);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 10.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 3, 2, 10.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 3, 3, 10.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 10.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayLeft", 1, 7, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
-	player->AddComponent<game::LivesComponent>(3);
-
-	// add collisioncomp and playercomp
-	player->AddComponent<dae::HitboxComponent>();
-	player->GetComponent<dae::HitboxComponent>()->AddHitbox("body_hitbox", 0, 0, 26, 32);
-	player->GetComponent<dae::HitboxComponent>()->AddHitbox("feet_hitbox", 0, 32, 32, 6);
-
-	player->AddComponent<game::PlayerComponent>();
-
-	return player;
-}
-
 std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::string& type, int x, int y)
 {
 	auto enemy = std::make_unique<dae::GameObject>();
@@ -234,4 +186,72 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	// add collisioncomp and EnemyComp
 
 	return enemy;
+}
+
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, int y)
+{
+	// check if game is single or multiplayer mode?
+
+	auto player = std::make_unique<dae::GameObject>();
+	player->SetLocalPosition(glm::vec3(x, y, 0.f));
+	player->SetDimensions(32, 32);
+
+	std::string spriteFileName;
+	if (id == 0)
+	{
+		spriteFileName = "dynamic_objects/player0_sprite_sheet.png";
+		player->GiveTag("player0");
+	}
+	else if (id == 1)
+	{
+		spriteFileName = "dynamic_objects/player0_sprite_sheet.png";
+		player->GiveTag("player1");
+	}
+	else throw std::runtime_error("player id incorrect, failed to load player correctly");
+
+	player->AddComponent<dae::RenderComponent>(true);
+	player->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ x, y, 32, 32 });
+	player->AddComponent<dae::SpriteComponent>(player->GetComponent<dae::RenderComponent>(), 32, 32);
+	player->GetComponent<dae::SpriteComponent>()->LoadTexture(spriteFileName);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("idle", 1, 0, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 3, 1, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 3, 2, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 3, 3, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 10.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayLeft", 1, 7, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
+	player->AddComponent<game::LivesComponent>(3);
+
+	// add collisioncomp and playercomp
+	player->AddComponent<dae::HitboxComponent>();
+	player->GetComponent<dae::HitboxComponent>()->AddHitbox("body_hitbox", 5, 0, 22, 32);
+	player->GetComponent<dae::HitboxComponent>()->AddHitbox("feet_hitbox", 5, 32, 22, 6);
+
+	auto pepper = CreatePepper();
+	player->AddComponent<game::PlayerComponent>(pepper.get());
+	dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(pepper));
+	return player;
+}
+
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePepper()
+{
+	auto pepper = std::make_unique<dae::GameObject>();
+	pepper->SetLocalPosition({ -50.f, -50.f, 0.f });
+	pepper->SetDimensions(32, 32);
+
+	pepper->AddComponent<dae::RenderComponent>(true);
+	pepper->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ -10, -10, 32, 32 });
+	pepper->AddComponent<dae::SpriteComponent>(pepper->GetComponent<dae::RenderComponent>(), 32, 32);
+	pepper->GetComponent<dae::SpriteComponent>()->LoadTexture("dynamic_objects/pepper_sprite_sheet.png");
+	pepper->GetComponent<dae::SpriteComponent>()->LoadAnimationData("pepperLeft", 4, 0, 8.f);
+	pepper->GetComponent<dae::SpriteComponent>()->LoadAnimationData("pepperRight", 4, 1, 8.f);
+
+	pepper->AddComponent<dae::HitboxComponent>();
+	pepper->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
+
+	pepper->AddComponent<game::PepperComponent>(pepper->GetComponent<dae::HitboxComponent>());
+	return pepper;
 }

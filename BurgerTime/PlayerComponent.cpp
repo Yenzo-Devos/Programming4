@@ -1,15 +1,18 @@
 #include "PlayerComponent.h"
 #include "PlayerIdleState.h"
+#include "PlayerMoveState.h"
+#include "PepperComponent.h"
 
-game::PlayerComponent::PlayerComponent(dae::GameObject* pOwner)
+game::PlayerComponent::PlayerComponent(dae::GameObject* pOwner, dae::GameObject* pPepper)
 	: BaseComponent( pOwner )
 	, m_pState{ std::make_unique<PlayerIdleState>() }
+	, m_pPepper{ pPepper }
 {
 }
 
-void game::PlayerComponent::Update(float elapsedSec)
+void game::PlayerComponent::Update(float deltaTime)
 {
-	m_pState->Update(elapsedSec);
+	m_pState->Update(deltaTime);
 	HandleState();
 }
 
@@ -41,4 +44,13 @@ bool game::PlayerComponent::CheckIfPlayerMoved() const
 	if (m_pOwner->GetWorldPosition() != m_LastPos) 
 		return true;
 	return false;
+}
+
+void game::PlayerComponent::ActivatePepper(glm::vec2 pos, glm::vec2 dir)
+{
+	if (m_pPepper->GetComponent<PepperComponent>()->Activate(pos, dir))
+	{
+		auto moveState = dynamic_cast<PlayerMoveState*>(m_pState.get());
+		if (moveState) moveState->Throw();
+	}
 }

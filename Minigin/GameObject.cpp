@@ -47,7 +47,7 @@ void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPos)
 	else
 	{
 		if (keepWorldPos)
-			SetLocalPosition(GetWorldPosition() - m_pParent->GetWorldPosition());
+			SetLocalPosition(GetWorldPosition() - pParent->GetWorldPosition());
 		SetPositionDirty();
 	}
 

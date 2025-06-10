@@ -7,7 +7,8 @@ namespace dae
 	{
 		OnPlayerDeath,
 		OnPlayerScored,
-		OnIngredientFallOnPlate
+		OnIngredientFallOnPlate,
+		EnemyStunned
 	};
 
 	class Observer

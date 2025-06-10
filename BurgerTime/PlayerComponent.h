@@ -8,7 +8,7 @@ namespace game
 	class PlayerComponent : public dae::BaseComponent
 	{
 	public:
-		PlayerComponent(dae::GameObject* pOwner);
+		PlayerComponent(dae::GameObject* pOwner, dae::GameObject* pPepper);
 		~PlayerComponent() = default;
 
 		PlayerComponent(const PlayerComponent& other) = delete;
@@ -16,7 +16,7 @@ namespace game
 		PlayerComponent& operator=(const PlayerComponent& other) = delete;
 		PlayerComponent& operator=(PlayerComponent&& other) = delete;
 
-		void Update(float elapsedSec) override;
+		void Update(float deltaTime) override;
 		void HandleState();
 
 		PlayerState* GetState() const { return m_pState.get(); }
@@ -28,7 +28,10 @@ namespace game
 		bool CheckIfPlayerMoved() const;
 
 		dae::GameObject* GetOwner() { return m_pOwner; }
+
+		void ActivatePepper(glm::vec2 pos, glm::vec2 dir);
 	private:
+		dae::GameObject* m_pPepper{};
 		std::unique_ptr<PlayerState> m_pState{};
 		glm::vec3 m_Direction{};
 		glm::vec3 m_LastPos{};

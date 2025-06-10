@@ -103,10 +103,16 @@ void game::ThrowPepperCommand::Execute(float)
 	// get direction
 	auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
 	glm::vec3 direction = playerComp->GetDirection();
-
-
-	// create pepper Object
-
+	glm::vec3 playerPos = GetGameObject()->GetWorldPosition();
+	
+	glm::vec2 pos{};
+	if (direction.x == 1.f)
+		pos = { playerPos.x + GetGameObject()->GetDimensions().first, playerPos.y };
+	else if (direction.x == -1.f)
+		pos = { playerPos.x - GetGameObject()->GetDimensions().first, playerPos.y };
+	else return;
+	
+	playerComp->ActivatePepper(pos, direction);
 	// set player to pepperState
 	// change state to pepper and give direction
 	//playerComp->ChangeState(&game::PlayerState::m_Pepper);

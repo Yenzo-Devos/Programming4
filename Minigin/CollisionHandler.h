@@ -21,6 +21,9 @@ namespace dae
 		bool IsNextWalkPossible(glm::vec2 pos, int width, int height);
 		bool IsNextClimbPossible(glm::vec2 pos, int height);
 
+		std::vector<GameObject*> IsOverlappingWithObject(const std::string& identifier, glm::vec2 pos, int width, int height);
+		std::vector<GameObject*> IsOverlappingWithObject(const std::string& identifier, HitboxComponent::Box* hitbox);
+
 		std::vector<GameObject*> AreEnemiesHit(HitboxComponent::Box* hitbox);
 		GameObject* HasIngredientLanded(glm::vec2 pos);
 

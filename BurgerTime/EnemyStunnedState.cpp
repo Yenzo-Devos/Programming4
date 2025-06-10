@@ -1,5 +1,5 @@
 #include "EnemyStunnedState.h"
-#include "EnemyMovingState.h"
+#include "EnemyChaseState.h"
 
 void game::EnemyStunnedState::Update(float deltaTime)
 {
@@ -12,7 +12,7 @@ std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::Game
     // return DeadState
 
     if (m_AccuStunTime >= m_StunTime)
-        return std::make_unique<EnemyMovingState>();
+        return std::make_unique<EnemyChaseState>();
 
     return nullptr;
 }
