@@ -60,6 +60,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateLadder(int x, int y, i
 	auto ladder = std::make_unique<dae::GameObject>();
 	ladder->GiveTag("ladder");
 	ladder->SetLocalPosition(glm::vec3(x, y, 0.f));
+	ladder->SetDimensions(32, length * 32);
 	
 	const std::string textureFileName = "static_objects/ladder" + std::to_string(length) + ".png";
 	ladder->AddComponent<dae::RenderComponent>();
@@ -76,6 +77,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlatform(int, int x, i
 	auto platform = std::make_unique<dae::GameObject>();
 	platform->GiveTag("platform");
 	platform->SetLocalPosition(glm::vec3(x, y, 0.f));
+	platform->SetDimensions(64, 6);
 	
 	platform->AddComponent<dae::RenderComponent>();
 	platform->AddComponent<dae::TextureComponent>(platform->GetComponent<dae::RenderComponent>());
@@ -92,6 +94,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlate(int idGroup, int
 	auto plate = std::make_unique<dae::GameObject>();
 	plate->GiveTag("plate");
 	plate->SetLocalPosition(glm::vec3(x, y, 0.f));
+	plate->SetDimensions(76, 10);
 
 	plate->AddComponent<dae::RenderComponent>();
 	plate->AddComponent<dae::TextureComponent>(plate->GetComponent<dae::RenderComponent>());
@@ -109,6 +112,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateFloor(int x, int y)
 	auto floor = std::make_unique<dae::GameObject>();
 	floor->GiveTag("floor");
 	floor->SetLocalPosition(glm::vec3(x, y, 0.f));
+	floor->SetDimensions(32, 6);
 
 	floor->AddComponent<dae::RenderComponent>();
 	floor->AddComponent<dae::TextureComponent>(floor->GetComponent<dae::RenderComponent>());
@@ -121,10 +125,11 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateWalkableObject(int x, 
 {
 	auto walkableObj = std::make_unique<dae::GameObject>();
 	walkableObj->GiveTag("walkable_object");
-	walkableObj->SetLocalPosition(glm::vec3(x, y, width));
+	walkableObj->SetLocalPosition(glm::vec3(x, y, 0.f));
+	walkableObj->SetDimensions(width, 6);
 	
-	walkableObj->AddComponent<dae::HitboxComponent>();
-	walkableObj->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, width, 6);
+	//walkableObj->AddComponent<dae::HitboxComponent>();
+	//walkableObj->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, width, 6);
 	return walkableObj;
 }
 
@@ -133,6 +138,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	auto ingredient = std::make_unique<dae::GameObject>();
 	ingredient->GiveTag("ingredient");
 	ingredient->SetLocalPosition(glm::vec3(x, y, 0.f));
+	ingredient->SetDimensions(64, 16);
 
 	const std::string textureFileName = "dynamic_objects/ingredient" + std::to_string(type) + ".png";
 	ingredient->AddComponent<dae::RenderComponent>(true);
@@ -164,6 +170,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	
 	auto player = std::make_unique<dae::GameObject>();
 	player->SetLocalPosition(glm::vec3(x, y, 0.f));
+	player->SetDimensions(32, 32);
 
 	std::string spriteFileName;
 	if (id == 0)
@@ -196,7 +203,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 
 	// add collisioncomp and playercomp
 	player->AddComponent<dae::HitboxComponent>();
-	player->GetComponent<dae::HitboxComponent>()->AddHitbox("body_hitbox", 0, 0, 32, 32);
+	player->GetComponent<dae::HitboxComponent>()->AddHitbox("body_hitbox", 0, 0, 26, 32);
 	player->GetComponent<dae::HitboxComponent>()->AddHitbox("feet_hitbox", 0, 32, 32, 6);
 
 	player->AddComponent<game::PlayerComponent>();
@@ -209,6 +216,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	auto enemy = std::make_unique<dae::GameObject>();
 	enemy->GiveTag("enemy");
 	enemy->SetLocalPosition(glm::vec3(x, y, 0.f));
+	enemy->SetDimensions(32, 32);
 
 	const std::string textureFileName = "dynamic_objects/" + type + "_sprite_sheet.png";
 	enemy->AddComponent<dae::RenderComponent>(true);

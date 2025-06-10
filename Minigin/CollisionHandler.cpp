@@ -15,24 +15,29 @@ void dae::CollisionHandler::Init()
 	m_pPlayerVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("player0");
 }
 
-bool dae::CollisionHandler::IsNextWalkPossible(HitboxComponent::Box* hitbox)
+bool dae::CollisionHandler::IsNextWalkPossible(glm::vec2 pos, int width, int height)
 {
 	for (const auto& walkableObject : m_pWalkableObjectVec)
 	{
-		auto walkHitbox = walkableObject->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
-		if (IsFullyOverlapping(hitbox, walkHitbox))
+		auto walkObjPos = walkableObject->GetWorldPosition();
+		auto walkObjWidth = walkableObject->GetDimensions().first;
+		if (pos.x > walkObjPos.x &&
+			pos.x + width < walkObjPos.x + walkObjWidth &&
+			std::abs((pos.y+height) - walkObjPos.y) <= 1.5f)
 			return true;
 	}
 	return false;
 }
 
-bool dae::CollisionHandler::IsNextClimbPossible(HitboxComponent::Box* hitbox)
+bool dae::CollisionHandler::IsNextClimbPossible(glm::vec2 pos, int height)
 {
 	for (const auto& ladder : m_pLadderVec)
 	{
-		auto ladderHitbox = ladder->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
-		if (IsOverlapping(hitbox, ladderHitbox) and
-			std::abs(hitbox->left - static_cast<int>(ladder->GetWorldPosition().x)) <= .5f)
+		auto ladderPos = ladder->GetWorldPosition();
+		auto ladderHeight = ladder->GetDimensions().second;
+		if (std::abs(pos.x - ladderPos.x) <= 1.5f &&
+			pos.y + height > ladderPos.y &&
+			pos.y + height < ladderPos.y + ladderHeight)
 			return true;
 	}
 	return false;

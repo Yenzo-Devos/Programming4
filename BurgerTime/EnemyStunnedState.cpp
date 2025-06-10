@@ -3,7 +3,7 @@
 
 void game::EnemyStunnedState::Update(float deltaTime)
 {
-    m_AccuStunTime += m_StunTime;
+    m_AccuStunTime += deltaTime;
 }
 
 std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::GameObject&)

@@ -18,8 +18,8 @@ namespace dae
 
 		void Init();
 		
-		bool IsNextWalkPossible(HitboxComponent::Box* hitbox);
-		bool IsNextClimbPossible(HitboxComponent::Box* hitbox);
+		bool IsNextWalkPossible(glm::vec2 pos, int width, int height);
+		bool IsNextClimbPossible(glm::vec2 pos, int height);
 
 		std::vector<GameObject*> AreEnemiesHit(HitboxComponent::Box* hitbox);
 		GameObject* HasIngredientLanded(glm::vec2 pos);

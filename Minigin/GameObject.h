@@ -31,6 +31,9 @@ namespace dae
 		const glm::vec3& GetWorldPosition();
 		void SetLocalPosition(const glm::vec3& pos);
 		void UpdateWorldPosition();
+		
+		void SetDimensions(int width, int height);
+		std::pair<int, int> GetDimensions() { return { m_Width, m_Height }; }
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -59,6 +62,8 @@ namespace dae
 		bool m_IsPositionDirty{ false };
 		glm::vec3 m_WorldPosition{};
 		glm::vec3 m_LocalPosition{};
+		int m_Width{};
+		int m_Height{};
 
 		// position function
 		void SetPositionDirty();

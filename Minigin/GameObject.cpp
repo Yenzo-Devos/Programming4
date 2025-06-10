@@ -121,3 +121,9 @@ void dae::GameObject::UpdateWorldPosition()
 	if (this->HasComponent<dae::HitboxComponent>())
 		this->GetComponent<dae::HitboxComponent>()->UpdateHitboxPosition();
 }
+
+void dae::GameObject::SetDimensions(int width, int height)
+{
+	m_Width = width;
+	m_Height = height;
+}
