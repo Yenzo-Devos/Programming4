@@ -9,7 +9,7 @@ namespace game
 		EnemyDeadState() = default;
 		virtual void Update(float deltaTime);
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject& owner) override;
-		//void OnEnter(dae::GameObject& owner) override;
+		void OnEnter(dae::GameObject& owner) override;
 		//virtual void OnExit(dae::GameObject&) {}
 
 	private:

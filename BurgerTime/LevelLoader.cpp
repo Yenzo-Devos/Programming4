@@ -184,7 +184,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 1, 10.f);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 2, 10.f);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 3, 10.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 4, 10.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 4, 4.f);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 5, 10.f);
 	enemy->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	

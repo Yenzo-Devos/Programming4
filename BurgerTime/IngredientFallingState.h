@@ -20,6 +20,7 @@ namespace game
 
 		dae::HitboxComponent* m_pHitboxComp;
 		void EmptyLandingPlatform();
+		std::vector<dae::GameObject*> CheckIfEnemiesCollide();
 	};
 }
 

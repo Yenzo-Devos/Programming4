@@ -16,6 +16,8 @@ void game::IngredientFallingState::Update(float deltaTime)
         if (m_AccuGraceTimer >= m_GraceTime)
             m_GracePeriodOver = true;
     }
+    for (auto enemy : CheckIfEnemiesCollide())
+        enemy->GetComponent<EnemyComponent>()->Hit();
 }
 
 std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(dae::GameObject& owner)
@@ -51,13 +53,7 @@ void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
     owner.GetComponent<game::FallComponent>()->Activate(true);
 
     // check if enemies were on it and set them to falling
-    std::vector<dae::GameObject*> enemyVec{};
-    for (auto hitbox : m_pHitboxComp->GetAllHitboxes())
-    {
-        auto bufferVec = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", hitbox);
-        enemyVec.insert(enemyVec.end(), bufferVec.begin(), bufferVec.end());
-    }
-    for (auto enemy : enemyVec)
+    for (auto enemy : CheckIfEnemiesCollide())
         enemy->GetComponent<EnemyComponent>()->StartFalling();
 }
 
@@ -73,4 +69,15 @@ void game::IngredientFallingState::EmptyLandingPlatform()
         for (const auto& ingredient : ingredientVec)
             for (int index{ 0 }; index < 4; ++index)
                 ingredient.first->GetComponent<IngredientComponent>()->Hit(index);
+}
+
+std::vector<dae::GameObject*> game::IngredientFallingState::CheckIfEnemiesCollide()
+{
+    std::vector<dae::GameObject*> enemyVec{};
+    for (auto hitbox : m_pHitboxComp->GetAllHitboxes())
+    {
+        auto bufferVec = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", hitbox);
+        enemyVec.insert(enemyVec.end(), bufferVec.begin(), bufferVec.end());
+    }
+    return enemyVec;
 }

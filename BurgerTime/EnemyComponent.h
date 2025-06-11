@@ -25,6 +25,7 @@ namespace game
 		void HandleState();
 
 		void StartFalling();
+		void Hit();
 		void Broadcast(dae::GameObject*, dae::Event event) override;
 
 	private:

@@ -34,6 +34,15 @@ void game::EnemyComponent::StartFalling()
 		stunState->Fall();
 }
 
+void game::EnemyComponent::Hit()
+{
+	auto state = dynamic_cast<EnemyChaseState*>(m_pState.get());
+	if (state)
+		state->Hit();
+	else if (auto stunState = dynamic_cast<EnemyStunnedState*>(m_pState.get()))
+		stunState->Hit();
+}
+
 void game::EnemyComponent::Broadcast(dae::GameObject*, dae::Event event)
 {
 	switch (event)

@@ -12,9 +12,11 @@ namespace game
 		void OnEnter(dae::GameObject& owner) override;
 		//virtual void OnExit(dae::GameObject&) {}
 		void Fall() { m_IsFalling = true; }
+		void Hit() { m_GotHit = true; }
 
 	private:
 		bool m_IsFalling{ false };
+		bool m_GotHit{ false };
 		float m_AccuStunTime{ 0.f };
 		float m_StunTime{ 2.f };
 	};

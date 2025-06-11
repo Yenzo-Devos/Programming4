@@ -17,3 +17,8 @@ std::unique_ptr<game::EnemyState> game::EnemyDeadState::HandleState(dae::GameObj
     }
     return nullptr;
 }
+
+void game::EnemyDeadState::OnEnter(dae::GameObject& owner)
+{
+    owner.SetLocalPosition({ -50.f, -50.f, 0.f });
+}
