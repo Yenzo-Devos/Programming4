@@ -2,9 +2,12 @@
 #include "EnemyChaseState.h"
 #include "EnemyStunnedState.h"
 
-game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner)
+
+
+game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner, std::unique_ptr<dae::GameObject> pointEffectObj)
 	: BaseComponent(pOwner)
 	, m_pState{ std::make_unique<EnemyChaseState>(pOwner->GetComponent<dae::SpriteComponent>(), pOwner->GetComponent<ChaseComponent>()) }
+	, m_pPointEffect{ std::move(pointEffectObj) }
 {
 }
 

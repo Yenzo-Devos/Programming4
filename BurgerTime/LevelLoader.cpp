@@ -18,6 +18,8 @@
 #include "EnemyComponent.h"
 #include "ChaseComponent.h"
 #include "RespawnComponent.h"
+#include "PointsComponent.h"
+#include "PointEffectComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -195,12 +197,35 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
 	enemy->AddComponent<game::ChaseComponent>(pLadders);
 	
-	enemy->AddComponent<game::EnemyComponent>();
+	auto pointEffect = CreatePointEffect();
+	enemy->AddComponent<game::EnemyComponent>(pointEffect);
 	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
 	enemy->AddComponent<game::FallComponent>(100.f);
 
 
 	return enemy;
+}
+
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePointEffect()
+{
+	auto pointEffect = std::make_unique<dae::GameObject>();
+	pointEffect->SetLocalPosition(glm::vec3{ -50.f, -50.f, 0.f });
+	pointEffect->AddComponent<dae::RenderComponent>(true);
+	pointEffect->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{-50, -50, 32, 32});
+	pointEffect->AddComponent<dae::SpriteComponent>(pointEffect->GetComponent<dae::RenderComponent>());
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadTexture("ui_objects/points_texture.png");
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("100", 1, 0, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("200", 1, 1, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("300", 1, 2, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("500", 1, 3, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("1000", 1, 4, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("2000", 1, 5, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("4000", 1, 6, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("8000", 1, 7, 1.f);
+	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("16000", 1, 8, 1.f);
+	pointEffect->AddComponent<PointEffectComponent>();
+
+	return pointEffect;
 }
 
 std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, int y)
@@ -239,6 +264,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
 	player->AddComponent<game::LivesComponent>(3);
+	player->AddComponent<game::PointsComponent>();
 
 	// add collisioncomp and playercomp
 	player->AddComponent<dae::HitboxComponent>();

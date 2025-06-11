@@ -35,6 +35,7 @@ void game::PlayerMoveState::OnEnter(PlayerComponent& playerComp)
 		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkUp");
 
 	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
+	m_CurrentHealth = playerComp.GetOwner()->GetComponent<LivesComponent>()->GetCurrentNrOfLives();
 }
 
 void game::PlayerMoveState::ChangeDirection(glm::vec3 direction)

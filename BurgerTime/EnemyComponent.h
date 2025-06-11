@@ -13,7 +13,7 @@ namespace game
 	class EnemyComponent : public dae::BaseComponent, public dae::Observer
 	{
 	public:
-		EnemyComponent(dae::GameObject* pOwner);
+		EnemyComponent(dae::GameObject* pOwner, std::unique_ptr<dae::GameObject> pointEffectObj);
 		~EnemyComponent() = default;
 
 		EnemyComponent(const EnemyComponent& other) = delete;
@@ -30,5 +30,6 @@ namespace game
 
 	private:
 		std::unique_ptr<game::EnemyState> m_pState;
+		std::unique_ptr<dae::GameObject> m_pPointEffectObj;
 	};
 }
