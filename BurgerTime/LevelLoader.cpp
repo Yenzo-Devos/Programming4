@@ -53,9 +53,7 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 		for (const auto& enemy : dynamicObject["enemy"])
 			scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
 		for (const auto& player : dynamicObject["player"])
-		{
 			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
-		}
 	}
 	catch (const std::exception& e)
 	{
@@ -206,10 +204,11 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 		pointMultiplier = 3;
 
 	auto pointEffect = CreatePointEffect();
-	enemy->AddComponent<game::EnemyComponent>(std::move(pointEffect), pointMultiplier);
+	enemy->AddComponent<game::EnemyComponent>(pointEffect.get(), pointMultiplier);
+	dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(pointEffect));
+
 	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
 	enemy->AddComponent<game::FallComponent>(100.f);
-
 	return enemy;
 }
 
@@ -217,6 +216,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePointEffect()
 {
 	auto pointEffect = std::make_unique<dae::GameObject>();
 	pointEffect->SetLocalPosition(glm::vec3{ -50.f, -50.f, 0.f });
+	pointEffect->GiveTag("point_effect");
 	pointEffect->AddComponent<dae::RenderComponent>(true);
 	pointEffect->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{-50, -50, 32, 32});
 	pointEffect->AddComponent<dae::SpriteComponent>(pointEffect->GetComponent<dae::RenderComponent>(), 32, 32);

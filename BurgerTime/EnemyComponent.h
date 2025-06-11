@@ -13,7 +13,7 @@ namespace game
 	class EnemyComponent : public dae::BaseComponent, public dae::Observer
 	{
 	public:
-		EnemyComponent(dae::GameObject* pOwner, std::unique_ptr<dae::GameObject> pointEffectObj, int pointMultiplier);
+		EnemyComponent(dae::GameObject* pOwner, dae::GameObject* pointEffectObj, int pointMultiplier);
 		~EnemyComponent() = default;
 
 		EnemyComponent(const EnemyComponent& other) = delete;
@@ -25,13 +25,15 @@ namespace game
 		void HandleState();
 
 		void StartFalling();
-		void Hit();
+		void Hit(dae::GameObject* pLastInteractedObj);
 		void Broadcast(dae::GameObject*, dae::Event event) override;
+
 		int GetPointMultiplier() const { return m_PointMultiplier; }
+		dae::GameObject* GetPointEffect() const { return m_pPointEffectObj; }
 
 	private:
 		std::unique_ptr<game::EnemyState> m_pState;
-		std::unique_ptr<dae::GameObject> m_pPointEffectObj;
+		dae::GameObject* m_pPointEffectObj{};
 		int m_PointMultiplier{};
 	};
 }

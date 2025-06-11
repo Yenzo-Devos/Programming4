@@ -23,7 +23,7 @@ void game::IngredientFallingState::Update(float deltaTime)
             m_GracePeriodOver = true;
     }
     for (auto enemy : CheckIfEnemiesCollide())
-        enemy->GetComponent<EnemyComponent>()->Hit();
+        enemy->GetComponent<EnemyComponent>()->Hit(m_pLastInteractedObj);
 }
 
 std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(dae::GameObject& owner)

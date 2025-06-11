@@ -21,7 +21,7 @@ std::unique_ptr<game::EnemyState> game::EnemyChaseState::HandleState(dae::GameOb
 	if (m_IsStunned)
 		return std::make_unique<EnemyStunnedState>();
 	if (m_GotHit)
-		return std::make_unique<EnemySquishedState>();
+		return std::make_unique<EnemySquishedState>(m_PointsToBeAwarded, m_pLastInteractedObj);
 	if (m_IsFalling)
 		return std::make_unique<EnemyFallState>();
 
@@ -38,6 +38,13 @@ void game::EnemyChaseState::OnEnter(dae::GameObject& owner)
 void game::EnemyChaseState::OnExit(dae::GameObject&)
 {
 	m_pChaseComp->Activate(false);
+}
+
+void game::EnemyChaseState::Hit(int pointsToBeAwarded, dae::GameObject* pLastInteractedObj)
+{
+	m_GotHit = true;
+	m_PointsToBeAwarded = pointsToBeAwarded;
+	m_pLastInteractedObj = pLastInteractedObj;
 }
 
 void game::EnemyChaseState::ChangeAnimation(glm::vec2 dir)

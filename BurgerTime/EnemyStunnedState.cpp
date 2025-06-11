@@ -11,7 +11,7 @@ void game::EnemyStunnedState::Update(float deltaTime)
 std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::GameObject&)
 {
     if (m_GotHit)
-        return std::make_unique<EnemySquishedState>();
+        return std::make_unique<EnemySquishedState>(m_PointsToBeAwarded, m_pLastInteractedObj);
 
     if (m_IsFalling)
         return std::make_unique<EnemyFallState>();
@@ -25,4 +25,11 @@ std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::Game
 void game::EnemyStunnedState::OnEnter(dae::GameObject& owner)
 {
     owner.GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayed");
+}
+
+void game::EnemyStunnedState::Hit(int points, dae::GameObject* pLastInteractedObj)
+{
+    m_GotHit = true;
+    m_PointsToBeAwarded = points;
+    m_pLastInteractedObj = pLastInteractedObj;
 }

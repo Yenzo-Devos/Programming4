@@ -16,15 +16,17 @@ namespace game
 		virtual void OnExit(dae::GameObject&) override;
 		void Stun() { m_IsStunned = true; }
 		void Fall() { m_IsFalling = true; }
-		void Hit() { m_GotHit = true; }
+		void Hit(int pointsToBeAwarded, dae::GameObject* pLastInteractedObj);
 
 	private:
 		bool m_IsStunned{ false };
 		bool m_IsFalling{ false };
 		bool m_GotHit{ false };
+		int m_PointsToBeAwarded{};
 		glm::vec2 m_Direction{};
 		dae::SpriteComponent* m_pSpriteComp{};
 		ChaseComponent* m_pChaseComp{};
+		dae::GameObject* m_pLastInteractedObj{};
 
 		void ChangeAnimation(glm::vec2 dir);
 	};

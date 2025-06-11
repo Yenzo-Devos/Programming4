@@ -3,6 +3,12 @@
 #include "SpriteComponent.h"
 #include "EnemyDeadState.h"
 
+game::EnemySquishedState::EnemySquishedState(int pointsToBeAwarded, dae::GameObject* pLastInteractedObj)
+    : m_PointsToBeAwarded{ pointsToBeAwarded }
+    , m_pLastInteractedObj{ pLastInteractedObj }
+{
+}
+
 void game::EnemySquishedState::Update(float deltaTime)
 {
     m_AccuAnimTime += deltaTime;
@@ -11,7 +17,7 @@ void game::EnemySquishedState::Update(float deltaTime)
 std::unique_ptr<game::EnemyState> game::EnemySquishedState::HandleState(dae::GameObject&)
 {
     if (m_AccuAnimTime > m_AnimTime)
-        return std::make_unique<EnemyDeadState>();
+        return std::make_unique<EnemyDeadState>(m_PointsToBeAwarded, m_pLastInteractedObj);
     return nullptr;
 }
 

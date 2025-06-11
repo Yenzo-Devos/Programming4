@@ -1,10 +1,10 @@
 #include "EnemyComponent.h"
 #include "EnemyChaseState.h"
 #include "EnemyStunnedState.h"
+#include "PointsComponent.h"
 
 
-
-game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner, std::unique_ptr<dae::GameObject> pointEffectObj, int pointMultiplier)
+game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner, dae::GameObject* pointEffectObj, int pointMultiplier)
 	: BaseComponent(pOwner)
 	, m_pState{ std::make_unique<EnemyChaseState>(pOwner->GetComponent<dae::SpriteComponent>(), pOwner->GetComponent<ChaseComponent>()) }
 	, m_pPointEffectObj{ std::move(pointEffectObj) }
@@ -38,13 +38,13 @@ void game::EnemyComponent::StartFalling()
 		stunState->Fall();
 }
 
-void game::EnemyComponent::Hit()
+void game::EnemyComponent::Hit(dae::GameObject* pLastInteractedObj)
 {
 	auto state = dynamic_cast<EnemyChaseState*>(m_pState.get());
 	if (state)
-		state->Hit();
+		state->Hit(100 * m_PointMultiplier, pLastInteractedObj);
 	else if (auto stunState = dynamic_cast<EnemyStunnedState*>(m_pState.get()))
-		stunState->Hit();
+		stunState->Hit(100 * m_PointMultiplier, pLastInteractedObj);
 }
 
 void game::EnemyComponent::Broadcast(dae::GameObject*, dae::Event event)
