@@ -41,6 +41,7 @@ namespace dae
 		void SetTexture(Texture2D* pTexture);
 		
 		void AddObjectToRender(const Rect& dstRect, const Rect& srcRect = Rect{0,0,0,0}, int offsetX = 0, int offsetY = 0);
+		void RemoveLastRenderObject() { m_ObjectToRender.pop_back(); }
 		void SetSourceRect(int index, const Rect& srcRect) { m_ObjectToRender[index].srcRect = srcRect; }
 		void ChangeOffset(int index, int offsetX = 0, int offsetY = 0);
 

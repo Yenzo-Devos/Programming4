@@ -124,11 +124,14 @@ void load()
 
 	auto chefObj = scene.GetObjectByTag("player0");
 	auto chefLivesObj = scene.CreateObject();
-	chefLivesObj->SetLocalPosition(glm::vec3{ 20.f, 120.f, 0.f });
-	chefLivesObj->AddComponent<dae::RenderComponent>();
-	chefLivesObj->AddComponent<dae::TextComponent>(chefLivesObj->GetComponent<dae::RenderComponent>());
-	chefLivesObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 12);
-	chefLivesObj->AddComponent<game::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextComponent>());
+	chefLivesObj->SetLocalPosition(glm::vec3{ 0.f, 480.f, 0.f });
+	chefLivesObj->AddComponent<dae::RenderComponent>(true);
+	chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ 0, 464, 16, 16 }, dae::RenderComponent::Rect{ 0, 0, 16, 16 }, 0, -16);
+	chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ 0, 448, 16, 16 }, dae::RenderComponent::Rect{ 0, 0, 16, 16 }, 0, -32);
+	chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ 0, 432, 16, 16 }, dae::RenderComponent::Rect{ 0, 0, 16, 16 }, 0, -48);
+	chefLivesObj->AddComponent<dae::TextureComponent>(chefLivesObj->GetComponent<dae::RenderComponent>());
+	chefLivesObj->GetComponent<dae::TextureComponent>()->LoadTexture("ui_objects/life_texture.png");
+	chefLivesObj->AddComponent<game::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextureComponent>());
 
 	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<game::LivesDisplayComponent>());
 	scene.Add(std::move(chefLivesObj));

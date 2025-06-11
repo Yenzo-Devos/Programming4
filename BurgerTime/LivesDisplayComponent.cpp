@@ -1,13 +1,12 @@
 #include "LivesDisplayComponent.h"
 #include "LivesComponent.h"
-#include "TextComponent.h"
+#include "TextureComponent.h"
 #include "GameObject.h"
 
-game::LivesDisplayComponent::LivesDisplayComponent(dae::GameObject* owner, dae::TextComponent* pText)
+game::LivesDisplayComponent::LivesDisplayComponent(dae::GameObject* owner, dae::TextureComponent* pTexture)
 	: BaseComponent(owner)
-	, m_pLivesText{pText}
+	, m_pLivesTexture{ pTexture }
 {
-	m_pLivesText->SetText("3 Lives");
 }
 
 void game::LivesDisplayComponent::Broadcast(dae::GameObject* pGameObject, dae::Event event)
@@ -15,26 +14,12 @@ void game::LivesDisplayComponent::Broadcast(dae::GameObject* pGameObject, dae::E
 	switch (event)
 	{
 	case dae::Event::OnPlayerDeath:
-		UpdateLivesTexture(pGameObject);
+		if (pGameObject->GetComponent<game::LivesComponent>()->GetCurrentNrOfLives() >= 0)
+			m_pLivesTexture->RemoveLastRenderObject();
 		break;
 	case dae::Event::OnPlayerScored:
 		break;
 	default:
 		break;
 	}
-}
-
-void game::LivesDisplayComponent::UpdateLivesTexture(dae::GameObject* pGameObject)
-{
-	//if (!pGameObject->HasComponent<LivesComponent>())
-	//	return;
-
-	int nrOfLives = pGameObject->GetComponent<game::LivesComponent>()->GetCurrentNrOfLives();
-	m_LifeText = std::to_string(nrOfLives);
-	if (nrOfLives == 1)
-		m_LifeText += " Life";
-	else
-		m_LifeText += " Lives";
-
-	m_pLivesText->SetText(m_LifeText);
 }

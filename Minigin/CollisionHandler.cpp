@@ -47,6 +47,8 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 {
 	std::vector<dae::GameObject*> resultVec{};
 	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag(identifier);
+	if (objectsToCheck.empty())
+		return resultVec;
 	for (const auto& obj : objectsToCheck)
 	{
 		auto hitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
@@ -61,6 +63,9 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 {
 	std::vector<dae::GameObject*> resultVec{};
 	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag(identifier);
+	if (objectsToCheck.empty())
+		return resultVec;
+	
 	for (const auto& obj : objectsToCheck)
 	{
 		auto otherhitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");

@@ -1,4 +1,12 @@
 #include "ChaseComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "GameObject.h"
+#include "CollisionHandler.h"
+#include <vector>
+#include "HitboxComponent.h"
+#include "LivesComponent.h"
+
 game::ChaseComponent::ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec)
 	: BaseComponent(pOwner)
 	, m_pLadderVec{ pLadderVec }
@@ -41,6 +49,8 @@ void game::ChaseComponent::Update(float deltaTime)
 	{
 		CheckMoveOnLadder(m_pLockedChaseObj, deltaTime);
 	}
+
+	CheckHitPlayer();
 }
 
 void game::ChaseComponent::AddObjectToChase(dae::GameObject* object)
@@ -175,4 +185,13 @@ void game::ChaseComponent::LockInDirection(glm::vec2 dir)
 	m_IsDirectionLocked = true;
 	m_AccuLockedDirTime = 0.f;
 	m_pLockedChaseObj = GetClosestObjectToChase();
+}
+
+void game::ChaseComponent::CheckHitPlayer()
+{
+	auto hitbox = m_pOwner->GetComponent<dae::HitboxComponent>();
+	if (!dae::CollisionHandler::GetInstance().IsOverlappingWithObject("player0", hitbox->GetHitbox("main_hitbox")).empty())
+		dae::SceneManager::GetInstance().GetActiveScene().GetObjectByTag("player0")->GetComponent<LivesComponent>()->LoseLife(1);
+	if (!dae::CollisionHandler::GetInstance().IsOverlappingWithObject("player1", hitbox->GetHitbox("main_hitbox")).empty())
+		dae::SceneManager::GetInstance().GetActiveScene().GetObjectByTag("player1")->GetComponent<LivesComponent>()->LoseLife(1);
 }

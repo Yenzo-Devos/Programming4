@@ -22,6 +22,8 @@ namespace dae
 
 		virtual void Update(float) override {};
 		void LoadTexture(const std::string& textureName);
+
+		void RemoveLastRenderObject() {	m_pRenderComponent->RemoveLastRenderObject(); }
 	
 	private:
 		RenderComponent* m_pRenderComponent;

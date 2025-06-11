@@ -242,7 +242,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 
 	// add collisioncomp and playercomp
 	player->AddComponent<dae::HitboxComponent>();
-	player->GetComponent<dae::HitboxComponent>()->AddHitbox("body_hitbox", 5, 0, 22, 32);
+	player->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 5, 0, 22, 32);
 	player->GetComponent<dae::HitboxComponent>()->AddHitbox("feet_hitbox", 5, 32, 22, 6);
 
 	auto pepper = CreatePepper();

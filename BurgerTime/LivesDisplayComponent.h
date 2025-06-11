@@ -6,7 +6,7 @@
 
 namespace dae
 {
-	class TextComponent;
+	class TextureComponent;
 	class GameObject;
 }
 
@@ -15,7 +15,7 @@ namespace game
 	class LivesDisplayComponent : public dae::Observer, public dae::BaseComponent
 	{
 	public:
-		LivesDisplayComponent(dae::GameObject* owner, dae::TextComponent* pTexture);
+		LivesDisplayComponent(dae::GameObject* owner, dae::TextureComponent* pTexture);
 		virtual ~LivesDisplayComponent() = default;
 
 		LivesDisplayComponent(const LivesDisplayComponent& other) = delete;
@@ -27,10 +27,7 @@ namespace game
 		void Broadcast(dae::GameObject* pGameObject, dae::Event event) override;
 	
 	private:
-		dae::TextComponent* m_pLivesText;
-		std::string m_LifeText;
-
-		void UpdateLivesTexture(dae::GameObject* pGameObject);
+		dae::TextureComponent* m_pLivesTexture;
 	};
 }
 

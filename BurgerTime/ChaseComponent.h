@@ -48,5 +48,6 @@ namespace game
 		bool CheckLadderMovement(dae::GameObject* pTarget, float deltaTime);
 		void MoveOnLockedPosition(float deltaTime);
 		void LockInDirection(glm::vec2 dir);
+		void CheckHitPlayer();
 	};
 }
