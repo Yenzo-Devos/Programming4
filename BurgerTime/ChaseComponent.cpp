@@ -2,10 +2,10 @@
 game::ChaseComponent::ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec)
 	: BaseComponent(pOwner)
 	, m_pLadderVec{ pLadderVec }
-	, m_MoveLeftCommand{ std::make_unique<MoveCommand>(pOwner, 100.f, glm::vec3{-1.f, 0.f, 0.f}) }
-	, m_MoveRightCommand{ std::make_unique<MoveCommand>(pOwner, 100.f, glm::vec3{1.f, 0.f, 0.f}) }
-	, m_MoveUpCommand{ std::make_unique<MoveCommand>(pOwner, 100.f, glm::vec3{0.f, -1.f, 0.f}) }
-	, m_MoveDownCommand{ std::make_unique<MoveCommand>(pOwner, 100.f, glm::vec3{0.f, 1.f, 0.f}) }
+	, m_MoveLeftCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{-1.f, 0.f, 0.f}) }
+	, m_MoveRightCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{1.f, 0.f, 0.f}) }
+	, m_MoveUpCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{0.f, -1.f, 0.f}) }
+	, m_MoveDownCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{0.f, 1.f, 0.f}) }
 {
 }
 
@@ -23,17 +23,20 @@ void game::ChaseComponent::Update(float deltaTime)
 		}
 	}
 
-	dae::GameObject* pTarget = GetClosestObjectToChase();
+	if (!m_pLockedChaseObj)
+		m_pLockedChaseObj = GetClosestObjectToChase();
 	
 	// check if there is a ladder?
 	if (!m_IsOnLadder)
 	{
-		if (CheckLadderMovement(pTarget, deltaTime))
+		if (CheckLadderMovement(m_pLockedChaseObj, deltaTime))
 			m_IsOnLadder = true;
+		else
+			MoveOnLockedPosition(deltaTime);
 	}
 	else
 	{
-		CheckMoveOnLadder(pTarget, deltaTime);
+		CheckMoveOnLadder(m_pLockedChaseObj, deltaTime);
 	}
 }
 
@@ -44,6 +47,9 @@ void game::ChaseComponent::AddObjectToChase(dae::GameObject* object)
 
 dae::GameObject* game::ChaseComponent::GetClosestObjectToChase()
 {
+	if (static_cast<int>(m_pObjectToChaseVec.size()) == 1)
+		return m_pObjectToChaseVec[0];
+
 	dae::GameObject* pTarget{};
 	auto pos = m_pOwner->GetWorldPosition();
 	float minDistSq = std::numeric_limits<float>::max();
@@ -53,7 +59,7 @@ dae::GameObject* game::ChaseComponent::GetClosestObjectToChase()
 		float dy = player->GetWorldPosition().x - pos.x;
 		float distSq = dx * dx + dy * dy;
 
-		if (distSq < minDistSq);
+		if (distSq < minDistSq)
 		{
 			minDistSq = distSq;
 			pTarget = player;
@@ -69,7 +75,8 @@ void game::ChaseComponent::CheckMoveOnLadder(dae::GameObject* pTarget, float del
 	const auto targetPos = pTarget->GetWorldPosition();
 	const auto deltaX = targetPos.x - pos.x;
 	const auto deltaY = targetPos.y - pos.y;
-	if (std::abs(deltaX) < std::abs(deltaY))
+	if (std::abs(deltaX) < std::abs(deltaY) or
+		std::abs(deltaY) <= 1.5f)
 	{
 		bool hasMoved{ false };
 		if (deltaX > 0)
@@ -78,6 +85,7 @@ void game::ChaseComponent::CheckMoveOnLadder(dae::GameObject* pTarget, float del
 			{
 				LockInDirection(glm::vec2{ 1.f, 0.f });
 				hasMoved = true;
+				m_IsOnLadder = false;
 			}
 		}
 		else
@@ -86,6 +94,7 @@ void game::ChaseComponent::CheckMoveOnLadder(dae::GameObject* pTarget, float del
 			{
 				LockInDirection(glm::vec2{ -1.f, 0.f });
 				hasMoved = true;
+				m_IsOnLadder = false;
 			}
 		}
 
@@ -94,10 +103,14 @@ void game::ChaseComponent::CheckMoveOnLadder(dae::GameObject* pTarget, float del
 			if (CheckLadderMovement(pTarget, deltaTime))
 				m_IsOnLadder = true;
 			else
+			{
 				if (deltaX > 0 and m_MoveLeftCommand->Execute(deltaTime))
 					LockInDirection(glm::vec2{ -1.f, 0.f });
 				else if (deltaX <= 0 and m_MoveRightCommand->Execute(deltaTime))
 					LockInDirection(glm::vec2{ 1.f, 0.f });
+
+				m_IsOnLadder = false;
+			}
 		}
 	}
 	else
@@ -113,12 +126,12 @@ bool game::ChaseComponent::CheckLadderMovement(dae::GameObject* pTarget, float d
 	{
 		if (m_MoveUpCommand->Execute(deltaTime))
 		{
-			m_LockedDirection = glm::vec2{ 0.f, -1.f };
+			LockInDirection(glm::vec2{ 0.f, -1.f });
 			return true;
 		}
 		if (m_MoveDownCommand->Execute(deltaTime))
 		{
-			m_LockedDirection = glm::vec2{ 0.f, 1.f };
+			LockInDirection(glm::vec2{ 0.f, 1.f });
 			return true;
 		}
 	}
@@ -126,12 +139,12 @@ bool game::ChaseComponent::CheckLadderMovement(dae::GameObject* pTarget, float d
 	{
 		if (m_MoveDownCommand->Execute(deltaTime))
 		{
-			m_LockedDirection = glm::vec2{ 0.f, 1.f };
+			LockInDirection(glm::vec2{ 0.f, 1.f });
 			return true;
 		}
 		if (m_MoveUpCommand->Execute(deltaTime))
 		{
-			m_LockedDirection = glm::vec2{ 0.f, -1.f };
+			LockInDirection(glm::vec2{ 0.f, -1.f });
 			return true;
 		}
 	}
@@ -158,4 +171,5 @@ void game::ChaseComponent::LockInDirection(glm::vec2 dir)
 	m_LockedDirection = dir;
 	m_IsDirectionLocked = true;
 	m_AccuLockedDirTime = 0.f;
+	m_pLockedChaseObj = GetClosestObjectToChase();
 }

@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp" />
+    <ClCompile Include="ChaseComponent.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="RespawnComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChaseComponent.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyDeadState.h" />

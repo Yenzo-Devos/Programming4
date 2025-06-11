@@ -17,6 +17,7 @@
 #include "PepperComponent.h"
 #include "EnemyComponent.h"
 #include "ChaseComponent.h"
+#include "RespawnComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -47,8 +48,8 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 		auto dynamicObject = jsonData["dynamicObjects"];
 		for (const auto& ingredient : dynamicObject["ingredient"])
 			scene.Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"], scene.GetAllObjectByTag("plate")));
-		//for (const auto& enemy : dynamicObject["enemy"])
-			//scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
+		for (const auto& enemy : dynamicObject["enemy"])
+			scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
 		for (const auto& player : dynamicObject["player"])
 			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
 	}
@@ -186,7 +187,14 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	
 	// add collisioncomp and EnemyComp
-	//enemy->AddComponent<dae::HitboxComponent>();
+	enemy->AddComponent<dae::HitboxComponent>();
+	enemy->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
+
+	enemy->AddComponent<game::EnemyComponent>();
+	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
+
+	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
+	enemy->AddComponent<game::ChaseComponent>(pLadders);
 
 	return enemy;
 }
@@ -236,6 +244,10 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	auto pepper = CreatePepper();
 	player->AddComponent<game::PlayerComponent>(pepper.get());
 	dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(pepper));
+
+	auto enemies = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("enemy");
+	for (auto enemy : enemies)
+		enemy->GetComponent<game::ChaseComponent>()->AddObjectToChase(player.get());
 	return player;
 }
 

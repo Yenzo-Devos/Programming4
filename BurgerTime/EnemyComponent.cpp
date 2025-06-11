@@ -3,6 +3,7 @@
 
 game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
+	, m_pState{ std::make_unique<EnemyChaseState>() }
 {
 }
 

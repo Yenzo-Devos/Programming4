@@ -5,7 +5,7 @@
 
 namespace game
 {
-	class ChaseComponent : dae::BaseComponent
+	class ChaseComponent : public dae::BaseComponent
 	{
 	public:
 		ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec);
@@ -23,12 +23,13 @@ namespace game
 		// movement vars
 		bool m_IsOnLadder{ false };
 		glm::vec2 m_LockedDirection{};
+		dae::GameObject* m_pLockedChaseObj{};
 		std::vector<dae::GameObject*> m_pObjectToChaseVec{};
 		std::vector<dae::GameObject*> m_pLadderVec{};
 
 		bool m_IsDirectionLocked{ false };
 		float m_AccuLockedDirTime{ 0.f };
-		const float m_LockedDirTime{ 2.f };
+		const float m_LockedDirTime{ 0.5f };
 
 		// move commands
 		std::unique_ptr<MoveCommand> m_MoveLeftCommand{};

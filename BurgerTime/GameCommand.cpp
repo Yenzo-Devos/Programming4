@@ -28,10 +28,11 @@ game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::v
 
 bool game::MoveCommand::Execute(float deltaTime)
 {
-	if (m_Direction.y != 0)
+	if (m_Direction.y != 0.f)
 		return Climb(deltaTime);
-	else if (m_Direction.x != 0)
+	else if (m_Direction.x != 0.f)
 		return Walk(deltaTime);
+	return false;
 }
 
 bool game::MoveCommand::Climb(float deltaTime)
@@ -98,7 +99,8 @@ bool game::ThrowPepperCommand::Execute(float)
 		pos = { playerPos.x + GetGameObject()->GetDimensions().first, playerPos.y };
 	else if (direction.x == -1.f)
 		pos = { playerPos.x - GetGameObject()->GetDimensions().first, playerPos.y };
-	else return;
+	else return false;
 	
 	playerComp->ActivatePepper(pos, direction);
+	return true;
 }
