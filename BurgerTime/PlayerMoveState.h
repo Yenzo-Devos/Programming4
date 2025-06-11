@@ -17,6 +17,7 @@ namespace game
 		glm::vec3 m_LastPos{};
 		glm::vec3 m_Direction{};
 		bool m_Throw{ false };
+		int m_CurrentHealth{};
 	};
 }
 

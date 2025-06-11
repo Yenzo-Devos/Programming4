@@ -2,7 +2,9 @@
 #include "PlayerComponent.h"
 #include "PlayerIdleState.h"
 #include "PlayerPepperState.h"
+#include "PlayerDyingState.h"
 #include "SpriteComponent.h"
+#include "LivesComponent.h"
 
 std::unique_ptr<game::PlayerState> game::PlayerMoveState::HandleState(PlayerComponent& playerComp)
 {
@@ -11,6 +13,9 @@ std::unique_ptr<game::PlayerState> game::PlayerMoveState::HandleState(PlayerComp
 
 	if (m_Throw)
 		return std::make_unique<PlayerPepperState>();
+
+	if (m_CurrentHealth != playerComp.GetOwner()->GetComponent<LivesComponent>()->GetCurrentNrOfLives())
+		return std::make_unique<PlayerDyingState>();
 
 	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
 	return nullptr;

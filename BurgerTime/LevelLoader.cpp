@@ -234,7 +234,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 3, 3, 10.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 3, 4, 10.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("winning", 2, 5, 1.f);
-	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 1.f);
+	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 5, 6, 10.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayLeft", 1, 7, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");

@@ -15,5 +15,6 @@ namespace game
 		//void OnExit(PlayerComponent* playerComp) override {};
 	private:
 		glm::vec3 m_LastPos{};
+		int m_CurrentHealth{};
 	};
 }

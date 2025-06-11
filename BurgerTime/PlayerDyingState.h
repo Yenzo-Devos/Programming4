@@ -10,8 +10,8 @@ namespace game
 	public:
 		PlayerDyingState() = default;
 		void Update(float) override {};
-		std::unique_ptr<PlayerState> HandleState(PlayerComponent&) override { return nullptr; }
-		void OnEnter(PlayerComponent&) override {}
+		std::unique_ptr<PlayerState> HandleState(PlayerComponent&) override;
+		void OnEnter(PlayerComponent& playerComp) override;
 		//void OnExit(PlayerComponent* playerComp) override {};
 	private:
 		glm::vec3 m_LastPos{};
