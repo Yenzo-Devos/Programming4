@@ -1,5 +1,6 @@
 #include "EnemyStunnedState.h"
 #include "EnemyChaseState.h"
+#include "EnemyFallState.h"
 
 void game::EnemyStunnedState::Update(float deltaTime)
 {
@@ -8,8 +9,8 @@ void game::EnemyStunnedState::Update(float deltaTime)
 
 std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::GameObject&)
 {
-    // check if hit by ingredient falling
-    // return DeadState
+    if (m_IsFalling)
+        return std::make_unique<EnemyFallState>();
 
     if (m_AccuStunTime >= m_StunTime)
         return std::make_unique<EnemyChaseState>();

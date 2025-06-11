@@ -2,6 +2,7 @@
 #include "EnemyStunnedState.h"
 #include "GameObject.h"
 #include "SpriteComponent.h"
+#include "EnemyFallState.h"
 
 game::EnemyChaseState::EnemyChaseState(dae::SpriteComponent* spriteComp, ChaseComponent* chaseComp)
 	: m_pSpriteComp{ spriteComp }
@@ -20,6 +21,8 @@ std::unique_ptr<game::EnemyState> game::EnemyChaseState::HandleState(dae::GameOb
 		return std::make_unique<EnemyStunnedState>();
 	// TODO: check if Enemy is Squished
 	// TODO: check if Enemy is Falling
+	if (m_IsFalling)
+		return std::make_unique<EnemyFallState>();
 
 	return nullptr;
 }

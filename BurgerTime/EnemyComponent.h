@@ -24,6 +24,7 @@ namespace game
 		void Update(float deltaTime) override;
 		void HandleState();
 
+		void StartFalling();
 		void Broadcast(dae::GameObject*, dae::Event event) override;
 
 	private:

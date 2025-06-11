@@ -6,6 +6,7 @@
 #include "HitboxComponent.h"
 #include "RenderComponent.h"
 #include "FallComponent.h"
+#include "EnemyComponent.h"
 
 void game::IngredientFallingState::Update(float deltaTime)
 {
@@ -22,7 +23,7 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
     if (!m_GracePeriodOver)
         return nullptr;
 
-    EmptyLandingPlatform(owner);
+    EmptyLandingPlatform();
 
     auto pos = owner.GetWorldPosition();
     auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
@@ -46,7 +47,18 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
 
 void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
 {
+    m_pHitboxComp = owner.GetComponent<dae::HitboxComponent>();
     owner.GetComponent<game::FallComponent>()->Activate(true);
+
+    // check if enemies were on it and set them to falling
+    std::vector<dae::GameObject*> enemyVec{};
+    for (auto hitbox : m_pHitboxComp->GetAllHitboxes())
+    {
+        auto bufferVec = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", hitbox);
+        enemyVec.insert(enemyVec.end(), bufferVec.begin(), bufferVec.end());
+    }
+    for (auto enemy : enemyVec)
+        enemy->GetComponent<EnemyComponent>()->StartFalling();
 }
 
 void game::IngredientFallingState::OnExit(dae::GameObject& owner)
@@ -54,10 +66,9 @@ void game::IngredientFallingState::OnExit(dae::GameObject& owner)
     owner.GetComponent<game::FallComponent>()->Activate(false);
 }
 
-void game::IngredientFallingState::EmptyLandingPlatform(dae::GameObject& owner)
+void game::IngredientFallingState::EmptyLandingPlatform()
 {
-    auto hitbox = owner.GetComponent<dae::HitboxComponent>()->GetHitbox("left_hitbox");
-    auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(hitbox);
+    auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(m_pHitboxComp->GetHitbox("left_hitbox"));
     if (!ingredientVec.empty())
         for (const auto& ingredient : ingredientVec)
             for (int index{ 0 }; index < 4; ++index)

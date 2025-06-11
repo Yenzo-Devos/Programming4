@@ -15,9 +15,11 @@ namespace game
 		void OnEnter(dae::GameObject& owner) override;
 		virtual void OnExit(dae::GameObject&) override;
 		void Stun() { m_IsStunned = true; }
+		void Fall() { m_IsFalling = true; }
 
 	private:
 		bool m_IsStunned{ false };
+		bool m_IsFalling{ false };
 		glm::vec2 m_Direction{};
 		dae::SpriteComponent* m_pSpriteComp{};
 		ChaseComponent* m_pChaseComp{};

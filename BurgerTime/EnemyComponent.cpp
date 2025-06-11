@@ -1,5 +1,6 @@
 #include "EnemyComponent.h"
 #include "EnemyChaseState.h"
+#include "EnemyStunnedState.h"
 
 game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
@@ -22,6 +23,15 @@ void game::EnemyComponent::HandleState()
 		m_pState = std::move(newState);
 		m_pState->OnEnter(*m_pOwner);
 	}
+}
+
+void game::EnemyComponent::StartFalling()
+{
+	auto state = dynamic_cast<EnemyChaseState*>(m_pState.get());
+	if (state)
+		state->Fall();
+	else if (auto stunState = dynamic_cast<EnemyStunnedState*>(m_pState.get()))
+		stunState->Fall();
 }
 
 void game::EnemyComponent::Broadcast(dae::GameObject*, dae::Event event)

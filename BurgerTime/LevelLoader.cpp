@@ -159,7 +159,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_middle_hitbox", 32, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_hitbox", 48, 0, 16, 16);
 	ingredient->AddComponent<game::IngredientComponent>();
-	ingredient->AddComponent<game::FallComponent>(15.f);
+	ingredient->AddComponent<game::FallComponent>(100.f);
 
 	for (const auto& plate : plateVec)
 		if (idGroup == plate->GetComponent<PlateComponent>()->GetID())
@@ -180,12 +180,12 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ x, y, 32, 32 });
 	enemy->AddComponent<dae::SpriteComponent>(enemy->GetComponent<dae::RenderComponent>(), 32, 32);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadTexture(textureFileName);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 0, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 1, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 2, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 3, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 4, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 5, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 0, 10.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 1, 10.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 2, 10.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 3, 10.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 4, 10.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 5, 10.f);
 	enemy->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	
 	// add collisioncomp and EnemyComp
@@ -197,6 +197,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	
 	enemy->AddComponent<game::EnemyComponent>();
 	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
+	enemy->AddComponent<game::FallComponent>(100.f);
 
 
 	return enemy;

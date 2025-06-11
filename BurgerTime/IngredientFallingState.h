@@ -1,5 +1,7 @@
 #pragma once
 #include "IngredientState.h"
+#include "HitboxComponent.h"
+
 namespace game
 {
 	class IngredientFallingState : public IngredientState
@@ -12,12 +14,12 @@ namespace game
 		virtual void OnExit(dae::GameObject& owner);
 	
 	private:
-		const float m_FallingSpeed{ 10.f };
-		const float m_GraceTime{ 2.f };
+		const float m_GraceTime{ 0.5f };
 		float m_AccuGraceTimer{ 0.f };
 		bool m_GracePeriodOver{ false };
 
-		void EmptyLandingPlatform(dae::GameObject& owner);
+		dae::HitboxComponent* m_pHitboxComp;
+		void EmptyLandingPlatform();
 	};
 }
 
