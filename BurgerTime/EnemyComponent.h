@@ -24,7 +24,7 @@ namespace game
 		void Update(float deltaTime) override;
 		void HandleState();
 
-		void StartFalling();
+		void StartFalling(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling);
 		void Hit(dae::GameObject* pLastInteractedObj);
 		void Broadcast(dae::GameObject*, dae::Event event) override;
 

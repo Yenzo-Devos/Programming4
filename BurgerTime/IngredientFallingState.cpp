@@ -9,6 +9,7 @@
 #include "EnemyComponent.h"
 #include "PointsComponent.h"
 
+
 game::IngredientFallingState::IngredientFallingState(dae::GameObject* pLastInteractedObj)
     : m_pLastInteractedObj{ pLastInteractedObj }
 {
@@ -61,8 +62,18 @@ void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
     owner.GetComponent<game::FallComponent>()->Activate(true);
 
     // check if enemies were on it and set them to falling
-    for (auto enemy : CheckIfEnemiesCollide())
-        enemy->GetComponent<EnemyComponent>()->StartFalling();
+    auto enemySet = CheckIfEnemiesCollide();
+    bool isFirst = true;
+    for (auto enemy : enemySet)
+    {
+        if (isFirst)
+        {
+            enemy->GetComponent<EnemyComponent>()->StartFalling(m_pLastInteractedObj, isFirst, static_cast<int>(enemySet.size()));
+            isFirst = false;
+        }
+        else
+            enemy->GetComponent<EnemyComponent>()->StartFalling(m_pLastInteractedObj, isFirst, static_cast<int>(enemySet.size()));
+    }
 }
 
 void game::IngredientFallingState::OnExit(dae::GameObject& owner)
@@ -79,13 +90,13 @@ void game::IngredientFallingState::EmptyLandingPlatform()
                 ingredient.first->GetComponent<IngredientComponent>()->Hit(index, m_pLastInteractedObj);
 }
 
-std::vector<dae::GameObject*> game::IngredientFallingState::CheckIfEnemiesCollide()
+std::unordered_set<dae::GameObject*> game::IngredientFallingState::CheckIfEnemiesCollide()
 {
-    std::vector<dae::GameObject*> enemyVec{};
+    std::unordered_set<dae::GameObject*> enemyVec{};
     for (auto hitbox : m_pHitboxComp->GetAllHitboxes())
     {
         auto bufferVec = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", hitbox);
-        enemyVec.insert(enemyVec.end(), bufferVec.begin(), bufferVec.end());
+        enemyVec.insert(bufferVec.begin(), bufferVec.end());
     }
     return enemyVec;
 }

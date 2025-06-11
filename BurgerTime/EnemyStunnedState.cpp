@@ -14,7 +14,7 @@ std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::Game
         return std::make_unique<EnemySquishedState>(m_PointsToBeAwarded, m_pLastInteractedObj);
 
     if (m_IsFalling)
-        return std::make_unique<EnemyFallState>();
+        return std::make_unique<EnemyFallState>(m_pLastInteractedObj, m_FirstToFall, m_NrOfEnemiesFalling);
 
     if (m_AccuStunTime >= m_StunTime)
         return std::make_unique<EnemyChaseState>();
@@ -25,6 +25,14 @@ std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::Game
 void game::EnemyStunnedState::OnEnter(dae::GameObject& owner)
 {
     owner.GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayed");
+}
+
+void game::EnemyStunnedState::Fall(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling)
+{
+    m_IsFalling = true;
+    m_pLastInteractedObj = pLastInteractedObj;
+    m_FirstToFall = isFirst;
+    m_NrOfEnemiesFalling = nrOfEnemiesFalling;
 }
 
 void game::EnemyStunnedState::Hit(int points, dae::GameObject* pLastInteractedObj)

@@ -23,7 +23,7 @@ std::unique_ptr<game::EnemyState> game::EnemyChaseState::HandleState(dae::GameOb
 	if (m_GotHit)
 		return std::make_unique<EnemySquishedState>(m_PointsToBeAwarded, m_pLastInteractedObj);
 	if (m_IsFalling)
-		return std::make_unique<EnemyFallState>();
+		return std::make_unique<EnemyFallState>(m_pLastInteractedObj, m_FirstToFall, m_NrOfEnemiesFalling);
 
 	return nullptr;
 }
@@ -38,6 +38,14 @@ void game::EnemyChaseState::OnEnter(dae::GameObject& owner)
 void game::EnemyChaseState::OnExit(dae::GameObject&)
 {
 	m_pChaseComp->Activate(false);
+}
+
+void game::EnemyChaseState::Fall(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling)
+{
+	m_IsFalling = true;
+	m_pLastInteractedObj = pLastInteractedObj;
+	m_FirstToFall = isFirst;
+	m_NrOfEnemiesFalling = nrOfEnemiesFalling;
 }
 
 void game::EnemyChaseState::Hit(int pointsToBeAwarded, dae::GameObject* pLastInteractedObj)

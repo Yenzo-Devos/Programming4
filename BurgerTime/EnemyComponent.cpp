@@ -29,13 +29,13 @@ void game::EnemyComponent::HandleState()
 	}
 }
 
-void game::EnemyComponent::StartFalling()
+void game::EnemyComponent::StartFalling(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling)
 {
 	auto state = dynamic_cast<EnemyChaseState*>(m_pState.get());
 	if (state)
-		state->Fall();
+		state->Fall(pLastInteractedObj, isFirst, nrOfEnemiesFalling);
 	else if (auto stunState = dynamic_cast<EnemyStunnedState*>(m_pState.get()))
-		stunState->Fall();
+		stunState->Fall(pLastInteractedObj, isFirst, nrOfEnemiesFalling);
 }
 
 void game::EnemyComponent::Hit(dae::GameObject* pLastInteractedObj)

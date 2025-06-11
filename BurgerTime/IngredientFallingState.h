@@ -1,6 +1,7 @@
 #pragma once
 #include "IngredientState.h"
 #include "HitboxComponent.h"
+#include <unordered_set>
 
 namespace game
 {
@@ -22,7 +23,7 @@ namespace game
 		dae::GameObject* m_pLastInteractedObj{};
 		dae::HitboxComponent* m_pHitboxComp{};
 		void EmptyLandingPlatform();
-		std::vector<dae::GameObject*> CheckIfEnemiesCollide();
+		std::unordered_set<dae::GameObject*> CheckIfEnemiesCollide();
 	};
 }
 

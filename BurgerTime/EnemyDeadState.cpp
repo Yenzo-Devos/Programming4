@@ -30,8 +30,11 @@ std::unique_ptr<game::EnemyState> game::EnemyDeadState::HandleState(dae::GameObj
 
 void game::EnemyDeadState::OnEnter(dae::GameObject& owner)
 {
-    m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(m_PointsToBeAwarded);
-    auto pointEffect = owner.GetComponent<EnemyComponent>()->GetPointEffect();
-    pointEffect->GetComponent<PointEffectComponent>()->SpawnEffect(owner.GetWorldPosition(), m_PointsToBeAwarded);
+    if (m_pLastInteractedObj)
+    {
+        m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(m_PointsToBeAwarded);
+        auto pointEffect = owner.GetComponent<EnemyComponent>()->GetPointEffect();
+        pointEffect->GetComponent<PointEffectComponent>()->SpawnEffect(owner.GetWorldPosition(), m_PointsToBeAwarded);
+    }
     owner.SetLocalPosition({ -50.f, -50.f, 0.f });
 }
