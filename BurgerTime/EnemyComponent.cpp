@@ -4,10 +4,11 @@
 
 
 
-game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner, std::unique_ptr<dae::GameObject> pointEffectObj)
+game::EnemyComponent::EnemyComponent(dae::GameObject* pOwner, std::unique_ptr<dae::GameObject> pointEffectObj, int pointMultiplier)
 	: BaseComponent(pOwner)
 	, m_pState{ std::make_unique<EnemyChaseState>(pOwner->GetComponent<dae::SpriteComponent>(), pOwner->GetComponent<ChaseComponent>()) }
-	, m_pPointEffect{ std::move(pointEffectObj) }
+	, m_pPointEffectObj{ std::move(pointEffectObj) }
+	, m_PointMultiplier{ pointMultiplier }
 {
 }
 

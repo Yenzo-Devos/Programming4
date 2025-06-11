@@ -51,7 +51,7 @@ bool game::MoveCommand::Climb(float deltaTime)
 			auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox"));
 			if (!ingredientVec.empty())
 				for (const auto& ingredient : ingredientVec)
-					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second);
+					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second, GetGameObject());
 		}
 		return true;
 	}
@@ -75,7 +75,7 @@ bool game::MoveCommand::Walk(float deltaTime)
 			auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox"));
 			if (!ingredientVec.empty())
 				for (const auto& ingredient : ingredientVec)
-					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second);
+					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second, GetGameObject());
 		}
 		return true;
 	}

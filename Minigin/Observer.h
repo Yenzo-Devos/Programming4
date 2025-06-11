@@ -8,6 +8,7 @@ namespace dae
 		OnPlayerDeath,
 		OnPlayerScored,
 		OnIngredientFallOnPlate,
+		OnIngredientLanded,
 		EnemyStunned
 	};
 

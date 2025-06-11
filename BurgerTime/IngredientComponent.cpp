@@ -29,11 +29,11 @@ void game::IngredientComponent::HandleState()
 	}
 }
 
-void game::IngredientComponent::Hit(int index)
+void game::IngredientComponent::Hit(int index, dae::GameObject* pHitter)
 {
 	auto state = dynamic_cast<IngredientIdleState*>(m_pState.get());
 	if (state)
-		state->Hit(index, *m_pOwner);
+		state->Hit(index, *m_pOwner, pHitter);
 }
 
 void game::IngredientComponent::AddObserver(dae::Observer* pObserver)

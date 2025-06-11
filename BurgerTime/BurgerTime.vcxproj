@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="ChaseComponent.cpp" />
+    <ClCompile Include="CoopGameState.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
@@ -175,10 +176,12 @@
     <ClCompile Include="FallComponent.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="IngredientComponent.cpp" />
     <ClCompile Include="IngredientFallingState.cpp" />
     <ClCompile Include="IngredientIdleState.cpp" />
     <ClCompile Include="IngredientOnPlateState.cpp" />
+    <ClCompile Include="LeaderboardState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
@@ -190,10 +193,17 @@
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerPepperState.cpp" />
     <ClCompile Include="PlayerWinningState.cpp" />
+    <ClCompile Include="PointEffectComponent.cpp" />
+    <ClCompile Include="PointsComponent.cpp" />
+    <ClCompile Include="PointsDisplayComponent.cpp" />
     <ClCompile Include="RespawnComponent.cpp" />
+    <ClCompile Include="SingleplayerGameState.cpp" />
+    <ClCompile Include="StartScreenState.cpp" />
+    <ClCompile Include="VersusGameState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaseComponent.h" />
+    <ClInclude Include="CoopGameState.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyDeadState.h" />
@@ -204,11 +214,13 @@
     <ClInclude Include="FallComponent.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="IngredientComponent.h" />
     <ClInclude Include="IngredientFallingState.h" />
     <ClInclude Include="IngredientIdleState.h" />
     <ClInclude Include="IngredientOnPlateState.h" />
     <ClInclude Include="IngredientState.h" />
+    <ClInclude Include="LeaderboardState.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
@@ -221,7 +233,13 @@
     <ClInclude Include="PlayerPepperState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerWinningState.h" />
+    <ClInclude Include="PointEffectComponent.h" />
+    <ClInclude Include="PointsComponent.h" />
+    <ClInclude Include="PointsDisplayComponent.h" />
     <ClInclude Include="RespawnComponent.h" />
+    <ClInclude Include="SingleplayerGameState.h" />
+    <ClInclude Include="StartScreenState.h" />
+    <ClInclude Include="VersusGameState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

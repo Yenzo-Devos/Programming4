@@ -8,6 +8,7 @@ namespace game
 	{
 	public:
 		IngredientFallingState() = default;
+		IngredientFallingState(dae::GameObject* pLastInteractedObj);
 		virtual void Update(float deltaTime);
 		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&);
 		virtual void OnEnter(dae::GameObject& owner);
@@ -18,7 +19,8 @@ namespace game
 		float m_AccuGraceTimer{ 0.f };
 		bool m_GracePeriodOver{ false };
 
-		dae::HitboxComponent* m_pHitboxComp;
+		dae::GameObject* m_pLastInteractedObj{};
+		dae::HitboxComponent* m_pHitboxComp{};
 		void EmptyLandingPlatform();
 		std::vector<dae::GameObject*> CheckIfEnemiesCollide();
 	};

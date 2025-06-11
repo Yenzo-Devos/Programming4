@@ -197,11 +197,18 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
 	enemy->AddComponent<game::ChaseComponent>(pLadders);
 	
+	int pointMultiplier{};
+	if (type == "hotdog")
+		pointMultiplier = 1;
+	else if (type == "egg")
+		pointMultiplier = 2;
+	else if (type == "pickle")
+		pointMultiplier = 3;
+
 	auto pointEffect = CreatePointEffect();
-	enemy->AddComponent<game::EnemyComponent>(pointEffect);
+	enemy->AddComponent<game::EnemyComponent>(std::move(pointEffect), pointMultiplier);
 	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
 	enemy->AddComponent<game::FallComponent>(100.f);
-
 
 	return enemy;
 }
@@ -212,7 +219,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePointEffect()
 	pointEffect->SetLocalPosition(glm::vec3{ -50.f, -50.f, 0.f });
 	pointEffect->AddComponent<dae::RenderComponent>(true);
 	pointEffect->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{-50, -50, 32, 32});
-	pointEffect->AddComponent<dae::SpriteComponent>(pointEffect->GetComponent<dae::RenderComponent>());
+	pointEffect->AddComponent<dae::SpriteComponent>(pointEffect->GetComponent<dae::RenderComponent>(), 32, 32);
 	pointEffect->GetComponent<dae::SpriteComponent>()->LoadTexture("ui_objects/points_texture.png");
 	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("100", 1, 0, 1.f);
 	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("200", 1, 1, 1.f);
@@ -223,7 +230,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePointEffect()
 	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("4000", 1, 6, 1.f);
 	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("8000", 1, 7, 1.f);
 	pointEffect->GetComponent<dae::SpriteComponent>()->LoadAnimationData("16000", 1, 8, 1.f);
-	pointEffect->AddComponent<PointEffectComponent>();
+	pointEffect->AddComponent<PointEffectComponent>(pointEffect->GetComponent<dae::SpriteComponent>(), 2.f);
 
 	return pointEffect;
 }

@@ -7,6 +7,12 @@
 #include "RenderComponent.h"
 #include "FallComponent.h"
 #include "EnemyComponent.h"
+#include "PointsComponent.h"
+
+game::IngredientFallingState::IngredientFallingState(dae::GameObject* pLastInteractedObj)
+    : m_pLastInteractedObj{ pLastInteractedObj }
+{
+}
 
 void game::IngredientFallingState::Update(float deltaTime)
 {
@@ -34,12 +40,14 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
 
     if (platformObj->GetTag() == "platform")
     {
+        m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(50);
         for (int index{0}; index < 4; ++index)
             owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
         return std::make_unique<IngredientIdleState>();
     }
     else if (platformObj->GetTag() == "plate")
     {
+        m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(50);
         for (int index{0}; index < 4; ++index)
             owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
         return std::make_unique<IngredientOnPlateState>();
@@ -68,7 +76,7 @@ void game::IngredientFallingState::EmptyLandingPlatform()
     if (!ingredientVec.empty())
         for (const auto& ingredient : ingredientVec)
             for (int index{ 0 }; index < 4; ++index)
-                ingredient.first->GetComponent<IngredientComponent>()->Hit(index);
+                ingredient.first->GetComponent<IngredientComponent>()->Hit(index, m_pLastInteractedObj);
 }
 
 std::vector<dae::GameObject*> game::IngredientFallingState::CheckIfEnemiesCollide()

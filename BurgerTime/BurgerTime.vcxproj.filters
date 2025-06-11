@@ -49,6 +49,12 @@
     <Filter Include="Source Files\States\Enemy">
       <UniqueIdentifier>{f9d56fbd-1f04-4eaf-a512-304eae9bbbc3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States\Game">
+      <UniqueIdentifier>{2bc851a8-0f86-4ab9-bd50-351ab7eef92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Game">
+      <UniqueIdentifier>{96a46f86-1004-4775-a857-695d9960ec91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp">
@@ -68,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelLoader.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMoveState.cpp">
       <Filter>Source Files\States\Player</Filter>
@@ -133,6 +136,36 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="ChaseComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScreenState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleplayerGameState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusGameState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CoopGameState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaderboardState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsDisplayComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PointEffectComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,6 +255,33 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ChaseComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScreenState.h">
+      <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderboardState.h">
+      <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleplayerGameState.h">
+      <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusGameState.h">
+      <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CoopGameState.h">
+      <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsDisplayComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PointEffectComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

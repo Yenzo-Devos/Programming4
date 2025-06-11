@@ -13,9 +13,10 @@ namespace game
 		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&) override;
 		virtual void OnEnter(dae::GameObject& owner) override;
 
-		void Hit(int index, dae::GameObject& owner);
+		void Hit(int index, dae::GameObject& owner, dae::GameObject* interactedObj);
 	private:
 		std::array<bool, 4> m_IsLowered{};
+		dae::GameObject* m_pLastInteractedObj{};
 	};
 }
 

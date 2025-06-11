@@ -26,7 +26,7 @@ namespace game
 		void Update(float deltaTime) override;
 		void HandleState();
 
-		void Hit(int index);
+		void Hit(int index, dae::GameObject* pHitter);
 
 		void AddObserver(dae::Observer* pObserver);
 		void RemoveObserver(dae::Observer* pObserver);
@@ -37,5 +37,6 @@ namespace game
 		std::array<bool, 4> m_IsLowered{};
 
 		std::unique_ptr<dae::Subject> m_pIngredientFellOnPlateEvent;
+		std::unique_ptr<dae::Subject> m_pIngredientLandedEvent;
 	};
 }
