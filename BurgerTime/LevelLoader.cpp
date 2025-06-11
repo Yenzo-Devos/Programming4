@@ -15,6 +15,8 @@
 #include "FallComponent.h"
 #include "PlateComponent.h"
 #include "PepperComponent.h"
+#include "EnemyComponent.h"
+#include "ChaseComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
 {
@@ -184,6 +186,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	
 	// add collisioncomp and EnemyComp
+	//enemy->AddComponent<dae::HitboxComponent>();
 
 	return enemy;
 }

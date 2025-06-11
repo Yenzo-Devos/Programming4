@@ -12,7 +12,7 @@ namespace dae
 		Command& operator=(const Command& other) = delete;
 		Command& operator=(Command&& other) = delete;
 
-		virtual void Execute(float) = 0;
+		virtual bool Execute(float) = 0;
 	
 	protected:
 		Command() = default;

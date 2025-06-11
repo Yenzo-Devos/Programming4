@@ -26,15 +26,15 @@ game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::v
 {
 }
 
-void game::MoveCommand::Execute(float deltaTime)
+bool game::MoveCommand::Execute(float deltaTime)
 {
 	if (m_Direction.y != 0)
-		Climb(deltaTime);
+		return Climb(deltaTime);
 	else if (m_Direction.x != 0)
-		Walk(deltaTime);
+		return Walk(deltaTime);
 }
 
-void game::MoveCommand::Climb(float deltaTime)
+bool game::MoveCommand::Climb(float deltaTime)
 {
 	// check if overlapping with ladder
 	auto nextPos = GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime);
@@ -52,10 +52,12 @@ void game::MoveCommand::Climb(float deltaTime)
 				for (const auto& ingredient : ingredientVec)
 					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second);
 		}
+		return true;
 	}
+	return false;
 }
 
-void game::MoveCommand::Walk(float deltaTime)
+bool game::MoveCommand::Walk(float deltaTime)
 {
 	// clean this up
 	auto nextPos = GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime);
@@ -74,23 +76,9 @@ void game::MoveCommand::Walk(float deltaTime)
 				for (const auto& ingredient : ingredientVec)
 					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second);
 		}
-		return;
+		return true;
 	}
-}
-
-game::KillCommand::KillCommand(dae::GameObject* pGameObject)
-	: GameObjectCommand(pGameObject)
-{
-}
-
-void game::KillCommand::Execute(float)
-{
-	//if (GetGameObject()->HasComponent<LivesComponent>())
-	GetGameObject()->GetComponent<LivesComponent>()->LoseLife(1);
-
-	auto& ss = dae::ServiceLocator::GetSoundSystem();
-	dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };
-	ss.AddToQueue(deathAudio);
+	return false;
 }
 
 game::ThrowPepperCommand::ThrowPepperCommand(dae::GameObject* pGameObject)
@@ -98,7 +86,7 @@ game::ThrowPepperCommand::ThrowPepperCommand(dae::GameObject* pGameObject)
 {
 }
 
-void game::ThrowPepperCommand::Execute(float)
+bool game::ThrowPepperCommand::Execute(float)
 {
 	// get direction
 	auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
@@ -113,7 +101,4 @@ void game::ThrowPepperCommand::Execute(float)
 	else return;
 	
 	playerComp->ActivatePepper(pos, direction);
-	// set player to pepperState
-	// change state to pepper and give direction
-	//playerComp->ChangeState(&game::PlayerState::m_Pepper);
 }

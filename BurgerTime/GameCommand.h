@@ -19,28 +19,15 @@ namespace game
 		MoveCommand& operator=(const MoveCommand& other) = delete;
 		MoveCommand& operator=(MoveCommand&& other) = delete;
 		
-		void Execute(float deltaTime) override;
+		bool Execute(float deltaTime) override;
 
 	private:
 		float m_Speed;
 		glm::vec3 m_Direction;
 	
-		void Climb(float deltaTime);
-		void Walk(float deltaTime);
+		bool Climb(float deltaTime);
+		bool Walk(float deltaTime);
 	
-	};
-
-	class KillCommand : public dae::GameObjectCommand
-	{
-	public:
-		KillCommand(dae::GameObject* pGameObject);
-		~KillCommand() = default;
-
-		KillCommand(const KillCommand& other) = delete;
-		KillCommand(KillCommand&& other) = delete;
-		KillCommand& operator=(const KillCommand& other) = delete;
-		KillCommand& operator=(KillCommand&& other) = delete;
-		void Execute(float) override;
 	};
 
 	class ThrowPepperCommand : public dae::GameObjectCommand
@@ -54,6 +41,6 @@ namespace game
 		ThrowPepperCommand& operator=(const ThrowPepperCommand& other) = delete;
 		ThrowPepperCommand& operator=(ThrowPepperCommand&& other) = delete;
 
-		void Execute(float) override;
+		bool Execute(float) override;
 	};
 }
