@@ -1,7 +1,7 @@
 #include "EnemyFallState.h"
 #include "GameObject.h"
 #include "CollisionHandler.h"
-#include "EnemyChaseState.h"
+#include "EnemyShowPointsState.h"
 #include "EnemyDeadState.h"
 
 game::EnemyFallState::EnemyFallState(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling)
@@ -29,7 +29,15 @@ std::unique_ptr<game::EnemyState> game::EnemyFallState::HandleState(dae::GameObj
 	auto hitbox = m_pHitboxComp->GetHitbox("main_hitbox");
 	auto platform = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("platform", hitbox);
 	if (static_cast<int>(platform.size()) > 0)
-		return std::make_unique<EnemyChaseState>();
+		if (m_FirstToFall)
+		{
+			const int max = 6;
+			int maxedCount = std::min(m_NrOfEnemiesFalling, max);
+			int pointsResult = 500 * (1 << (maxedCount - 1));
+			return std::make_unique<EnemyShowPointsState>(pointsResult, m_pLastInteractedObj);
+		}
+		else
+			return std::make_unique<EnemyShowPointsState>();
 	
 	auto plate = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("plate", hitbox);
 	if (static_cast<int>(plate.size()) > 0)

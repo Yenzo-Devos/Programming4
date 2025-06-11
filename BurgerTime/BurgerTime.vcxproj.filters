@@ -168,6 +168,9 @@
     <ClCompile Include="PointEffectComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyShowPointsState.cpp">
+      <Filter>Source Files\States\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSComponent.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="PointEffectComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShowPointsState.h">
+      <Filter>Header Files\States\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

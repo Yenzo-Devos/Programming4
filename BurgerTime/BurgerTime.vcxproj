@@ -170,6 +170,7 @@
     <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
     <ClCompile Include="EnemyFallState.cpp" />
+    <ClCompile Include="EnemyShowPointsState.cpp" />
     <ClCompile Include="EnemySquishedState.cpp" />
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="EnemyStunnedState.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyDeadState.h" />
     <ClInclude Include="EnemyFallState.h" />
+    <ClInclude Include="EnemyShowPointsState.h" />
     <ClInclude Include="EnemySquishedState.h" />
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="EnemyStunnedState.h" />
