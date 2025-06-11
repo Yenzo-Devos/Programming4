@@ -33,8 +33,8 @@ namespace dae
 		friend class Singleton<CollisionHandler>;
 		CollisionHandler() = default;
 
-		bool IsOverlapping(HitboxComponent::Box* hitbox, HitboxComponent::Box* otherHitbox) const;
-		bool IsFullyOverlapping(HitboxComponent::Box* hitbox, HitboxComponent::Box* otherHitbox) const;
+		bool IsOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const;
+		bool IsFullyOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const;
 
 		std::vector<GameObject*> m_pWalkableObjectVec{};
 		std::vector<GameObject*> m_pLadderVec{};

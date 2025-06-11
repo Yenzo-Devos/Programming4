@@ -1,5 +1,7 @@
 #pragma once
 #include "EnemyState.h"
+#include "SpriteComponent.h"
+#include "ChaseComponent.h"
 
 namespace game
 {
@@ -7,13 +9,19 @@ namespace game
 	{
 	public:
 		EnemyChaseState() = default;
-		//virtual void Update(float) {}
+		EnemyChaseState(dae::SpriteComponent* spriteComp, ChaseComponent* chaseComp);
+		virtual void Update(float) override;
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject&) override;
-		//void OnEnter(dae::GameObject& owner) override;
-		//virtual void OnExit(dae::GameObject&) {}
+		void OnEnter(dae::GameObject& owner) override;
+		virtual void OnExit(dae::GameObject&) override;
 		void Stun() { m_IsStunned = true; }
 
 	private:
 		bool m_IsStunned{ false };
+		glm::vec2 m_Direction{};
+		dae::SpriteComponent* m_pSpriteComp{};
+		ChaseComponent* m_pChaseComp{};
+
+		void ChangeAnimation(glm::vec2 dir);
 	};
 }

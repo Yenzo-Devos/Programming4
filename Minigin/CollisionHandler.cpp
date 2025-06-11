@@ -49,9 +49,9 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag(identifier);
 	for (const auto& obj : objectsToCheck)
 	{
-		auto hitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_Hitbox");
-		HitboxComponent::Box* pBox = new HitboxComponent::Box{ static_cast<int>(pos.x), static_cast<int>(pos.y), width, height, 0, 0 };
-		if (IsOverlapping(hitbox, pBox))
+		auto hitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		HitboxComponent::Box pBox = HitboxComponent::Box{ static_cast<int>(pos.x), static_cast<int>(pos.y), width, height, 0, 0 };
+		if (IsOverlapping(*hitbox, pBox))
 			resultVec.emplace_back(obj);
 	}
 	return resultVec;
@@ -63,8 +63,8 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag(identifier);
 	for (const auto& obj : objectsToCheck)
 	{
-		auto otherhitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_Hitbox");
-		if (IsOverlapping(otherhitbox, hitbox))
+		auto otherhitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
+		if (IsOverlapping(*otherhitbox, *hitbox))
 			resultVec.emplace_back(obj);
 	}
 	return resultVec;
@@ -76,7 +76,7 @@ std::vector<dae::GameObject*> dae::CollisionHandler::AreEnemiesHit(HitboxCompone
 	for (const auto& enemy : m_pEnemyVec)
 	{
 		auto enemyHitbox = enemy->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
-		if (IsOverlapping(hitbox, enemyHitbox))
+		if (IsOverlapping(*hitbox, *enemyHitbox))
 			resultVec.emplace_back(enemy);
 	}
 	return resultVec;
@@ -110,7 +110,7 @@ std::vector<std::pair<dae::GameObject*, int>> dae::CollisionHandler::PerformIngr
 		auto ingredientHitboxComp = ingredient->GetComponent<dae::HitboxComponent>();
 		for (const auto& ingredientHitbox : ingredientHitboxComp->GetAllHitboxes())
 		{
-			if (IsOverlapping(hitbox, ingredientHitbox))
+			if (IsOverlapping(*hitbox, *ingredientHitbox))
 			{
 				resultVec.emplace_back(std::make_pair(ingredient, count));
 			}
@@ -120,20 +120,20 @@ std::vector<std::pair<dae::GameObject*, int>> dae::CollisionHandler::PerformIngr
 	return resultVec;
 }
 
-bool dae::CollisionHandler::IsOverlapping(HitboxComponent::Box* hitbox, HitboxComponent::Box* otherHitbox) const
+bool dae::CollisionHandler::IsOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const
 {
-	if (hitbox->left > otherHitbox->left + otherHitbox->width or otherHitbox->left > hitbox->left + hitbox->width)
+	if (hitbox.left > otherHitbox.left + otherHitbox.width or otherHitbox.left > hitbox.left + hitbox.width)
 		return false;
-	if (hitbox->top + hitbox->height < otherHitbox->top or otherHitbox->top + otherHitbox->height < hitbox->top)
+	if (hitbox.top + hitbox.height < otherHitbox.top or otherHitbox.top + otherHitbox.height < hitbox.top)
 		return false;
 	return true;
 }
 
-bool dae::CollisionHandler::IsFullyOverlapping(HitboxComponent::Box* hitbox, HitboxComponent::Box* otherHitbox) const
+bool dae::CollisionHandler::IsFullyOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const
 {
-	if (hitbox->left < otherHitbox->left or hitbox->left + hitbox->width > otherHitbox->left + otherHitbox->width)
+	if (hitbox.left < otherHitbox.left or hitbox.left + hitbox.width > otherHitbox.left + otherHitbox.width)
 		return false;
-	if (hitbox->top < otherHitbox->top or hitbox->top + hitbox->height > otherHitbox->top + otherHitbox->height)
+	if (hitbox.top < otherHitbox.top or hitbox.top + hitbox.height > otherHitbox.top + otherHitbox.height)
 		return false;
 	
 	return true;

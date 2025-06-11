@@ -51,7 +51,9 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 		for (const auto& enemy : dynamicObject["enemy"])
 			scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
 		for (const auto& player : dynamicObject["player"])
+		{
 			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
+		}
 	}
 	catch (const std::exception& e)
 	{
@@ -178,23 +180,24 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ x, y, 32, 32 });
 	enemy->AddComponent<dae::SpriteComponent>(enemy->GetComponent<dae::RenderComponent>(), 32, 32);
 	enemy->GetComponent<dae::SpriteComponent>()->LoadTexture(textureFileName);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 1, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 2, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 3, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 4, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 5, 1.f);
-	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 6, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkLeft", 2, 0, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkRight", 2, 1, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkUp", 2, 2, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("walkDown", 2, 3, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("dying", 4, 4, 1.f);
+	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 5, 1.f);
 	enemy->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	
 	// add collisioncomp and EnemyComp
 	enemy->AddComponent<dae::HitboxComponent>();
 	enemy->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
 
+	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
+	enemy->AddComponent<game::ChaseComponent>(pLadders);
+	
 	enemy->AddComponent<game::EnemyComponent>();
 	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
 
-	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
-	enemy->AddComponent<game::ChaseComponent>(pLadders);
 
 	return enemy;
 }

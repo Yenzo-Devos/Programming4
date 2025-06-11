@@ -11,6 +11,9 @@ game::ChaseComponent::ChaseComponent(dae::GameObject* pOwner, std::vector<dae::G
 
 void game::ChaseComponent::Update(float deltaTime)
 {
+	if (!m_IsActive)
+		return;
+
 	if (m_IsDirectionLocked)
 	{
 		m_AccuLockedDirTime += deltaTime;

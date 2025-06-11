@@ -18,11 +18,16 @@ namespace game
 
 		void Update(float deltaTime) override;
 		void AddObjectToChase(dae::GameObject* object);
+		glm::vec2 GetDirection() { return m_LockedDirection; }
+
+		void Activate(bool isActive) { m_IsActive = isActive; }
 	
 	private:
+		bool m_IsActive{ true };
+
 		// movement vars
 		bool m_IsOnLadder{ false };
-		glm::vec2 m_LockedDirection{};
+		glm::vec2 m_LockedDirection{ 1.f, 0.f };
 		dae::GameObject* m_pLockedChaseObj{};
 		std::vector<dae::GameObject*> m_pObjectToChaseVec{};
 		std::vector<dae::GameObject*> m_pLadderVec{};

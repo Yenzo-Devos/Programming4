@@ -16,3 +16,8 @@ std::unique_ptr<game::EnemyState> game::EnemyStunnedState::HandleState(dae::Game
 
     return nullptr;
 }
+
+void game::EnemyStunnedState::OnEnter(dae::GameObject& owner)
+{
+    owner.GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayed");
+}
