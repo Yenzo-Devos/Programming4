@@ -31,6 +31,8 @@
 #include "RenderComponent.h"
 #include "PointsComponent.h"
 #include "PointsDisplayComponent.h"
+#include "PepperComponent.h"
+#include "PepperDisplayComponent.h"
 //#include "RotatingComponent.h"
 //#include "TrashTheCacheComponent.h"
 
@@ -62,12 +64,36 @@ void load()
 	//textObj->GetComponent<dae::TextComponent>()->SetFont("Lingua.otf", 36);
 	//scene.Add(std::move(textObj));
 
+	auto scoreTextObj = scene.CreateObject();
+	scoreTextObj->SetLocalPosition(glm::vec3{ 0.f, 4.f, 0.f });
+	scoreTextObj->AddComponent<dae::RenderComponent>();
+	scoreTextObj->AddComponent<dae::TextComponent>(scoreTextObj->GetComponent<dae::RenderComponent>());
+	scoreTextObj->GetComponent<dae::TextComponent>()->SetText("SCORE");
+	scoreTextObj->GetComponent<dae::TextComponent>()->SetFont("ui_objects/burger_time_font.otf", 18);
+	scene.Add(std::move(scoreTextObj));
+	
+	auto pepperTextObj = scene.CreateObject();
+	pepperTextObj->SetLocalPosition(glm::vec3{ 310.f, 4.f, 0.f});
+	pepperTextObj->AddComponent<dae::RenderComponent>();
+	pepperTextObj->AddComponent<dae::TextComponent>(pepperTextObj->GetComponent<dae::RenderComponent>());
+	pepperTextObj->GetComponent<dae::TextComponent>()->SetText("PEPPER");
+	pepperTextObj->GetComponent<dae::TextComponent>()->SetFont("ui_objects/burger_time_font.otf", 18);
+	scene.Add(std::move(pepperTextObj));
+
+	auto pepperCountObj = scene.CreateObject();
+	pepperCountObj->SetLocalPosition(glm::vec3{ 400.f, 30.f, 0.f });
+	pepperCountObj->AddComponent<dae::RenderComponent>();
+	pepperCountObj->AddComponent<dae::TextComponent>(pepperCountObj->GetComponent<dae::RenderComponent>());
+	pepperCountObj->GetComponent<dae::TextComponent>()->SetText("5");
+	pepperCountObj->GetComponent<dae::TextComponent>()->SetFont("ui_objects/burger_time_font.otf", 18);
+	pepperCountObj->AddComponent<game::PepperDisplayComponent>(pepperCountObj->GetComponent<dae::TextComponent>());
+
 	auto chefPointsObj = scene.CreateObject();
-	chefPointsObj->SetLocalPosition(glm::vec3{ 0.f, 24.f, 0.f });
+	chefPointsObj->SetLocalPosition(glm::vec3{ 4.f, 24.f, 0.f });
 	chefPointsObj->AddComponent<dae::RenderComponent>();
 	chefPointsObj->AddComponent<dae::TextComponent>(chefPointsObj->GetComponent<dae::RenderComponent>());
 	chefPointsObj->GetComponent<dae::TextComponent>()->SetText("0");
-	chefPointsObj->GetComponent<dae::TextComponent>()->SetFont("ui_objects/burger_time_font.otf", 24);
+	chefPointsObj->GetComponent<dae::TextComponent>()->SetFont("ui_objects/burger_time_font.otf", 18);
 	chefPointsObj->AddComponent<game::PointsDisplayComponent>(chefPointsObj->GetComponent<dae::TextComponent>());
 
 	auto chefLivesObj = scene.CreateObject();
@@ -81,8 +107,11 @@ void load()
 	chefLivesObj->AddComponent<game::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextureComponent>());
 
 	auto chefObj = scene.GetObjectByTag("player0");
+	auto pepperObj = scene.GetObjectByTag("pepper");
+	pepperObj->GetComponent<game::PepperComponent>()->AddObserver(pepperCountObj->GetComponent<game::PepperDisplayComponent>());
 	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<game::LivesDisplayComponent>());
 	chefObj->GetComponent<game::PointsComponent>()->AddObserver(chefPointsObj->GetComponent<game::PointsDisplayComponent>());
+	scene.Add(std::move(pepperCountObj));
 	scene.Add(std::move(chefLivesObj));
 	scene.Add(std::move(chefPointsObj));
 
@@ -101,7 +130,7 @@ void load()
 	//pepperObj->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	//pepperObj->AddComponent<game::LivesComponent>(3);
 
-	auto pepperObj = scene.GetObjectByTag("enemy");
+	auto enemyObj = scene.GetObjectByTag("enemy");
 	//auto pepperLivesObj = scene.CreateObject();
 	//pepperLivesObj->SetLocalPosition(glm::vec3{ 20.f, 140.f, 0.f });
 	//pepperLivesObj->AddComponent<dae::RenderComponent>();
@@ -128,10 +157,10 @@ void load()
 	dae::InputManager::GetInstance().BindCommand(std::move(ThrowPepperCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_B);
 
 	// adding keyboard movement
-	auto moveLeftCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj, speed, glm::vec3(-1, 0, 0));
-	auto moveRightCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj, speed, glm::vec3(1, 0, 0));
-	auto moveUpCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj, speed, glm::vec3(0, -1, 0));
-	auto moveDownCommandKeyBoard = std::make_unique<game::MoveCommand>(pepperObj, speed, glm::vec3(0, 1, 0));
+	auto moveLeftCommandKeyBoard = std::make_unique<game::MoveCommand>(enemyObj, speed, glm::vec3(-1, 0, 0));
+	auto moveRightCommandKeyBoard = std::make_unique<game::MoveCommand>(enemyObj, speed, glm::vec3(1, 0, 0));
+	auto moveUpCommandKeyBoard = std::make_unique<game::MoveCommand>(enemyObj, speed, glm::vec3(0, -1, 0));
+	auto moveDownCommandKeyBoard = std::make_unique<game::MoveCommand>(enemyObj, speed, glm::vec3(0, 1, 0));
 
 	dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommandKeyBoard), dae::InputState::Held, SDL_SCANCODE_A);
 	dae::InputManager::GetInstance().BindCommand(std::move(moveRightCommandKeyBoard), dae::InputState::Held, SDL_SCANCODE_D);

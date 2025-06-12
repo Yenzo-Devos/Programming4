@@ -9,7 +9,8 @@ namespace dae
 		OnPlayerScored,
 		OnIngredientFallOnPlate,
 		OnIngredientLanded,
-		EnemyStunned
+		EnemyStunned,
+		PepperUsed
 	};
 
 	class Observer

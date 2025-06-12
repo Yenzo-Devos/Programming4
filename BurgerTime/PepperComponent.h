@@ -23,15 +23,19 @@ namespace game
 
 		void AddObserver(dae::Observer* pObserver);
 		void RemoveObserver(dae::Observer* pObserver);
+
+		int GetPepperCount() const { return m_PepperCount; }
 	
 	private:
 		bool m_IsActive{ false };
 		float m_AccuActiveTime{ 0.f };
 		const float m_ActiveTime{ 0.5f };
 		void DeActivate();
+
+		int m_PepperCount{ 5 };
 		
 		dae::HitboxComponent* m_pHitboxComp{};
-		std::unique_ptr<dae::Subject> m_pEnemyStunEvent;
+		std::unique_ptr<dae::Subject> m_pPepperEvent;
 	};
 }
 

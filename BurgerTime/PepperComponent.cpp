@@ -6,7 +6,7 @@
 game::PepperComponent::PepperComponent(dae::GameObject* pOwner, dae::HitboxComponent* hitboxComp)
 	: BaseComponent(pOwner)
 	, m_pHitboxComp{ hitboxComp }
-	, m_pEnemyStunEvent{ std::make_unique<dae::Subject>() }
+	, m_pPepperEvent{ std::make_unique<dae::Subject>() }
 {
 }
 
@@ -33,6 +33,12 @@ bool game::PepperComponent::Activate(glm::vec2 pos, glm::vec2 dir)
 	if (m_IsActive)
 		return false;
 
+	if (m_PepperCount <= 0)
+		return false;
+
+	--m_PepperCount;
+	m_pPepperEvent->Broadcast(m_pOwner, dae::Event::PepperUsed);
+
 	m_IsActive = true;
 	m_pOwner->SetLocalPosition({ pos, 0.f });
 	if (dir.x == 1.f)
@@ -44,12 +50,12 @@ bool game::PepperComponent::Activate(glm::vec2 pos, glm::vec2 dir)
 
 void game::PepperComponent::AddObserver(dae::Observer* pObserver)
 {
-	m_pEnemyStunEvent->AddObserver(pObserver);
+	m_pPepperEvent->AddObserver(pObserver);
 }
 
 void game::PepperComponent::RemoveObserver(dae::Observer* pObserver)
 {
-	m_pEnemyStunEvent->RemoveObserver(pObserver);
+	m_pPepperEvent->RemoveObserver(pObserver);
 }
 
 void game::PepperComponent::DeActivate()

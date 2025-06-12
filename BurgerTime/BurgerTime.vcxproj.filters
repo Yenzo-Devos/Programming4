@@ -171,6 +171,9 @@
     <ClCompile Include="EnemyShowPointsState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="PepperDisplayComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSComponent.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="EnemyShowPointsState.h">
       <Filter>Header Files\States\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PepperDisplayComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

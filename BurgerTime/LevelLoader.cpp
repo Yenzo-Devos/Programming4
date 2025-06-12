@@ -293,6 +293,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePepper()
 	auto pepper = std::make_unique<dae::GameObject>();
 	pepper->SetLocalPosition({ -50.f, -50.f, 0.f });
 	pepper->SetDimensions(32, 32);
+	pepper->GiveTag("pepper");
 
 	pepper->AddComponent<dae::RenderComponent>(true);
 	pepper->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ -10, -10, 32, 32 });

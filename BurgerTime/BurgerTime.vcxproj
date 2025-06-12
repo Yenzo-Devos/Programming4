@@ -187,6 +187,7 @@
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="PepperComponent.cpp" />
+    <ClCompile Include="PepperDisplayComponent.cpp" />
     <ClCompile Include="PlateComponent.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PlayerDyingState.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="PepperComponent.h" />
+    <ClInclude Include="PepperDisplayComponent.h" />
     <ClInclude Include="PlateComponent.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerDyingState.h" />
