@@ -41,6 +41,7 @@
 #include "GameModeComponent.h"
 #include "MenuComponent.h"
 #include "CursorComponent.h"
+#include "CommandLoader.h"
 
 #include <iostream>
 
@@ -59,15 +60,16 @@ void load()
 
 	dae::InputManager::GetInstance().AddController();
 	dae::InputManager::GetInstance().AddController();
+	game::CommandLoader::GetInstance().CreateStartMenuCommands(scene);
 
-	auto menuComp = scene->GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
-	auto confirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, scene->GetObjectByTag("menu"));
-	auto menuMoveUpCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{0.f, -1.f});
-	auto menuMoveDownCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
-
-	dae::InputManager::GetInstance().BindCommand(std::move(confirmCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
-	dae::InputManager::GetInstance().BindCommand(std::move(menuMoveUpCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_UP);
-	dae::InputManager::GetInstance().BindCommand(std::move(menuMoveDownCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_DOWN);
+	//auto menuComp = scene->GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
+	//auto confirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, scene->GetObjectByTag("menu"));
+	//auto menuMoveUpCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{0.f, -1.f});
+	//auto menuMoveDownCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
+	//
+	//dae::InputManager::GetInstance().BindCommand(std::move(confirmCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
+	//dae::InputManager::GetInstance().BindCommand(std::move(menuMoveUpCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_UP);
+	//dae::InputManager::GetInstance().BindCommand(std::move(menuMoveDownCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_DOWN);
 
 	// example code
 	//auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");

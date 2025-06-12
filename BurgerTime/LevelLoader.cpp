@@ -22,7 +22,7 @@
 #include "PointEffectComponent.h"
 #include "GameModeComponent.h"
 
-void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene)
+void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene, GameModeComponent::PlayerData playerData)
 {
 	using json = nlohmann::json;
 
@@ -55,6 +55,8 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 			scene->Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
 		for (const auto& player : dynamicObject["player"])
 			scene->Add(CreatePlayer(player["id"], player["x"], player["y"]));
+
+		AddPlayerDataToObjects(scene, playerData);
 	}
 	catch (const std::exception& e)
 	{
@@ -236,6 +238,15 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePointEffect()
 	pointEffect->AddComponent<PointEffectComponent>(pointEffect->GetComponent<dae::SpriteComponent>(), 2.f);
 
 	return pointEffect;
+}
+
+void game::LevelLoader::AddPlayerDataToObjects(dae::Scene* pScene, GameModeComponent::PlayerData playerData)
+{
+	auto player = pScene->GetObjectByTag("player0");
+	player->AddComponent<PointsComponent>(playerData.score);
+	player->AddComponent<LivesComponent>(playerData.lives);
+	auto pepperHitbox = player->GetComponent<PlayerComponent>()->GetPepper()->GetComponent<dae::HitboxComponent>();
+	player->GetComponent<PlayerComponent>()->GetPepper()->AddComponent<PepperComponent>(pepperHitbox, playerData.nrOfPepper);
 }
 
 std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, int y)

@@ -1,6 +1,7 @@
 #pragma once
 #include "Singleton.h"
 #include "Scene.h"
+#include "GameModeComponent.h"
 
 #include <string>
 #include <memory>
@@ -19,7 +20,7 @@ namespace game
 		LevelLoader& operator=(const LevelLoader& other) = delete;
 		LevelLoader& operator=(LevelLoader&& other) = delete;
 	
-		void LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene);
+		void LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene, GameModeComponent::PlayerData playerData);
 	private:
 		friend class Singleton<LevelLoader>;
 		LevelLoader() = default;
@@ -38,5 +39,6 @@ namespace game
 		std::unique_ptr<dae::GameObject> CreateEnemy(const std::string& type, int x, int y);
 		std::unique_ptr<dae::GameObject> CreatePointEffect();
 		
+		void AddPlayerDataToObjects(dae::Scene* pScene, GameModeComponent::PlayerData playerData);
 	};
 }

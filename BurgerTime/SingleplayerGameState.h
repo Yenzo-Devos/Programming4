@@ -1,6 +1,8 @@
 #pragma once
 #include "GameState.h"
 #include "Scene.h"
+#include "GameModeComponent.h"
+
 namespace game
 {
 	class SingleplayerGameState : public GameState
@@ -17,7 +19,9 @@ namespace game
 	private:
 		int m_Level{1};
 		bool m_GameHasEnded{ false };
-		void CreateCommands(dae::Scene* pScene, dae::GameObject* owner);
+
+		GameModeComponent::PlayerData CreateBufferPlayerData(dae::Scene* pScene);
+		void RemoveAllObjects();
 	};
 }
 

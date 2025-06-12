@@ -204,6 +204,9 @@
     <ClCompile Include="MenuComponent.cpp">
       <Filter>Source Files\Components\MenuComponents</Filter>
     </ClCompile>
+    <ClCompile Include="CommandLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommand.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="MenuComponent.h">
       <Filter>Header Files\Components\MenuComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandLoader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
