@@ -11,6 +11,7 @@ namespace dae
 		
 		void Add(std::unique_ptr<GameObject> object);
 		void Remove(std::unique_ptr<GameObject> object);
+		void RemoveByTag(const std::string& tag);
 		void RemoveAll();
 
 		GameObject* GetObjectByTag(const std::string& tag);

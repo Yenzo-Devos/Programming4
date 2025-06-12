@@ -19,7 +19,7 @@ namespace game
 
 		void CreateStartMenuCommands(dae::Scene* pScene);
 		void CreateSinglePlayerCommands(dae::Scene* pScene, dae::GameObject* pGameState);
-		void CreateCoopCommands();
+		void CreateCoopCommands(dae::Scene* pScene, dae::GameObject* pGameState);
 		void CreateVersusCommands();
 		void CreateLeaderboardCommands(dae::Scene* pScene);
 

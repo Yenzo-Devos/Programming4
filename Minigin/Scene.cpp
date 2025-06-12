@@ -16,12 +16,24 @@ std::unique_ptr<GameObject> dae::Scene::CreateObject()
 
 void Scene::Add(std::unique_ptr<GameObject> object)
 {
+	if (object == nullptr)
+		return;
+
 	m_pObjects.emplace_back(std::move(object));
 }
 
 void Scene::Remove(std::unique_ptr<GameObject> object)
 {
 	m_pObjects.erase(std::remove(m_pObjects.begin(), m_pObjects.end(), object), m_pObjects.end());
+}
+
+void dae::Scene::RemoveByTag(const std::string& tag)
+{
+	m_pObjects.erase(std::remove_if(m_pObjects.begin(), m_pObjects.end(),
+			[&tag](const std::unique_ptr<GameObject>& obj) {
+				return obj->GetTag() == tag;
+			}),
+		m_pObjects.end());
 }
 
 void Scene::RemoveAll()

@@ -1,4 +1,7 @@
 #include "PointsComponent.h"
+#include "GameObject.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 game::PointsComponent::PointsComponent(dae::GameObject* owner, int currentPoints)
 	: BaseComponent(owner)
@@ -19,6 +22,12 @@ void game::PointsComponent::RemoveObserver(dae::Observer* pObserver)
 
 void game::PointsComponent::AddPoints(int amount)
 {
+	if (m_pOwner->GetTag() == "player1")
+	{
+		auto player = dae::SceneManager::GetInstance().GetActiveScene()->GetObjectByTag("player0");
+		player->GetComponent<PointsComponent>()->AddPoints(amount);
+		return;
+	}
 	m_Points += amount;
 	m_pPointsScored->Broadcast(m_pOwner, dae::Event::OnPlayerScored);
 }

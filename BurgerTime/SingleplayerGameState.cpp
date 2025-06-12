@@ -28,7 +28,7 @@ void game::SingleplayerGameState::OnEnter(dae::GameObject* owner)
 {
     auto scene = dae::SceneManager::GetInstance().CreateScene("singleplayer");
     auto playerData = owner->GetComponent<GameModeComponent>()->GetPlayerData();
-    LevelLoader::GetInstance().LoadLevel("../Data/", "levels/level1.json", scene, playerData);
+    LevelLoader::GetInstance().LoadLevel("../Data/", "levels/level1.json", scene, playerData, 0);
 
     UILoader::GetInstance().LoadGameUI(scene);
     CommandLoader::GetInstance().CreateSinglePlayerCommands(scene, owner);
@@ -52,7 +52,7 @@ void game::SingleplayerGameState::LoadNextLevel(dae::GameObject* owner)
     RemoveAllObjects();
     
     std::string levelName = "levels/level" + std::to_string(m_Level) + ".json";
-    LevelLoader::GetInstance().LoadLevel("../Data/", levelName, scene, playerData);
+    LevelLoader::GetInstance().LoadLevel("../Data/", levelName, scene, playerData, 0);
     
     UILoader::GetInstance().LoadGameUI(scene);
     CommandLoader::GetInstance().CreateSinglePlayerCommands(scene, owner);

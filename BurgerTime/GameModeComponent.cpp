@@ -1,6 +1,7 @@
 #include "GameModeComponent.h"
 #include "StartScreenState.h"
 #include "SingleplayerGameState.h"
+#include "CoopGameState.h"
 #include "LeaderboardState.h"
 #include "LeaderboardHandler.h"
 #include "GameObject.h"
@@ -52,12 +53,13 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 	{
 		std::vector<dae::GameObject*> pEnemies{};
 		auto state = dynamic_cast<SingleplayerGameState*>(m_pState.get());
-		if (state)
+		auto coopState = dynamic_cast<CoopGameState*>(m_pState.get());
+		if (state || coopState)
 		{
 			pEnemies = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
+			for (auto enemy : pEnemies)
+				enemy->GetComponent<ChaseComponent>()->Activate(false);
 		}
-		for (auto enemy : pEnemies)
-			enemy->GetComponent<ChaseComponent>()->Activate(false);
 		break;
 	}
 	case dae::Event::OnGameEnded:
@@ -67,6 +69,12 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 		{
 			m_FinishedPoints = pGameObject->GetComponent<PointsComponent>()->GetCurrentPoints();
 			singleplayerState->EndGame();
+		}
+		auto coopState = dynamic_cast<CoopGameState*>(m_pState.get());
+		if (coopState)
+		{
+			m_FinishedPoints = pGameObject->GetComponent<PointsComponent>()->GetCurrentPoints();
+			coopState->EndGame();
 		}
 		break;
 	}
@@ -80,6 +88,10 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 				auto singleplayerState = dynamic_cast<SingleplayerGameState*>(m_pState.get());
 				if (singleplayerState)
 					singleplayerState->LoadNextLevel(m_pOwner);
+
+				auto coopState = dynamic_cast<CoopGameState*>(m_pState.get());
+				if (coopState)
+					coopState->LoadNextLevel(m_pOwner);
 			}
 		}
 		break;
