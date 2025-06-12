@@ -8,6 +8,5 @@ void game::LeaderboardState::OnEnter(dae::GameObject&)
 	UILoader::GetInstance().LoadLeaderBoardUI(scene);
 	// load the commands
 
-	auto gamemode = dae::SceneManager::GetInstance().GetActiveScene()->GetGameMode();
-	dae::SceneManager::GetInstance().SetActiveScene("leaderboard", std::move(gamemode));
+	dae::SceneManager::GetInstance().SetActiveScene("leaderboard");
 }

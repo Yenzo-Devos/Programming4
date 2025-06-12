@@ -17,12 +17,15 @@ namespace dae
 		void Render();
 
 		dae::Scene* GetActiveScene() const { return m_ActiveScene; }
-		void SetActiveScene(const std::string& name, std::unique_ptr<GameObject> pGameMode);
+		void SetActiveScene(const std::string& name);
+		void SetGameMode(std::unique_ptr<GameObject> pGameMode) { m_pGameMode = std::move(pGameMode); }
+		GameObject* GetGameMode() const { return m_pGameMode.get(); }
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 
 		std::vector<std::unique_ptr<Scene>> m_pScenes;
 		Scene* m_ActiveScene{};
+		std::unique_ptr<GameObject> m_pGameMode{};
 	};
 }

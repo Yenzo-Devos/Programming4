@@ -6,9 +6,9 @@ game::CursorComponent::CursorComponent(dae::GameObject* pOwner)
 {
 }
 
-void game::CursorComponent::Click()
+void game::CursorComponent::Click(dae::GameObject* menu)
 {
-	m_pOnClicked->Broadcast(m_pOwner, dae::Event::OnCursorClicked);
+	m_pOnClicked->Broadcast(menu, dae::Event::OnCursorClicked);
 }
 
 void game::CursorComponent::AddObserver(dae::Observer* pObserver)

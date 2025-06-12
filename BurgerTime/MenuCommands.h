@@ -30,7 +30,7 @@ namespace game
 	class MenuConfirmCommand : public dae::GameObjectCommand
 	{
 	public:
-		MenuConfirmCommand(dae::GameObject* pGameObject);
+		MenuConfirmCommand(dae::GameObject* pGameObject, dae::GameObject* pMenu);
 		~MenuConfirmCommand() = default;
 
 		MenuConfirmCommand(const MenuConfirmCommand& other) = delete;
@@ -41,6 +41,7 @@ namespace game
 		bool Execute(float) override;
 
 	private:
+		dae::GameObject* m_pMenu{};
 	};
 }
 

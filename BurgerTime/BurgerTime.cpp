@@ -51,18 +51,19 @@ void load()
 	auto gameMode = scene->CreateObject();
 	gameMode->GiveTag("gamemode");
 	gameMode->AddComponent<game::GameModeComponent>();
-	scene->Add(std::move(gameMode));
-
 	game::UILoader::GetInstance().LoadStartScreenUI(scene);
-	
-	dae::InputManager::GetInstance().AddController();
-	auto cursor = scene->GetObjectByTag(">");
-	cursor->GetComponent<game::CursorComponent>()->AddObserver(cursor->GetComponent<game::GameModeComponent>());
 
+	auto cursor = scene->GetObjectByTag(">");
+	cursor->GetComponent<game::CursorComponent>()->AddObserver(gameMode->GetComponent<game::GameModeComponent>());
+	dae::SceneManager::GetInstance().SetGameMode(std::move(gameMode));
+
+	dae::InputManager::GetInstance().AddController();
 	auto menuComp = scene->GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
+	auto confirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, scene->GetObjectByTag("menu"));
 	auto menuMoveUpCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{0.f, -1.f});
 	auto menuMoveDownCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
 
+	dae::InputManager::GetInstance().BindCommand(std::move(confirmCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
 	dae::InputManager::GetInstance().BindCommand(std::move(menuMoveUpCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_UP);
 	dae::InputManager::GetInstance().BindCommand(std::move(menuMoveDownCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_DOWN);
 

@@ -46,13 +46,14 @@ bool game::MenuMoveCommand::Execute(float)
     return false;
 }
 
-game::MenuConfirmCommand::MenuConfirmCommand(dae::GameObject* pGameObject)
+game::MenuConfirmCommand::MenuConfirmCommand(dae::GameObject* pGameObject, dae::GameObject* pMenu)
     : GameObjectCommand(pGameObject)
+    , m_pMenu{ pMenu }
 {
 }
 
 bool game::MenuConfirmCommand::Execute(float)
 {
-    GetGameObject()->GetComponent<CursorComponent>()->Click();
+    GetGameObject()->GetComponent<CursorComponent>()->Click(m_pMenu);
     return true;
 }

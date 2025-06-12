@@ -28,5 +28,6 @@ void game::StartScreenState::OnExit(dae::GameObject&)
 
 void game::StartScreenState::ModeSelected(int itemIndex)
 {
+	m_ModeSelected = true;
 	m_ItemIndex = itemIndex;
 }

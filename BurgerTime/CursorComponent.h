@@ -10,7 +10,7 @@ namespace dae
 
 namespace game
 {
-	class CursorComponent : dae::BaseComponent
+	class CursorComponent : public dae::BaseComponent
 	{
 	public:
 		CursorComponent(dae::GameObject* pOwner);
@@ -22,7 +22,7 @@ namespace game
 		CursorComponent& operator=(CursorComponent&& other) = delete;
 
 		void Update(float) override {}
-		void Click();
+		void Click(dae::GameObject* menu);
 	
 		void AddObserver(dae::Observer* pObserver);
 		void RemoveObserver(dae::Observer* pObserver);
