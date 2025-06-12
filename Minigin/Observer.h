@@ -11,7 +11,8 @@ namespace dae
 		OnIngredientLanded,
 		EnemyStunned,
 		PepperUsed,
-		OnCursorClicked
+		OnCursorClicked,
+		OnGameEnded
 	};
 
 	class Observer

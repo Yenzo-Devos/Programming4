@@ -5,10 +5,14 @@
 #include "CollisionHandler.h"
 #include "GameCommand.h"
 #include "UILoader.h"
+#include "LeaderboardState.h"
 
 std::unique_ptr<game::GameState> game::SingleplayerGameState::HandleState(dae::GameObject&)
 {
     // on death go to leaderboard
+    if (m_GameHasEnded)
+        return std::make_unique<LeaderboardState>();
+
     return nullptr;
 }
 

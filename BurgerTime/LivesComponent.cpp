@@ -15,6 +15,8 @@ void game::LivesComponent::LoseLife(int amount)
 		m_CurrentLives -= amount;
 		m_pPlayerDiedEvent->Broadcast(m_pOwner, dae::Event::OnPlayerDeath);
 	}
+	else if (m_CurrentLives == 0)
+		m_pPlayerDiedEvent->Broadcast(m_pOwner, dae::Event::OnGameEnded);
 }
 
 void game::LivesComponent::AddObserver(dae::Observer* pObserver)

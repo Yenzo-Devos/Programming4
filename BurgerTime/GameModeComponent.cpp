@@ -1,10 +1,13 @@
 #include "GameModeComponent.h"
 #include "StartScreenState.h"
+#include "SingleplayerGameState.h"
 #include "LeaderboardState.h"
 #include "LeaderboardHandler.h"
 #include "GameObject.h"
 #include "CursorComponent.h"
 #include "MenuComponent.h"
+#include "ChaseComponent.h"
+#include "PointsComponent.h"
 
 game::GameModeComponent::GameModeComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
@@ -42,6 +45,28 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 		auto leaderboardState = dynamic_cast<LeaderboardState*>(m_pState.get());
 		if (leaderboardState)
 			LeaderboardHandler::GetInstance().ConfirmName();
+		break;
+	}
+	case dae::Event::OnPlayerDeath:
+	{
+		std::vector<dae::GameObject*> pEnemies{};
+		auto state = dynamic_cast<SingleplayerGameState*>(m_pState.get());
+		if (state)
+		{
+			pEnemies = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
+		}
+		for (auto enemy : pEnemies)
+			enemy->GetComponent<ChaseComponent>()->Activate(false);
+		break;
+	}
+	case dae::Event::OnGameEnded:
+	{
+		auto singleplayerState = dynamic_cast<SingleplayerGameState*>(m_pState.get());
+		if (singleplayerState)
+		{
+			m_FinishedPoints = pGameObject->GetComponent<PointsComponent>()->GetCurrentPoints();
+			singleplayerState->EndGame();
+		}
 		break;
 	}
 	default:

@@ -28,6 +28,13 @@ game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::v
 
 bool game::MoveCommand::Execute(float deltaTime)
 {
+	if (GetGameObject()->HasComponent<PlayerComponent>())
+	{
+		auto state = GetGameObject()->GetComponent<PlayerComponent>()->GetState();
+		if (dynamic_cast<PlayerDyingState*>(state))
+			return false;
+	}
+
 	if (m_Direction.y != 0.f)
 		return Climb(deltaTime);
 	else if (m_Direction.x != 0.f)

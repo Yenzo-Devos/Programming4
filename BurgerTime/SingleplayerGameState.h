@@ -13,9 +13,10 @@ namespace game
 		void OnExit(dae::GameObject&) override;
 
 		void LoadNextLevel();
+		void EndGame() { m_GameHasEnded = true; }
 	private:
 		int m_Level{1};
-
+		bool m_GameHasEnded{ false };
 		void CreateCommands(dae::Scene* pScene);
 	};
 }

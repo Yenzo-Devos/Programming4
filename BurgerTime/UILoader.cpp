@@ -64,8 +64,11 @@ void game::UILoader::LoadGameUI(dae::Scene* scene)
 	auto chefObj = scene->GetObjectByTag("player0");
 	auto pepperObj = scene->GetObjectByTag("pepper");
 	pepperObj->GetComponent<game::PepperComponent>()->AddObserver(pepperCountObj->GetComponent<game::PepperDisplayComponent>());
-	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<game::LivesDisplayComponent>());
 	chefObj->GetComponent<game::PointsComponent>()->AddObserver(chefPointsObj->GetComponent<game::PointsDisplayComponent>());
+	
+	auto gamemode = dae::SceneManager::GetInstance().GetGameMode();
+	chefObj->GetComponent<game::LivesComponent>()->AddObserver(chefLivesObj->GetComponent<game::LivesDisplayComponent>());
+	chefObj->GetComponent<game::LivesComponent>()->AddObserver(gamemode->GetComponent<game::GameModeComponent>());
 	scene->Add(std::move(pepperCountObj));
 	scene->Add(std::move(chefLivesObj));
 	scene->Add(std::move(chefPointsObj));
