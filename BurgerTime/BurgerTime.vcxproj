@@ -166,6 +166,7 @@
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="ChaseComponent.cpp" />
     <ClCompile Include="CoopGameState.cpp" />
+    <ClCompile Include="CursorComponent.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="FallComponent.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
+    <ClCompile Include="GameModeComponent.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="IngredientComponent.cpp" />
     <ClCompile Include="IngredientFallingState.cpp" />
@@ -186,6 +188,8 @@
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
+    <ClCompile Include="MenuCommands.cpp" />
+    <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="PepperComponent.cpp" />
     <ClCompile Include="PepperDisplayComponent.cpp" />
     <ClCompile Include="PlateComponent.cpp" />
@@ -201,11 +205,13 @@
     <ClCompile Include="RespawnComponent.cpp" />
     <ClCompile Include="SingleplayerGameState.cpp" />
     <ClCompile Include="StartScreenState.cpp" />
+    <ClCompile Include="UILoader.cpp" />
     <ClCompile Include="VersusGameState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaseComponent.h" />
     <ClInclude Include="CoopGameState.h" />
+    <ClInclude Include="CursorComponent.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyDeadState.h" />
@@ -217,6 +223,7 @@
     <ClInclude Include="FallComponent.h" />
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
+    <ClInclude Include="GameModeComponent.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="IngredientComponent.h" />
     <ClInclude Include="IngredientFallingState.h" />
@@ -227,6 +234,8 @@
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
+    <ClInclude Include="MenuCommands.h" />
+    <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="PepperComponent.h" />
     <ClInclude Include="PepperDisplayComponent.h" />
     <ClInclude Include="PlateComponent.h" />
@@ -243,6 +252,7 @@
     <ClInclude Include="RespawnComponent.h" />
     <ClInclude Include="SingleplayerGameState.h" />
     <ClInclude Include="StartScreenState.h" />
+    <ClInclude Include="UILoader.h" />
     <ClInclude Include="VersusGameState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

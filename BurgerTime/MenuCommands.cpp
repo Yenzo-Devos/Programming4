@@ -1,0 +1,58 @@
+#include "MenuCommands.h"
+#include "GameObject.h"
+#include "CursorComponent.h"
+
+
+game::MenuMoveCommand::MenuMoveCommand(dae::GameObject* pGameObject, MenuComponent* pMenu, glm::vec2 direction)
+    : GameObjectCommand(pGameObject)
+    , m_pMenu{pMenu}
+    , m_Direction{ direction }
+{
+}
+
+bool game::MenuMoveCommand::Execute(float)
+{
+    auto pos = GetGameObject()->GetWorldPosition();
+    if (m_pMenu->IsOrderHorizontal())
+    {
+        if (m_Direction.x == 1.f)
+        {
+            auto nextPos = m_pMenu->GetNextItemLocation(true);
+            GetGameObject()->SetLocalPosition(glm::vec3{ nextPos.x, pos.y, 0.f });
+            return true;
+        }
+        else if (m_Direction.x == -1.f)
+        {
+            auto nextPos = m_pMenu->GetNextItemLocation(false);
+            GetGameObject()->SetLocalPosition(glm::vec3{ nextPos.x, pos.y, 0.f });
+            return true;
+        }
+    }
+    else
+    {
+        if (m_Direction.y == -1.f)
+        {
+            auto nextPos = m_pMenu->GetNextItemLocation(false);
+            GetGameObject()->SetLocalPosition(glm::vec3{ pos.x, nextPos.y, 0.f });
+            return true;
+        }
+        else if (m_Direction.y == 1.f)
+        {
+            auto nextPos = m_pMenu->GetNextItemLocation(true);
+            GetGameObject()->SetLocalPosition(glm::vec3{ pos.x, nextPos.y, 0.f });
+            return true;
+        }
+    }
+    return false;
+}
+
+game::MenuConfirmCommand::MenuConfirmCommand(dae::GameObject* pGameObject)
+    : GameObjectCommand(pGameObject)
+{
+}
+
+bool game::MenuConfirmCommand::Execute(float)
+{
+    GetGameObject()->GetComponent<CursorComponent>()->Click();
+    return true;
+}
