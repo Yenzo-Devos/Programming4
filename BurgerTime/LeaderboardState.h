@@ -13,7 +13,5 @@ namespace game
 		void OnEnter(dae::GameObject* owner) override;
 		//virtual void OnExit(dae::GameObject&) {}
 
-	private:
-		void CreateCommands(dae::Scene* scene);
 	};
 }

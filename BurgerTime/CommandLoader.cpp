@@ -15,6 +15,14 @@ void game::CommandLoader::CreateStartMenuCommands(dae::Scene* pScene)
 	dae::InputManager::GetInstance().BindCommand(std::move(confirmCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
 	dae::InputManager::GetInstance().BindCommand(std::move(menuMoveUpCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_UP);
 	dae::InputManager::GetInstance().BindCommand(std::move(menuMoveDownCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_DOWN);
+
+    auto keyboardConfirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, pScene->GetObjectByTag("menu"));
+    auto keyboardmenuMoveUpCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 0.f, -1.f });
+    auto keyboardMenuMoveDownCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
+
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardConfirmCommand), dae::InputState::Released, SDL_SCANCODE_E);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardmenuMoveUpCommand), dae::InputState::Released, SDL_SCANCODE_W);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMenuMoveDownCommand), dae::InputState::Released, SDL_SCANCODE_S);
 }
 
 void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::GameObject* pGameState)
@@ -49,4 +57,34 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
     dae::InputManager::GetInstance().BindCommand(std::move(SkipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+}
+
+void game::CommandLoader::CreateLeaderboardCommands(dae::Scene* pScene)
+{
+    auto cursor = pScene->GetObjectByTag("^");
+    auto menuComp = pScene->GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
+    
+    auto confirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, pScene->GetObjectByTag("menu"));
+    auto menuMoveLeftCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ -1.f, 0.f });
+    auto menuMoveRigthCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 1.f, 0.f });
+    auto incrementLetterCommand = std::make_unique<ChangeLetterCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
+    auto decrementLetterCommand = std::make_unique<ChangeLetterCommand>(cursor, menuComp, glm::vec2{ 0.f, -1.f });
+
+    dae::InputManager::GetInstance().BindCommand(std::move(confirmCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_A);
+    dae::InputManager::GetInstance().BindCommand(std::move(menuMoveLeftCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_LEFT);
+    dae::InputManager::GetInstance().BindCommand(std::move(menuMoveRigthCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_RIGHT);
+    dae::InputManager::GetInstance().BindCommand(std::move(incrementLetterCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_DOWN);
+    dae::InputManager::GetInstance().BindCommand(std::move(decrementLetterCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::DPAD_UP);
+
+    auto keyboardConfirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, pScene->GetObjectByTag("menu"));
+    auto keyboardMenuMoveLeftCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ -1.f, 0.f });
+    auto keyboardMenuMoveRigthCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 1.f, 0.f });
+    auto keyboardIncrementLetterCommand = std::make_unique<ChangeLetterCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
+    auto keyboardDecrementLetterCommand = std::make_unique<ChangeLetterCommand>(cursor, menuComp, glm::vec2{ 0.f, -1.f });
+
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardConfirmCommand), dae::InputState::Released, SDL_SCANCODE_E);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMenuMoveLeftCommand), dae::InputState::Released, SDL_SCANCODE_A);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMenuMoveRigthCommand), dae::InputState::Released, SDL_SCANCODE_D);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardIncrementLetterCommand), dae::InputState::Released, SDL_SCANCODE_S);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardDecrementLetterCommand), dae::InputState::Released, SDL_SCANCODE_W);
 }

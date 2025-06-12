@@ -21,7 +21,7 @@ namespace game
 		void CreateSinglePlayerCommands(dae::Scene* pScene, dae::GameObject* pGameState);
 		void CreateCoopCommands();
 		void CreateVersusCommands();
-		void CreateLeaderboardCommands();
+		void CreateLeaderboardCommands(dae::Scene* pScene);
 
 	private:
 		friend class Singleton<CommandLoader>;
