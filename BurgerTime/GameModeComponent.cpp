@@ -1,5 +1,7 @@
 #include "GameModeComponent.h"
 #include "StartScreenState.h"
+#include "LeaderboardState.h"
+#include "LeaderboardHandler.h"
 #include "GameObject.h"
 #include "CursorComponent.h"
 #include "MenuComponent.h"
@@ -36,6 +38,10 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 		auto state = dynamic_cast<StartScreenState*>(m_pState.get());
 		if (state)
 			state->ModeSelected(pGameObject->GetComponent<MenuComponent>()->GetItemSelected());
+		
+		auto leaderboardState = dynamic_cast<LeaderboardState*>(m_pState.get());
+		if (leaderboardState)
+			LeaderboardHandler::GetInstance().ConfirmName();
 		break;
 	}
 	default:

@@ -4,6 +4,8 @@
 #include "TextComponent.h"
 #include "MenuComponent.h"
 #include "CursorComponent.h"
+#include "LeaderboardHandler.h"
+#include "GameModeComponent.h"
 
 void game::UILoader::LoadStartScreenUI(dae::Scene* scene)
 {
@@ -30,9 +32,45 @@ void game::UILoader::LoadStartScreenUI(dae::Scene* scene)
 	scene->Add(std::move(menu));
 }
 
-void game::UILoader::LoadLeaderBoardUI(dae::Scene*)
+void game::UILoader::LoadLeaderBoardUI(dae::Scene* scene)
 {
+	auto scoresEntries = LeaderboardHandler::GetInstance().CreateScoreboard("../Data/leaderboard.txt");
+	glm::vec2 pos{ 140.f, 50.f };
+	for (auto entry : scoresEntries)
+	{
+		auto nameObj = CreateSimpleTextObject(pos, entry.name, 18);
+		scene->Add(std::move(nameObj));
+		auto scoreObj = CreateSimpleTextObject(glm::vec2{pos.x + 70.f, pos.y}, std::to_string(entry.score), 18);
+		scene->Add(std::move(scoreObj));
+		pos.y += 40.f;
+	}
 
+	auto cursor = CreateSimpleTextObject(glm::vec2{ pos.x, pos.y + 30.f }, "^", 18);
+	cursor->AddComponent<CursorComponent>();
+	scene->Add(std::move(cursor));
+	
+	auto letter1 = CreateSimpleTextObject(pos, "A", 18);
+	LeaderboardHandler::GetInstance().AddLetterObject(letter1.get());
+	auto letter2 = CreateSimpleTextObject(glm::vec2{pos.x + 20.f, pos.y}, "A", 18);
+	LeaderboardHandler::GetInstance().AddLetterObject(letter2.get());
+	auto letter3 = CreateSimpleTextObject(glm::vec2{ pos.x + 40.f, pos.y }, "A", 18);
+	LeaderboardHandler::GetInstance().AddLetterObject(letter3.get());
+
+	int finalScore = dae::SceneManager::GetInstance().GetGameMode()->GetComponent<GameModeComponent>()->GetEndPoints();
+	auto scoreObj = CreateSimpleTextObject(glm::vec2{ pos.x + 70.f, pos.y }, std::to_string(finalScore), 18);
+	scene->Add(std::move(scoreObj));
+
+	auto menu = scene->CreateObject();
+	menu->GiveTag("menu");
+	menu->AddComponent<MenuComponent>(true);
+	menu->GetComponent<MenuComponent>()->AddMenuItem(letter1.get());
+	menu->GetComponent<MenuComponent>()->AddMenuItem(letter2.get());
+	menu->GetComponent<MenuComponent>()->AddMenuItem(letter3.get());
+
+	scene->Add(std::move(letter1));
+	scene->Add(std::move(letter2));
+	scene->Add(std::move(letter3));
+	scene->Add(std::move(menu));
 }
 
 std::unique_ptr<dae::GameObject> game::UILoader::CreateSimpleTextObject(glm::vec2 pos, const std::string& text, int fontSize)

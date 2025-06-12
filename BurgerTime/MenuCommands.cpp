@@ -1,7 +1,7 @@
 #include "MenuCommands.h"
 #include "GameObject.h"
 #include "CursorComponent.h"
-
+#include "LeaderboardHandler.h"
 
 game::MenuMoveCommand::MenuMoveCommand(dae::GameObject* pGameObject, MenuComponent* pMenu, glm::vec2 direction)
     : GameObjectCommand(pGameObject)
@@ -56,4 +56,26 @@ bool game::MenuConfirmCommand::Execute(float)
 {
     GetGameObject()->GetComponent<CursorComponent>()->Click(m_pMenu);
     return true;
+}
+
+game::ChangeLetterCommand::ChangeLetterCommand(dae::GameObject* pGameObject, MenuComponent* pMenu, glm::vec2 direction)
+    : GameObjectCommand(pGameObject)
+    , m_pMenu{ pMenu }
+    , m_Direction{ direction }
+{
+}
+
+bool game::ChangeLetterCommand::Execute(float)
+{
+    if (m_Direction.y == -1.f)
+    {
+        LeaderboardHandler::GetInstance().ChangeLetter(false, m_pMenu->GetItemSelected());
+        return true;
+    }
+    else if (m_Direction.y == 1.f)
+    {
+        LeaderboardHandler::GetInstance().ChangeLetter(true, m_pMenu->GetItemSelected());
+        return true;
+    }
+    return false;
 }

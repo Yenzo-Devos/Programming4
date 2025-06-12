@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "Scene.h"
 
 namespace game
 {
@@ -11,5 +12,8 @@ namespace game
 		std::unique_ptr<GameState> HandleState(dae::GameObject&) override { return nullptr; }
 		void OnEnter(dae::GameObject& owner) override;
 		//virtual void OnExit(dae::GameObject&) {}
+
+	private:
+		void CreateCommands(dae::Scene* scene);
 	};
 }

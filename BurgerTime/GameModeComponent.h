@@ -22,9 +22,10 @@ namespace game
 		void HandleState();
 
 		void Broadcast(dae::GameObject* pGameObject, dae::Event event) override;
-
+		int GetEndPoints() const { return m_FinishedPoints; }
 	private:
 		std::unique_ptr<GameState> m_pState{};
+		int m_FinishedPoints{ 1000 };
 	};
 }
 

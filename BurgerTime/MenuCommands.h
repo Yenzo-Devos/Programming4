@@ -43,5 +43,23 @@ namespace game
 	private:
 		dae::GameObject* m_pMenu{};
 	};
+
+	class ChangeLetterCommand : public dae::GameObjectCommand
+	{
+	public:
+		ChangeLetterCommand(dae::GameObject* pGameObject, MenuComponent* pMenu, glm::vec2 direction);
+		~ChangeLetterCommand() = default;
+
+		ChangeLetterCommand(const ChangeLetterCommand& other) = delete;
+		ChangeLetterCommand(ChangeLetterCommand&& other) = delete;
+		ChangeLetterCommand& operator=(const ChangeLetterCommand& other) = delete;
+		ChangeLetterCommand& operator=(ChangeLetterCommand&& other) = delete;
+
+		bool Execute(float) override;
+
+	private:
+		MenuComponent* m_pMenu{};
+		glm::vec2 m_Direction{};
+	};
 }
 

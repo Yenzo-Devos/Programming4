@@ -55,25 +55,25 @@
     <Filter Include="Source Files\States\Game">
       <UniqueIdentifier>{96a46f86-1004-4775-a857-695d9960ec91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\MenuComponents">
+      <UniqueIdentifier>{3dca60ca-0dce-4b23-8750-f94775aae26b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\GameComponents">
+      <UniqueIdentifier>{47b0b581-4f7d-469c-8321-a9c7eb6f8368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\GameComponents">
+      <UniqueIdentifier>{f36bbb33-68f8-4d09-a098-3e04e221e935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\MenuComponents">
+      <UniqueIdentifier>{fb608bce-113e-4bc6-bec5-54d3dfe6ff35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BurgerTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FPSComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplayComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameCommand.cpp">
       <Filter>Source Files\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMoveState.cpp">
       <Filter>Source Files\States\Player</Filter>
@@ -90,9 +90,6 @@
     <ClCompile Include="PlayerWinningState.cpp">
       <Filter>Source Files\States\Player</Filter>
     </ClCompile>
-    <ClCompile Include="IngredientComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="IngredientFallingState.cpp">
       <Filter>Source Files\States\Ingredient</Filter>
     </ClCompile>
@@ -102,20 +99,8 @@
     <ClCompile Include="IngredientOnPlateState.cpp">
       <Filter>Source Files\States\Ingredient</Filter>
     </ClCompile>
-    <ClCompile Include="FallComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlateComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="RespawnComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyComponent.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="EnemyStunnedState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
@@ -131,12 +116,6 @@
     </ClCompile>
     <ClCompile Include="EnemyFallState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="PepperComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ChaseComponent.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files\States\Game</Filter>
@@ -156,23 +135,11 @@
     <ClCompile Include="LeaderboardState.cpp">
       <Filter>Source Files\States\Game</Filter>
     </ClCompile>
-    <ClCompile Include="PointsComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsDisplayComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PointEffectComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyShowPointsState.cpp">
       <Filter>Source Files\States\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="PepperDisplayComponent.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="GameModeComponent.cpp">
       <Filter>Source Files\Components</Filter>
@@ -183,31 +150,67 @@
     <ClCompile Include="MenuCommands.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="MenuComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+    <ClCompile Include="LeaderboardHandler.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CursorComponent.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Source Files\Components\MenuComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="FallComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="IngredientComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplayComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PepperComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PepperDisplayComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlateComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PointEffectComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsDisplayComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnComponent.cpp">
+      <Filter>Source Files\Components\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuComponent.cpp">
+      <Filter>Source Files\Components\MenuComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FPSComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplayComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="GameCommand.h">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>Header Files\States\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>Header Files</Filter>
@@ -230,9 +233,6 @@
     <ClInclude Include="IngredientState.h">
       <Filter>Header Files\States\Ingredient</Filter>
     </ClInclude>
-    <ClInclude Include="IngredientComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="IngredientFallingState.h">
       <Filter>Header Files\States\Ingredient</Filter>
     </ClInclude>
@@ -242,20 +242,8 @@
     <ClInclude Include="IngredientOnPlateState.h">
       <Filter>Header Files\States\Ingredient</Filter>
     </ClInclude>
-    <ClInclude Include="FallComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlateComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="RespawnComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyState.h">
       <Filter>Header Files\States\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyComponent.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="EnemyStunnedState.h">
       <Filter>Header Files\States\Enemy</Filter>
@@ -271,12 +259,6 @@
     </ClInclude>
     <ClInclude Include="EnemyFallState.h">
       <Filter>Header Files\States\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="PepperComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ChaseComponent.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>Header Files\States\Game</Filter>
@@ -296,20 +278,8 @@
     <ClInclude Include="CoopGameState.h">
       <Filter>Header Files\States\Game</Filter>
     </ClInclude>
-    <ClInclude Include="PointsComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsDisplayComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PointEffectComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyShowPointsState.h">
       <Filter>Header Files\States\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="PepperDisplayComponent.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="GameModeComponent.h">
       <Filter>Header Files\Components</Filter>
@@ -320,11 +290,59 @@
     <ClInclude Include="MenuCommands.h">
       <Filter>Header Files\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="MenuComponent.h">
-      <Filter>Header Files\Components</Filter>
+    <ClInclude Include="LeaderboardHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FallComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="IngredientComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplayComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PepperComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PepperDisplayComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlateComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PointEffectComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsDisplayComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnComponent.h">
+      <Filter>Header Files\Components\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="CursorComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\Components\MenuComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuComponent.h">
+      <Filter>Header Files\Components\MenuComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

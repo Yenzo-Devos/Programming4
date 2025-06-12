@@ -184,6 +184,7 @@
     <ClCompile Include="IngredientFallingState.cpp" />
     <ClCompile Include="IngredientIdleState.cpp" />
     <ClCompile Include="IngredientOnPlateState.cpp" />
+    <ClCompile Include="LeaderboardHandler.cpp" />
     <ClCompile Include="LeaderboardState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="IngredientIdleState.h" />
     <ClInclude Include="IngredientOnPlateState.h" />
     <ClInclude Include="IngredientState.h" />
+    <ClInclude Include="LeaderboardHandler.h" />
     <ClInclude Include="LeaderboardState.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LivesComponent.h" />

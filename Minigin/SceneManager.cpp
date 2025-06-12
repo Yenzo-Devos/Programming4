@@ -5,19 +5,11 @@ void dae::SceneManager::Update(float deltaTime)
 {
 	m_pGameMode->Update(deltaTime);
 	m_ActiveScene->Update(deltaTime);
-	//for(auto& scene : m_pScenes)
-	//{
-	//	scene->Update(deltaTime);
-	//}
 }
 
 void dae::SceneManager::Render()
 {
 	m_ActiveScene->Render();
-	//for (const auto& scene : m_pScenes)
-	//{
-	//	scene->Render();
-	//}
 }
 
 void dae::SceneManager::SetActiveScene(const std::string& name)
