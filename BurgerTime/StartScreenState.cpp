@@ -11,7 +11,7 @@ std::unique_ptr<game::GameState> game::StartScreenState::HandleState(dae::GameOb
 		return nullptr;
 
 	if (m_ItemIndex == 0)
-		return std::make_unique<LeaderboardState>();
+		return std::make_unique<SingleplayerGameState>();
 	if (m_ItemIndex == 1)
 		return std::make_unique<CoopGameState>();
 	if (m_ItemIndex == 2)

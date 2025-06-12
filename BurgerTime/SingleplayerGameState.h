@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "Scene.h"
 namespace game
 {
 	class SingleplayerGameState : public GameState
@@ -8,8 +9,14 @@ namespace game
 		SingleplayerGameState() = default;
 		//virtual void Update(float deltaTime);
 		std::unique_ptr<GameState> HandleState(dae::GameObject&) override;
-		//void OnEnter(dae::GameObject& owner) override;
-		//virtual void OnExit(dae::GameObject&) {}
+		void OnEnter(dae::GameObject& owner) override;
+		void OnExit(dae::GameObject&) override;
+
+		void LoadNextLevel();
+	private:
+		int m_Level{1};
+
+		void CreateCommands(dae::Scene* pScene);
 	};
 }
 

@@ -18,6 +18,7 @@ namespace game
 		UILoader& operator=(UILoader&& other) = delete;
 
 		void LoadStartScreenUI(dae::Scene* scene);
+		void LoadGameUI(dae::Scene* scene);
 		void LoadLeaderBoardUI(dae::Scene* scene);
 
 	private:

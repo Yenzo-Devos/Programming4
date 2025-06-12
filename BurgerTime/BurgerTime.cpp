@@ -58,6 +58,8 @@ void load()
 	dae::SceneManager::GetInstance().SetGameMode(std::move(gameMode));
 
 	dae::InputManager::GetInstance().AddController();
+	dae::InputManager::GetInstance().AddController();
+
 	auto menuComp = scene->GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
 	auto confirmCommand = std::make_unique<game::MenuConfirmCommand>(cursor, scene->GetObjectByTag("menu"));
 	auto menuMoveUpCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{0.f, -1.f});
