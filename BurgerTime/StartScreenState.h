@@ -11,11 +11,11 @@ namespace game
 		//virtual void Update(float deltaTime);
 		std::unique_ptr<GameState> HandleState(dae::GameObject&) override;
 		//void OnEnter(dae::GameObject& owner) override;
-		//virtual void OnExit(dae::GameObject&) {}
+		void OnExit(dae::GameObject&) override;
 
-		void ModeSelected(glm::vec3 pos);
+		void ModeSelected(int itemIndex);
 	private:
 		bool m_ModeSelected{ false };
-		float m_CursorHeight{};
+		int m_ItemIndex{-1};
 	};
 }

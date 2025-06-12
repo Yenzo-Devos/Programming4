@@ -19,7 +19,7 @@ namespace game
 		LevelLoader& operator=(const LevelLoader& other) = delete;
 		LevelLoader& operator=(LevelLoader&& other) = delete;
 	
-		void LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene);
+		void LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene);
 	private:
 		friend class Singleton<LevelLoader>;
 		LevelLoader() = default;

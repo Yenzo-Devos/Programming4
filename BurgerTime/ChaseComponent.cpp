@@ -191,7 +191,7 @@ void game::ChaseComponent::CheckHitPlayer()
 {
 	auto hitbox = m_pOwner->GetComponent<dae::HitboxComponent>();
 	if (!dae::CollisionHandler::GetInstance().IsOverlappingWithObject("player0", hitbox->GetHitbox("main_hitbox")).empty())
-		dae::SceneManager::GetInstance().GetActiveScene().GetObjectByTag("player0")->GetComponent<LivesComponent>()->LoseLife(1);
+		dae::SceneManager::GetInstance().GetActiveScene()->GetObjectByTag("player0")->GetComponent<LivesComponent>()->LoseLife(1);
 	if (!dae::CollisionHandler::GetInstance().IsOverlappingWithObject("player1", hitbox->GetHitbox("main_hitbox")).empty())
-		dae::SceneManager::GetInstance().GetActiveScene().GetObjectByTag("player1")->GetComponent<LivesComponent>()->LoseLife(1);
+		dae::SceneManager::GetInstance().GetActiveScene()->GetObjectByTag("player1")->GetComponent<LivesComponent>()->LoseLife(1);
 }

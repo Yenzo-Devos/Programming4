@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "Singleton.h"
+#include "GameObject.h"
 
 namespace dae
 {
@@ -10,17 +11,18 @@ namespace dae
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene& CreateScene(const std::string& name);
+		Scene* CreateScene(const std::string& name);
 
 		void Update(float deltaTime);
 		void Render();
 
-		dae::Scene& GetActiveScene() const { return *m_ActiveScene; }
+		dae::Scene* GetActiveScene() const { return m_ActiveScene; }
+		void SetActiveScene(const std::string& name, std::unique_ptr<GameObject> pGameMode);
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 
-		std::vector<std::shared_ptr<Scene>> m_scenes;
-		std::shared_ptr<Scene> m_ActiveScene;
+		std::vector<std::unique_ptr<Scene>> m_pScenes;
+		Scene* m_ActiveScene{};
 	};
 }

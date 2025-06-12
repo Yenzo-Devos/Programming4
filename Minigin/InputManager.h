@@ -39,6 +39,9 @@ namespace dae
 		bool ProcessInput(float DeltaTime);
 		void BindCommand(std::unique_ptr<Command> pCommand, int controllerID, InputState state, GamePad::GamePadButton button);
 		void BindCommand(std::unique_ptr<Command> pCommand, InputState state, SDL_Scancode key);
+		void UnBindGamePadCommands() { m_pGamePadCommands.clear(); }
+		void UnBindKeyboardCommands() { m_pKeyBoardCommands.clear(); }
+		
 		void AddController();
 
 	private:

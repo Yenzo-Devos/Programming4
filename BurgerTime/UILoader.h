@@ -17,8 +17,8 @@ namespace game
 		UILoader& operator=(const UILoader& other) = delete;
 		UILoader& operator=(UILoader&& other) = delete;
 
-		void LoadStartScreenUI(dae::Scene& scene);
-		void LoadLeaderBoardUI(dae::Scene& scene);
+		void LoadStartScreenUI(dae::Scene* scene);
+		void LoadLeaderBoardUI(dae::Scene* scene);
 
 	private:
 		friend class Singleton<UILoader>;

@@ -5,8 +5,6 @@
 
 using namespace dae;
 
-unsigned int Scene::m_idCounter = 0;
-
 Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene() = default;
@@ -48,6 +46,20 @@ std::vector<GameObject*> Scene::GetAllObjectByTag(const std::string& tag)
 			matchingObjects.emplace_back(obj.get());
 
 	return matchingObjects;
+}
+
+std::unique_ptr<GameObject> dae::Scene::GetGameMode()
+{
+	for (int index{ 0 }; index < static_cast<int>(m_pObjects.size()); ++index)
+	{
+		if (m_pObjects[index]->GetTag() == "gamemode")
+		{
+			std::unique_ptr<GameObject> result = std::move(m_pObjects[index]);
+			m_pObjects.erase(m_pObjects.begin() + index);
+			return result;
+		}
+	}
+	return nullptr;
 }
 
 void Scene::Update(float deltaTime)

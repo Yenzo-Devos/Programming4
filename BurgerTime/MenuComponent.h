@@ -21,6 +21,7 @@ namespace game
 		void AddMenuItem(dae::GameObject* pMenuItem);
 		glm::vec3 GetNextItemLocation(bool isNext);
 		bool IsOrderHorizontal() const { return m_isOrderedHorizontal; }
+		int GetItemSelected() const { return m_ItemSelected; }
 
 	private:
 		bool m_isOrderedHorizontal;

@@ -6,7 +6,6 @@ namespace dae
 {
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		std::unique_ptr<GameObject> CreateObject();
 		
@@ -16,10 +15,13 @@ namespace dae
 
 		GameObject* GetObjectByTag(const std::string& tag);
 		std::vector<GameObject*> GetAllObjectByTag(const std::string& tag);
+		std::unique_ptr<GameObject> GetGameMode();
+		std::string GetName() const { return m_Name; }
 
 		void Update(float deltaTime);
 		void Render() const;
 
+		Scene(const std::string& name);
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
@@ -27,12 +29,8 @@ namespace dae
 		Scene& operator=(Scene&& other) = delete;
 
 	private: 
-		explicit Scene(const std::string& name);
-
 		std::string m_Name;
 		std::vector<std::unique_ptr<GameObject>> m_pObjects{};
-		
-		static unsigned int m_idCounter; 
 	};
 
 }

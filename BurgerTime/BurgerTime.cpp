@@ -40,22 +40,26 @@
 
 #include "GameModeComponent.h"
 #include "MenuComponent.h"
+#include "CursorComponent.h"
 
 #include <iostream>
 
 void load()
 {
-	auto& scene = dae::SceneManager::GetInstance().CreateScene("start_screen");
+	auto scene = dae::SceneManager::GetInstance().CreateScene("start_screen");
 	// create the gamemode
-	auto gameMode = scene.CreateObject();
+	auto gameMode = scene->CreateObject();
+	gameMode->GiveTag("gamemode");
 	gameMode->AddComponent<game::GameModeComponent>();
-	scene.Add(std::move(gameMode));
+	scene->Add(std::move(gameMode));
 
 	game::UILoader::GetInstance().LoadStartScreenUI(scene);
 	
 	dae::InputManager::GetInstance().AddController();
-	auto cursor = scene.GetObjectByTag(">");
-	auto menuComp = scene.GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
+	auto cursor = scene->GetObjectByTag(">");
+	cursor->GetComponent<game::CursorComponent>()->AddObserver(cursor->GetComponent<game::GameModeComponent>());
+
+	auto menuComp = scene->GetObjectByTag("menu")->GetComponent<game::MenuComponent>();
 	auto menuMoveUpCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{0.f, -1.f});
 	auto menuMoveDownCommand = std::make_unique<game::MenuMoveCommand>(cursor, menuComp, glm::vec2{ 0.f, 1.f });
 

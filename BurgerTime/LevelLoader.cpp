@@ -21,7 +21,7 @@
 #include "PointsComponent.h"
 #include "PointEffectComponent.h"
 
-void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene& scene)
+void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene)
 {
 	using json = nlohmann::json;
 
@@ -37,23 +37,23 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 
 		const auto& staticObject = jsonData["staticObjects"];
 		for (const auto& ladder : staticObject["ladder"])
-			scene.Add(CreateLadder(ladder["x"], ladder["y"], ladder["length"]));
+			scene->Add(CreateLadder(ladder["x"], ladder["y"], ladder["length"]));
 		for (const auto& platform : staticObject["platform"])
-			scene.Add(CreatePlatform(platform["idGroup"], platform["x"], platform["y"]));
+			scene->Add(CreatePlatform(platform["idGroup"], platform["x"], platform["y"]));
 		for (const auto& plate : staticObject["plate"])
-			scene.Add(CreatePlate(plate["idGroup"], plate["x"], plate["y"]));
+			scene->Add(CreatePlate(plate["idGroup"], plate["x"], plate["y"]));
 		for (const auto& floor : staticObject["floor"])
-			scene.Add(CreateFloor(floor["x"], floor["y"]));
+			scene->Add(CreateFloor(floor["x"], floor["y"]));
 		for (const auto& walkableObject : staticObject["walkableObject"])
-			scene.Add(CreateWalkableObject(walkableObject["x"], walkableObject["y"], walkableObject["width"]));
+			scene->Add(CreateWalkableObject(walkableObject["x"], walkableObject["y"], walkableObject["width"]));
 
 		auto dynamicObject = jsonData["dynamicObjects"];
 		for (const auto& ingredient : dynamicObject["ingredient"])
-			scene.Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"], scene.GetAllObjectByTag("plate")));
+			scene->Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"], scene->GetAllObjectByTag("plate")));
 		for (const auto& enemy : dynamicObject["enemy"])
-			scene.Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
+			scene->Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
 		for (const auto& player : dynamicObject["player"])
-			scene.Add(CreatePlayer(player["id"], player["x"], player["y"]));
+			scene->Add(CreatePlayer(player["id"], player["x"], player["y"]));
 	}
 	catch (const std::exception& e)
 	{
@@ -192,7 +192,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->AddComponent<dae::HitboxComponent>();
 	enemy->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
 
-	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
+	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("ladder");
 	enemy->AddComponent<game::ChaseComponent>(pLadders);
 	
 	int pointMultiplier{};
@@ -205,7 +205,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 
 	auto pointEffect = CreatePointEffect();
 	enemy->AddComponent<game::EnemyComponent>(pointEffect.get(), pointMultiplier);
-	dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(pointEffect));
+	dae::SceneManager::GetInstance().GetActiveScene()->Add(std::move(pointEffect));
 
 	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
 	enemy->AddComponent<game::FallComponent>(100.f);
@@ -280,9 +280,9 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 
 	auto pepper = CreatePepper();
 	player->AddComponent<game::PlayerComponent>(pepper.get());
-	dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(pepper));
+	dae::SceneManager::GetInstance().GetActiveScene()->Add(std::move(pepper));
 
-	auto enemies = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("enemy");
+	auto enemies = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
 	for (auto enemy : enemies)
 		enemy->GetComponent<game::ChaseComponent>()->AddObjectToChase(player.get());
 	return player;

@@ -2,6 +2,7 @@
 #include "StartScreenState.h"
 #include "GameObject.h"
 #include "CursorComponent.h"
+#include "MenuComponent.h"
 
 game::GameModeComponent::GameModeComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
@@ -32,7 +33,9 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 	{
 	case dae::Event::OnCursorClicked:
 	{
-		pGameObject->GetComponent<CursorComponent>()->Click();
+		auto state = dynamic_cast<StartScreenState*>(m_pState.get());
+		if (state)
+			state->ModeSelected(pGameObject->GetComponent<MenuComponent>()->GetItemSelected());
 		break;
 	}
 	default:

@@ -5,14 +5,14 @@
 
 void dae::CollisionHandler::Init()
 {
-	m_pWalkableObjectVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("walkable_object");
-	m_pLadderVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ladder");
-	m_pIngredientVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("ingredient");
-	m_pPlatformVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("platform");
-	m_pPlateVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("plate");
-	m_pEnemyVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("enemy");
+	m_pWalkableObjectVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("walkable_object");
+	m_pLadderVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("ladder");
+	m_pIngredientVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("ingredient");
+	m_pPlatformVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("platform");
+	m_pPlateVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("plate");
+	m_pEnemyVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
 	// TODO: find a way to get player0 and 1 in this when needed
-	m_pPlayerVec = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag("player0");
+	m_pPlayerVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("player0");
 }
 
 bool dae::CollisionHandler::IsNextWalkPossible(glm::vec2 pos, int width, int height)
@@ -46,7 +46,7 @@ bool dae::CollisionHandler::IsNextClimbPossible(glm::vec2 pos, int height)
 std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(const std::string& identifier, glm::vec2 pos, int width, int height)
 {
 	std::vector<dae::GameObject*> resultVec{};
-	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag(identifier);
+	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag(identifier);
 	if (objectsToCheck.empty())
 		return resultVec;
 	for (const auto& obj : objectsToCheck)
@@ -62,7 +62,7 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(const std::string& identifier, HitboxComponent::Box* hitbox)
 {
 	std::vector<dae::GameObject*> resultVec{};
-	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene().GetAllObjectByTag(identifier);
+	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag(identifier);
 	if (objectsToCheck.empty())
 		return resultVec;
 	

@@ -3,7 +3,7 @@
 
 void dae::SceneManager::Update(float deltaTime)
 {
-	for(auto& scene : m_scenes)
+	for(auto& scene : m_pScenes)
 	{
 		scene->Update(deltaTime);
 	}
@@ -11,16 +11,28 @@ void dae::SceneManager::Update(float deltaTime)
 
 void dae::SceneManager::Render()
 {
-	for (const auto& scene : m_scenes)
+	for (const auto& scene : m_pScenes)
 	{
 		scene->Render();
 	}
 }
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
+void dae::SceneManager::SetActiveScene(const std::string& name, std::unique_ptr<GameObject> pGameMode)
 {
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	m_ActiveScene = scene;
-	return *scene;
+	for (const auto& scene : m_pScenes)
+		if (scene->GetName() == name)
+		{
+			scene->Add(std::move(pGameMode));
+			m_ActiveScene = scene.get();
+			//->Add(std::move(pGameMode));
+		}
+}
+
+dae::Scene* dae::SceneManager::CreateScene(const std::string& name)
+{
+	//const auto& scene = std::shared_ptr<Scene>(new Scene(name));
+	auto scene = std::make_unique<Scene>(name);
+	m_ActiveScene = scene.get();
+	m_pScenes.emplace_back(std::move(scene));
+	return m_ActiveScene;
 }
