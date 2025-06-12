@@ -3,10 +3,11 @@
 #include "CollisionHandler.h"
 #include "EnemyComponent.h"
 
-game::PepperComponent::PepperComponent(dae::GameObject* pOwner, dae::HitboxComponent* hitboxComp)
+game::PepperComponent::PepperComponent(dae::GameObject* pOwner, dae::HitboxComponent* hitboxComp, int pepperCount)
 	: BaseComponent(pOwner)
 	, m_pHitboxComp{ hitboxComp }
 	, m_pPepperEvent{ std::make_unique<dae::Subject>() }
+	, m_PepperCount{ pepperCount }
 {
 }
 

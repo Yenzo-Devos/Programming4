@@ -13,7 +13,7 @@ namespace game
 	class PointsComponent : public dae::BaseComponent
 	{
 	public:
-		PointsComponent(dae::GameObject* owner);
+		PointsComponent(dae::GameObject* owner, int currentPoints);
 		virtual ~PointsComponent() = default;
 
 		PointsComponent(const PointsComponent& other) = delete;

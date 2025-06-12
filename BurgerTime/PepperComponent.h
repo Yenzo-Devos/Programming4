@@ -10,7 +10,7 @@ namespace game
 	class PepperComponent : public dae::BaseComponent
 	{
 	public:
-		PepperComponent(dae::GameObject* pOwner, dae::HitboxComponent* hitboxComp);
+		PepperComponent(dae::GameObject* pOwner, dae::HitboxComponent* hitboxComp, int pepperCount);
 		~PepperComponent() = default;
 
 		PepperComponent(const PepperComponent& other) = delete;
@@ -32,7 +32,7 @@ namespace game
 		const float m_ActiveTime{ 0.5f };
 		void DeActivate();
 
-		int m_PepperCount{ 5 };
+		int m_PepperCount{ };
 		
 		dae::HitboxComponent* m_pHitboxComp{};
 		std::unique_ptr<dae::Subject> m_pPepperEvent;

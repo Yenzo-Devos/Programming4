@@ -16,7 +16,7 @@ namespace game
 		virtual void OnExit(dae::GameObject& owner);
 	
 	private:
-		const float m_GraceTime{ 0.5f };
+		const float m_GraceTime{ 0.25f };
 		float m_AccuGraceTimer{ 0.f };
 		bool m_GracePeriodOver{ false };
 

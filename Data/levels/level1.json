@@ -101,7 +101,10 @@
             { "type" : 2, "idGroup" : 3, "x" : 224, "y" : 384 }
         ],
         "enemy" : [
-            { "type" : "hotdog", "x" : 0, "y" : 74 }
+            { "type" : "hotdog", "x" : 0, "y" : 74 },
+            { "type" : "hotdog", "x" : 384, "y" : 74 },
+            { "type" : "egg", "x" : 384, "y" : 362 },
+            { "type" : "pickle", "x" : 0, "y" : 362 }
         ],
         "player" : [
             { "id" : 0, "x" : 192, "y" : 362 }

@@ -20,6 +20,7 @@
 #include "RespawnComponent.h"
 #include "PointsComponent.h"
 #include "PointEffectComponent.h"
+#include "GameModeComponent.h"
 
 void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene)
 {
@@ -158,12 +159,14 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("left_middle_hitbox", 16, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_middle_hitbox", 32, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_hitbox", 48, 0, 16, 16);
-	ingredient->AddComponent<game::IngredientComponent>();
+	ingredient->AddComponent<game::IngredientComponent>(type);
 	ingredient->AddComponent<game::FallComponent>(100.f);
 
 	for (const auto& plate : plateVec)
 		if (idGroup == plate->GetComponent<PlateComponent>()->GetID())
 			ingredient->GetComponent<game::IngredientComponent>()->AddObserver(plate->GetComponent<PlateComponent>());
+	auto gamemode = dae::SceneManager::GetInstance().GetGameMode();
+	ingredient->GetComponent<game::IngredientComponent>()->AddObserver(gamemode->GetComponent<GameModeComponent>());
 
 	return ingredient;
 }
@@ -270,8 +273,8 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayLeft", 1, 7, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
-	player->AddComponent<game::LivesComponent>(3);
-	player->AddComponent<game::PointsComponent>();
+	// player->AddComponent<game::LivesComponent>(3);
+	// player->AddComponent<game::PointsComponent>(0);
 
 	// add collisioncomp and playercomp
 	player->AddComponent<dae::HitboxComponent>();
@@ -306,6 +309,6 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePepper()
 	pepper->AddComponent<dae::HitboxComponent>();
 	pepper->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
 
-	pepper->AddComponent<game::PepperComponent>(pepper->GetComponent<dae::HitboxComponent>());
+	//pepper->AddComponent<game::PepperComponent>(pepper->GetComponent<dae::HitboxComponent>(), 5);
 	return pepper;
 }

@@ -20,7 +20,6 @@ namespace game
 		void HandleState();
 
 		PlayerState* GetState() const { return m_pState.get(); }
-		void ChangeState(std::unique_ptr<PlayerState> state);
 
 		glm::vec3 GetDirection() const { return m_Direction; }
 		void ChangeDirection(glm::vec3 direction);
@@ -28,7 +27,8 @@ namespace game
 		bool CheckIfPlayerMoved() const;
 
 		dae::GameObject* GetOwner() { return m_pOwner; }
-
+		dae::GameObject* GetPepper() { return m_pPepper; }
+			 
 		void ActivatePepper(glm::vec2 pos, glm::vec2 dir);
 	private:
 		dae::GameObject* m_pPepper{};

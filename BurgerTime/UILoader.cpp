@@ -46,23 +46,31 @@ void game::UILoader::LoadGameUI(dae::Scene* scene)
 	auto scoreTextObj = CreateSimpleTextObject(glm::vec2{ 0.f, 4.f }, "SCORE", 18);
 	scene->Add(std::move(scoreTextObj));
 
-	auto pepperCountObj = CreateSimpleTextObject(glm::vec2{ 400.f, 30.f }, "5", 18);
+	auto chefObj = scene->GetObjectByTag("player0");
+	auto pepperObj = scene->GetObjectByTag("pepper");
+
+	auto pepperCountObj = CreateSimpleTextObject(glm::vec2{ 400.f, 30.f }, std::to_string(pepperObj->GetComponent<PepperComponent>()->GetPepperCount()), 18);
 	pepperCountObj->AddComponent<game::PepperDisplayComponent>(pepperCountObj->GetComponent<dae::TextComponent>());
-	auto chefPointsObj = CreateSimpleTextObject(glm::vec2{ 4.f, 24.f }, "0", 18);
+	auto chefPointsObj = CreateSimpleTextObject(glm::vec2{ 4.f, 24.f }, std::to_string(chefObj->GetComponent<PointsComponent>()->GetCurrentPoints()), 18);
 	chefPointsObj->AddComponent<game::PointsDisplayComponent>(chefPointsObj->GetComponent<dae::TextComponent>());	
 	
 	auto chefLivesObj = scene->CreateObject();
 	chefLivesObj->SetLocalPosition(glm::vec3{ 0.f, 480.f, 0.f });
 	chefLivesObj->AddComponent<dae::RenderComponent>(true);
-	chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ 0, 464, 16, 16 }, dae::RenderComponent::Rect{ 0, 0, 16, 16 }, 0, -16);
-	chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ 0, 448, 16, 16 }, dae::RenderComponent::Rect{ 0, 0, 16, 16 }, 0, -32);
-	chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{ 0, 432, 16, 16 }, dae::RenderComponent::Rect{ 0, 0, 16, 16 }, 0, -48);
+
+	dae::RenderComponent::Rect dstRect{ 0, 464, 16, 16 };
+	dae::RenderComponent::Rect srcRect{ 0, 0, 16, 16 };
+	int offsetY{ -16 };
+	for (int index{0}; index < static_cast<int>(chefObj->GetComponent<LivesComponent>()->GetCurrentNrOfLives()); ++index)
+	{
+		chefLivesObj->GetComponent<dae::RenderComponent>()->AddObjectToRender(dstRect, srcRect, 0, offsetY);
+		dstRect.bottom -= 16;
+		offsetY -= 16;
+	}
 	chefLivesObj->AddComponent<dae::TextureComponent>(chefLivesObj->GetComponent<dae::RenderComponent>());
 	chefLivesObj->GetComponent<dae::TextureComponent>()->LoadTexture("ui_objects/life_texture.png");
 	chefLivesObj->AddComponent<game::LivesDisplayComponent>(chefLivesObj->GetComponent<dae::TextureComponent>());
 
-	auto chefObj = scene->GetObjectByTag("player0");
-	auto pepperObj = scene->GetObjectByTag("pepper");
 	pepperObj->GetComponent<game::PepperComponent>()->AddObserver(pepperCountObj->GetComponent<game::PepperDisplayComponent>());
 	chefObj->GetComponent<game::PointsComponent>()->AddObserver(chefPointsObj->GetComponent<game::PointsDisplayComponent>());
 	

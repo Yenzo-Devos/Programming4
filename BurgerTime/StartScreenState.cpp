@@ -5,7 +5,7 @@
 #include "LeaderboardState.h"
 #include "InputManager.h"
 
-std::unique_ptr<game::GameState> game::StartScreenState::HandleState(dae::GameObject&)
+std::unique_ptr<game::GameState> game::StartScreenState::HandleState(dae::GameObject*)
 {
 	if (!m_ModeSelected)
 		return nullptr;
@@ -20,7 +20,7 @@ std::unique_ptr<game::GameState> game::StartScreenState::HandleState(dae::GameOb
 	return nullptr;
 }
 
-void game::StartScreenState::OnExit(dae::GameObject&)
+void game::StartScreenState::OnExit(dae::GameObject*)
 {
 	dae::InputManager::GetInstance().UnBindGamePadCommands();
 	dae::InputManager::GetInstance().UnBindKeyboardCommands();

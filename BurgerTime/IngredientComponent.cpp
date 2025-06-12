@@ -5,8 +5,9 @@
 #include "FallComponent.h"
 #include <algorithm>
 
-game::IngredientComponent::IngredientComponent(dae::GameObject* pOwner)
+game::IngredientComponent::IngredientComponent(dae::GameObject* pOwner, int type)
 	: BaseComponent(pOwner)
+	, m_Type{type}
 	, m_pState{ std::make_unique<IngredientIdleState>() }
 	, m_pIngredientFellOnPlateEvent{ std::make_unique<dae::Subject>() }
 {

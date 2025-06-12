@@ -15,6 +15,8 @@
 #include "PlayerDyingState.h"
 #include "PlayerWinningState.h"
 #include "IngredientComponent.h"
+#include "GameModeComponent.h"
+#include "SingleplayerGameState.h"
 
 #include <ranges>
 #include <memory>
@@ -110,4 +112,18 @@ bool game::ThrowPepperCommand::Execute(float)
 	
 	playerComp->ActivatePepper(pos, direction);
 	return true;
+}
+
+game::SkipLevel::SkipLevel(dae::GameObject* pGameObject)
+	: GameObjectCommand(pGameObject)
+{
+}
+
+bool game::SkipLevel::Execute(float)
+{
+	auto state = GetGameObject()->GetComponent<GameModeComponent>()->GetState();
+	auto singlePlayerState = dynamic_cast<SingleplayerGameState*>(state);
+	if (singlePlayerState)
+		singlePlayerState->LoadNextLevel(GetGameObject());
+	return false;
 }

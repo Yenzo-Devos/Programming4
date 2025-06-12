@@ -29,17 +29,15 @@ void game::IngredientFallingState::Update(float deltaTime)
 
 std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(dae::GameObject& owner)
 {
-    if (!m_GracePeriodOver)
-        return nullptr;
-
-    EmptyLandingPlatform();
+    if (m_GracePeriodOver)
+        EmptyLandingPlatform();
 
     auto pos = owner.GetWorldPosition();
     auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
     if (!platformObj)
         return nullptr;
 
-    if (platformObj->GetTag() == "platform")
+    if (platformObj->GetTag() == "platform" and m_GracePeriodOver)
     {
         m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(50);
         for (int index{0}; index < 4; ++index)

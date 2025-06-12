@@ -43,4 +43,18 @@ namespace game
 
 		bool Execute(float) override;
 	};
+
+	class SkipLevel : public dae::GameObjectCommand
+	{
+	public:
+		SkipLevel(dae::GameObject* pGameObject);
+		~SkipLevel() = default;
+
+		SkipLevel(const SkipLevel& other) = delete;
+		SkipLevel(SkipLevel&& other) = delete;
+		SkipLevel& operator=(const SkipLevel& other) = delete;
+		SkipLevel& operator=(SkipLevel&& other) = delete;
+
+		bool Execute(float) override;
+	};
 }

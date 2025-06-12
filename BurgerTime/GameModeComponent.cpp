@@ -8,6 +8,7 @@
 #include "MenuComponent.h"
 #include "ChaseComponent.h"
 #include "PointsComponent.h"
+#include "IngredientComponent.h"
 
 game::GameModeComponent::GameModeComponent(dae::GameObject* pOwner)
 	: BaseComponent(pOwner)
@@ -23,12 +24,12 @@ void game::GameModeComponent::Update(float deltaTime)
 
 void game::GameModeComponent::HandleState()
 {
-	auto newState = m_pState->HandleState(*m_pOwner);
+	auto newState = m_pState->HandleState(m_pOwner);
 	if (newState != nullptr)
 	{
-		m_pState->OnExit(*m_pOwner);
+		m_pState->OnExit(m_pOwner);
 		m_pState = std::move(newState);
-		m_pState->OnEnter(*m_pOwner);
+		m_pState->OnEnter(m_pOwner);
 	}
 }
 
@@ -66,6 +67,20 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 		{
 			m_FinishedPoints = pGameObject->GetComponent<PointsComponent>()->GetCurrentPoints();
 			singleplayerState->EndGame();
+		}
+		break;
+	}
+	case dae::Event::OnIngredientFallOnPlate:
+	{
+		if (pGameObject->GetComponent<IngredientComponent>()->IsTopBun())
+		{
+			int nrOfPlates = static_cast<int>(dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("plate").size());
+			if (++m_NrOfBurgerDone == nrOfPlates)
+			{
+				auto singleplayerState = dynamic_cast<SingleplayerGameState*>(m_pState.get());
+				if (singleplayerState)
+					singleplayerState->LoadNextLevel(m_pOwner);
+			}
 		}
 		break;
 	}

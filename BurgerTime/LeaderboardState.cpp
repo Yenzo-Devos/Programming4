@@ -6,7 +6,7 @@
 #include "CursorComponent.h"
 #include "GameModeComponent.h"
 
-void game::LeaderboardState::OnEnter(dae::GameObject&)
+void game::LeaderboardState::OnEnter(dae::GameObject*)
 {
 	auto scene = dae::SceneManager::GetInstance().CreateScene("leaderboard");
 	UILoader::GetInstance().LoadLeaderBoardUI(scene);

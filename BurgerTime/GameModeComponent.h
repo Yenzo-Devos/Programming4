@@ -10,6 +10,13 @@ namespace game
 	class GameModeComponent : public dae::Observer, public dae::BaseComponent
 	{
 	public:
+		struct PlayerData
+		{
+			int score;
+			int nrOfPepper;
+			int lives;
+		};
+
 		GameModeComponent(dae::GameObject* pOwner);
 		virtual ~GameModeComponent() = default;
 
@@ -21,11 +28,18 @@ namespace game
 		void Update(float deltaTime) override;
 		void HandleState();
 
+		GameState* GetState() const { return m_pState.get(); }
+		
 		void Broadcast(dae::GameObject* pGameObject, dae::Event event) override;
 		int GetEndPoints() const { return m_FinishedPoints; }
+		
+		void SetPlayerData(PlayerData playerData) { m_PlayerData = playerData; }
+		PlayerData GetPlayerData() { return m_PlayerData; }
 	private:
 		std::unique_ptr<GameState> m_pState{};
-		int m_FinishedPoints{ 1000 };
+		int m_FinishedPoints{ };
+		int m_NrOfBurgerDone{ };
+		PlayerData m_PlayerData{ 0, 5, 3};
 	};
 }
 

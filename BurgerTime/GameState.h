@@ -12,9 +12,9 @@ namespace game
 	public:
 		virtual ~GameState() {}
 		virtual void Update(float) {}
-		virtual std::unique_ptr<GameState> HandleState(dae::GameObject&) { return nullptr; }
-		virtual void OnEnter(dae::GameObject&) {}
-		virtual void OnExit(dae::GameObject&) {}
+		virtual std::unique_ptr<GameState> HandleState(dae::GameObject*) { return nullptr; }
+		virtual void OnEnter(dae::GameObject*) {}
+		virtual void OnExit(dae::GameObject*) {}
 	};
 }
 

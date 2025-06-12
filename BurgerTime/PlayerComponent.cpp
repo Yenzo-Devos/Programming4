@@ -27,12 +27,6 @@ void game::PlayerComponent::HandleState()
 	}
 }
 
-void game::PlayerComponent::ChangeState(std::unique_ptr<PlayerState> state)
-{
-	if (m_pState != state)
-		m_pState = std::move(state);
-}
-
 void game::PlayerComponent::ChangeDirection(glm::vec3 direction)
 {
 	if (m_Direction != direction)

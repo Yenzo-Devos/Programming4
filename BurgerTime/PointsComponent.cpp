@@ -1,8 +1,9 @@
 #include "PointsComponent.h"
 
-game::PointsComponent::PointsComponent(dae::GameObject* owner)
+game::PointsComponent::PointsComponent(dae::GameObject* owner, int currentPoints)
 	: BaseComponent(owner)
 	, m_pPointsScored{ std::make_unique<dae::Subject>() }
+	, m_Points{ currentPoints }
 {
 }
 
