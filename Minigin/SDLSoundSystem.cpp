@@ -36,7 +36,6 @@ public:
 private:
 	void AudioThreadQueue(std::stop_token stopToken);
 
-	bool m_IsActive{ true };
 	std::mutex m_QueueMutex{};
 	std::mutex m_PlayMutex{};
 	std::jthread m_AudioThread{};
@@ -44,6 +43,7 @@ private:
 	
 	std::queue<AudioFile> m_AudioQueue{};
 	std::unordered_map<std::string, Mix_Chunk*> m_pLoadedSounds{};
+	Mix_Music* m_pLoadedMusic{};
 	bool m_IsMuted{ false };
 };
 
@@ -54,13 +54,19 @@ dae::SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
 
 dae::SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
 {
-	m_IsActive = false;
+	m_AudioThread.request_stop();
+	for (auto sound : m_pLoadedSounds)
+		StopSound();
+	StopMusic();
+	
 	for (auto sound : m_pLoadedSounds)
 		Mix_FreeChunk(sound.second);
+	Mix_FreeMusic(m_pLoadedMusic);
 
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_Quit();
+	m_AudioThread.join();
 }
 
 bool dae::SDLSoundSystem::SDLSoundSystemImpl::Load(const std::string& filePath, const std::string& soundID)
@@ -86,18 +92,21 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::Play(const std::string& soundID, c
 		std::cerr << "Playing audio failed: " << Mix_GetError() << '\n';
 		return;
 	}
-	Mix_Volume(channel, volume);
+	if (m_IsMuted)
+		Mix_Volume(channel, 0);
+	else
+		Mix_Volume(channel, volume);
 }
 
 void dae::SDLSoundSystem::SDLSoundSystemImpl::PlayMusic(const std::string& filepath, int loops)
 {
-	Mix_Music* pMusic = Mix_LoadMUS(filepath.c_str());
-	if (!pMusic)
+	m_pLoadedMusic = Mix_LoadMUS(filepath.c_str());
+	if (!m_pLoadedMusic)
 	{
 		std::cerr << "Loading music failed: " << Mix_GetError() << '\n';
 		return;
 	}
-	if (Mix_PlayMusic(pMusic, loops) == -1)
+	if (Mix_PlayMusic(m_pLoadedMusic, loops) == -1)
 	{
 		std::cerr << "Playing music failed: " << Mix_GetError() << '\n';
 		return;
@@ -140,11 +149,13 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::MuteAllSound()
 	{
 		Mix_Volume(-1, 100);
 		Mix_VolumeMusic(100);
+		m_IsMuted = false;
 	}
 	else
 	{
 		Mix_Volume(-1, 0);
-		Mix_VolumeMusic(100);
+		Mix_VolumeMusic(0);
+		m_IsMuted = true;
 	}
 }
 

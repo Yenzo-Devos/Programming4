@@ -65,7 +65,8 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
     auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
     auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
-    auto skipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
+    auto skipLevelCommand = std::make_unique<game::SkipLevelCommand>(pGameState);
+    auto muteCommand = std::make_unique<game::MuteSoundCommand>();
 
     // keyboard bindings
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveLeftCommand), dae::InputState::Held, SDL_SCANCODE_A);
@@ -74,6 +75,7 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
     dae::InputManager::GetInstance().BindCommand(std::move(skipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+    dae::InputManager::GetInstance().BindCommand(std::move(muteCommand), dae::InputState::Released, SDL_SCANCODE_F2);
 }
 
 void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject* pGameState)
@@ -112,7 +114,8 @@ void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject
     auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
     auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
-    auto skipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
+    auto skipLevelCommand = std::make_unique<game::SkipLevelCommand>(pGameState);
+    auto muteCommand = std::make_unique<game::MuteSoundCommand>();
 
     // keyboard bindings
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveLeftCommand), dae::InputState::Held, SDL_SCANCODE_A);
@@ -121,6 +124,7 @@ void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
     dae::InputManager::GetInstance().BindCommand(std::move(skipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+    dae::InputManager::GetInstance().BindCommand(std::move(muteCommand), dae::InputState::Released, SDL_SCANCODE_F2);
 }
 
 void game::CommandLoader::CreateVersusCommands(dae::Scene* pScene, dae::GameObject* pGameState)
@@ -164,7 +168,8 @@ void game::CommandLoader::CreateVersusCommands(dae::Scene* pScene, dae::GameObje
     auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
     auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
-    auto skipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
+    auto skipLevelCommand = std::make_unique<game::SkipLevelCommand>(pGameState);
+    auto muteCommand = std::make_unique<game::MuteSoundCommand>();
 
     // keyboard bindings
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveLeftCommand), dae::InputState::Held, SDL_SCANCODE_A);
@@ -173,6 +178,7 @@ void game::CommandLoader::CreateVersusCommands(dae::Scene* pScene, dae::GameObje
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
     dae::InputManager::GetInstance().BindCommand(std::move(skipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+    dae::InputManager::GetInstance().BindCommand(std::move(muteCommand), dae::InputState::Released, SDL_SCANCODE_F2);
 }
 
 void game::CommandLoader::CreateLeaderboardCommands(dae::Scene* pScene)

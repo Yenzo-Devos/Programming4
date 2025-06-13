@@ -114,12 +114,12 @@ bool game::ThrowPepperCommand::Execute(float)
 	return true;
 }
 
-game::SkipLevel::SkipLevel(dae::GameObject* pGameObject)
+game::SkipLevelCommand::SkipLevelCommand(dae::GameObject* pGameObject)
 	: GameObjectCommand(pGameObject)
 {
 }
 
-bool game::SkipLevel::Execute(float)
+bool game::SkipLevelCommand::Execute(float)
 {
 	auto state = GetGameObject()->GetComponent<GameModeComponent>()->GetState();
 	auto gameState = dynamic_cast<PlayGameState*>(state);
@@ -128,6 +128,12 @@ bool game::SkipLevel::Execute(float)
 		gameState->LoadNextLevel(GetGameObject());
 		return true;
 	}
-
 	return false;
+}
+
+bool game::MuteSoundCommand::Execute(float)
+{
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	ss.MuteAllSound();
+	return true;
 }

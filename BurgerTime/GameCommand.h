@@ -44,16 +44,30 @@ namespace game
 		bool Execute(float) override;
 	};
 
-	class SkipLevel : public dae::GameObjectCommand
+	class SkipLevelCommand : public dae::GameObjectCommand
 	{
 	public:
-		SkipLevel(dae::GameObject* pGameObject);
-		~SkipLevel() = default;
+		SkipLevelCommand(dae::GameObject* pGameObject);
+		~SkipLevelCommand() = default;
 
-		SkipLevel(const SkipLevel& other) = delete;
-		SkipLevel(SkipLevel&& other) = delete;
-		SkipLevel& operator=(const SkipLevel& other) = delete;
-		SkipLevel& operator=(SkipLevel&& other) = delete;
+		SkipLevelCommand(const SkipLevelCommand& other) = delete;
+		SkipLevelCommand(SkipLevelCommand&& other) = delete;
+		SkipLevelCommand& operator=(const SkipLevelCommand& other) = delete;
+		SkipLevelCommand& operator=(SkipLevelCommand&& other) = delete;
+
+		bool Execute(float) override;
+	};
+
+	class MuteSoundCommand : public dae::Command
+	{
+	public:
+		MuteSoundCommand() = default;
+		~MuteSoundCommand() = default;
+
+		MuteSoundCommand(const MuteSoundCommand& other) = delete;
+		MuteSoundCommand(MuteSoundCommand&& other) = delete;
+		MuteSoundCommand& operator=(const MuteSoundCommand& other) = delete;
+		MuteSoundCommand& operator=(MuteSoundCommand&& other) = delete;
 
 		bool Execute(float) override;
 	};
