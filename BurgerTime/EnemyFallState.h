@@ -10,6 +10,13 @@ namespace game
 	public:
 		EnemyFallState() = default;
 		EnemyFallState(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling);
+		~EnemyFallState() = default;
+
+		EnemyFallState(const EnemyFallState& other) = delete;
+		EnemyFallState(EnemyFallState&& other) = delete;
+		EnemyFallState& operator=(const EnemyFallState& other) = delete;
+		EnemyFallState& operator=(EnemyFallState&& other) = delete;
+
 		void Update(float deltaTime);
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject&) override;
 		void OnEnter(dae::GameObject& owner) override;

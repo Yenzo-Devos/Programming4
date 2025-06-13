@@ -7,11 +7,17 @@ namespace game
 	{
 	public:
 		PlayerMoveState() = default;
-		void Update(float) override {};
-		std::unique_ptr<PlayerState> HandleState(PlayerComponent& playerComp) override;
-		void OnEnter(PlayerComponent& playerComp) override;
-		void ChangeDirection(glm::vec3 direction);
+		~PlayerMoveState() = default;
 
+		PlayerMoveState(const PlayerMoveState& other) = delete;
+		PlayerMoveState(PlayerMoveState&& other) = delete;
+		PlayerMoveState& operator=(const PlayerMoveState& other) = delete;
+		PlayerMoveState& operator=(PlayerMoveState&& other) = delete;
+
+		std::unique_ptr<PlayerState> HandleState(dae::GameObject* pOwner) override;
+		void OnEnter(dae::GameObject* pOwner) override;
+
+		void ChangeDirection(glm::vec3 direction);
 		void Throw();
 	private:
 		glm::vec3 m_LastPos{};

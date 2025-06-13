@@ -2,6 +2,7 @@
 #include "PlayerIdleState.h"
 #include "SpriteComponent.h"
 #include "ServiceLocator.h"
+#include "PlayerComponent.h"
 
 void game::PlayerPepperState::Update(float deltaTime)
 {
@@ -10,20 +11,20 @@ void game::PlayerPepperState::Update(float deltaTime)
 		m_TimerDone = true;
 }
 
-std::unique_ptr<game::PlayerState> game::PlayerPepperState::HandleState(PlayerComponent&)
+std::unique_ptr<game::PlayerState> game::PlayerPepperState::HandleState(dae::GameObject*)
 {
 	if (m_TimerDone)
 		return std::make_unique<PlayerIdleState>();
 	return nullptr;
 }
 
-void game::PlayerPepperState::OnEnter(PlayerComponent& playerComp)
+void game::PlayerPepperState::OnEnter(dae::GameObject* pOwner)
 {
-	auto dir = playerComp.GetDirection();
+	auto dir = pOwner->GetComponent<PlayerComponent>()->GetDirection();
 	if (dir.x == 1.f)
-		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayRight");
+		pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayRight");
 	if (dir.x == -1.f)
-		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayLeft");
+		pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayLeft");
 
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
 	dae::AudioFile pepperAudio{ "../Data/sounds/Pepper_Shake.wav", "PepperShake", 0 };

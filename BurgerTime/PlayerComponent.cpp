@@ -18,12 +18,12 @@ void game::PlayerComponent::Update(float deltaTime)
 
 void game::PlayerComponent::HandleState()
 {
-	auto newState = m_pState->HandleState(*this);
+	auto newState = m_pState->HandleState(m_pOwner);
 	if (newState != nullptr)
 	{
-		m_pState->OnExit(*this);
+		m_pState->OnExit(m_pOwner);
 		m_pState = std::move(newState);
-		m_pState->OnEnter(*this);
+		m_pState->OnEnter(m_pOwner);
 	}
 }
 

@@ -6,9 +6,13 @@ namespace game
 	{
 	public:
 		IngredientOnPlateState() = default;
-		//virtual void Update(float) {}
-		//virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&);
+		~IngredientOnPlateState() = default;
+
+		IngredientOnPlateState(const IngredientOnPlateState& other) = delete;
+		IngredientOnPlateState(IngredientOnPlateState&& other) = delete;
+		IngredientOnPlateState& operator=(const IngredientOnPlateState& other) = delete;
+		IngredientOnPlateState& operator=(IngredientOnPlateState&& other) = delete;
+
 		void OnEnter(dae::GameObject& owner) override;
-		//virtual void OnExit(dae::GameObject&) {}
 	};
 }

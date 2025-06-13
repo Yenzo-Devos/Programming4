@@ -87,9 +87,6 @@
     <ClCompile Include="PlayerDyingState.cpp">
       <Filter>Source Files\States\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerWinningState.cpp">
-      <Filter>Source Files\States\Player</Filter>
-    </ClCompile>
     <ClCompile Include="IngredientFallingState.cpp">
       <Filter>Source Files\States\Ingredient</Filter>
     </ClCompile>
@@ -222,9 +219,6 @@
       <Filter>Header Files\States\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDyingState.h">
-      <Filter>Header Files\States\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerWinningState.h">
       <Filter>Header Files\States\Player</Filter>
     </ClInclude>
     <ClInclude Include="IngredientState.h">

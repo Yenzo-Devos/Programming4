@@ -26,7 +26,6 @@ namespace game
 
 		bool CheckIfPlayerMoved() const;
 
-		dae::GameObject* GetOwner() { return m_pOwner; }
 		dae::GameObject* GetPepper() { return m_pPepper; }
 			 
 		void ActivatePepper(glm::vec2 pos, glm::vec2 dir);

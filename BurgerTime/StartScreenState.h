@@ -8,9 +8,14 @@ namespace game
 	{
 	public:
 		StartScreenState() = default;
-		//virtual void Update(float deltaTime);
+		~StartScreenState() = default;
+
+		StartScreenState(const StartScreenState& other) = delete;
+		StartScreenState(StartScreenState&& other) = delete;
+		StartScreenState& operator=(const StartScreenState& other) = delete;
+		StartScreenState& operator=(StartScreenState&& other) = delete;
+
 		std::unique_ptr<GameState> HandleState(dae::GameObject*) override;
-		//void OnEnter(dae::GameObject& owner) override;
 		void OnExit(dae::GameObject*) override;
 
 		void ModeSelected(int itemIndex);

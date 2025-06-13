@@ -9,9 +9,15 @@ namespace game
 	{
 	public:
 		IngredientIdleState() = default;
-		virtual void Update(float) override {}
-		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&) override;
-		virtual void OnEnter(dae::GameObject& owner) override;
+		~IngredientIdleState() = default;
+
+		IngredientIdleState(const IngredientIdleState& other) = delete;
+		IngredientIdleState(IngredientIdleState&& other) = delete;
+		IngredientIdleState& operator=(const IngredientIdleState& other) = delete;
+		IngredientIdleState& operator=(IngredientIdleState&& other) = delete;
+
+		std::unique_ptr<IngredientState> HandleState(dae::GameObject&) override;
+		void OnEnter(dae::GameObject& owner) override;
 
 		void Hit(int index, dae::GameObject& owner, dae::GameObject* interactedObj);
 	private:

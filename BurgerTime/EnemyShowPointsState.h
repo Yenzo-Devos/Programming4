@@ -9,6 +9,13 @@ namespace game
 	public:
 		EnemyShowPointsState() = default;
 		EnemyShowPointsState(int pointsToBeAwarded, dae::GameObject* pLastInteractedObj);
+		~EnemyShowPointsState() = default;
+
+		EnemyShowPointsState(const EnemyShowPointsState& other) = delete;
+		EnemyShowPointsState(EnemyShowPointsState&& other) = delete;
+		EnemyShowPointsState& operator=(const EnemyShowPointsState& other) = delete;
+		EnemyShowPointsState& operator=(EnemyShowPointsState&& other) = delete;
+
 		virtual void Update(float deltaTime);
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject&) override;
 		void OnEnter(dae::GameObject& owner) override;

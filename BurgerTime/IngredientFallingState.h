@@ -10,6 +10,13 @@ namespace game
 	public:
 		IngredientFallingState() = default;
 		IngredientFallingState(dae::GameObject* pLastInteractedObj);
+		~IngredientFallingState() = default;
+
+		IngredientFallingState(const IngredientFallingState& other) = delete;
+		IngredientFallingState(IngredientFallingState&& other) = delete;
+		IngredientFallingState& operator=(const IngredientFallingState& other) = delete;
+		IngredientFallingState& operator=(IngredientFallingState&& other) = delete;
+
 		virtual void Update(float deltaTime);
 		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&);
 		virtual void OnEnter(dae::GameObject& owner);

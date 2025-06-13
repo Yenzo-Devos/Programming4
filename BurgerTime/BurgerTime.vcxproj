@@ -199,7 +199,6 @@
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerPepperState.cpp" />
-    <ClCompile Include="PlayerWinningState.cpp" />
     <ClCompile Include="PlayGameState.cpp" />
     <ClCompile Include="PointEffectComponent.cpp" />
     <ClCompile Include="PointsComponent.cpp" />
@@ -246,7 +245,6 @@
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerPepperState.h" />
     <ClInclude Include="PlayerState.h" />
-    <ClInclude Include="PlayerWinningState.h" />
     <ClInclude Include="PlayGameState.h" />
     <ClInclude Include="PointEffectComponent.h" />
     <ClInclude Include="PointsComponent.h" />

@@ -9,7 +9,8 @@ namespace game
 	class EnemyState
 	{
 	public:
-		virtual ~EnemyState() {}
+		virtual ~EnemyState() = default;
+
 		virtual void Update(float) {}
 		virtual std::unique_ptr<EnemyState> HandleState(dae::GameObject&) { return nullptr; }
 		virtual void OnEnter(dae::GameObject&) {}

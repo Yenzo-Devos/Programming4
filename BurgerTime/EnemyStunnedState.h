@@ -7,10 +7,17 @@ namespace game
 	{
 	public:
 		EnemyStunnedState() = default;
+		~EnemyStunnedState() = default;
+
+		EnemyStunnedState(const EnemyStunnedState& other) = delete;
+		EnemyStunnedState(EnemyStunnedState&& other) = delete;
+		EnemyStunnedState& operator=(const EnemyStunnedState& other) = delete;
+		EnemyStunnedState& operator=(EnemyStunnedState&& other) = delete;
+
 		virtual void Update(float deltaTime);
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject&) override;
 		void OnEnter(dae::GameObject& owner) override;
-		//virtual void OnExit(dae::GameObject&) {}
+
 		void Fall(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling);
 		void Hit(int points, dae::GameObject* pLastInteractedObj);
 

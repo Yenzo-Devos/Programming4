@@ -10,6 +10,13 @@ namespace game
 	public:
 		EnemyChaseState() = default;
 		EnemyChaseState(dae::SpriteComponent* spriteComp, ChaseComponent* chaseComp);
+		~EnemyChaseState() = default;
+
+		EnemyChaseState(const EnemyChaseState& other) = delete;
+		EnemyChaseState(EnemyChaseState&& other) = delete;
+		EnemyChaseState& operator=(const EnemyChaseState& other) = delete;
+		EnemyChaseState& operator=(EnemyChaseState&& other) = delete;
+
 		virtual void Update(float) override;
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject&) override;
 		void OnEnter(dae::GameObject& owner) override;

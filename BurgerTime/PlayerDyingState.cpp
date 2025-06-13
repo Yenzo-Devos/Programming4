@@ -12,7 +12,7 @@ void game::PlayerDyingState::Update(float deltaTime)
 	m_AccuDeadTime += deltaTime;
 }
 
-std::unique_ptr<game::PlayerState> game::PlayerDyingState::HandleState(PlayerComponent&)
+std::unique_ptr<game::PlayerState> game::PlayerDyingState::HandleState(dae::GameObject*)
 {
 	if (m_AccuDeadTime > m_DeadTime)
 		return std::make_unique<PlayerIdleState>();
@@ -20,16 +20,16 @@ std::unique_ptr<game::PlayerState> game::PlayerDyingState::HandleState(PlayerCom
 	return nullptr;
 }
 
-void game::PlayerDyingState::OnEnter(PlayerComponent& playerComp)
+void game::PlayerDyingState::OnEnter(dae::GameObject* owner)
 {
-	playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
+	owner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
 	dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };
 	ss.AddToQueue(deathAudio);
 	ss.StopMusic();
 }
 
-void game::PlayerDyingState::OnExit(PlayerComponent& playerComp)
+void game::PlayerDyingState::OnExit(dae::GameObject* owner)
 {
 	auto pEnemies = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
 	for (auto enemy : pEnemies)
@@ -37,7 +37,7 @@ void game::PlayerDyingState::OnExit(PlayerComponent& playerComp)
 		enemy->GetComponent<RespawnComponent>()->RespawnOwner();
 		enemy->GetComponent<ChaseComponent>()->Activate(true);
 	}
-	playerComp.GetOwner()->GetComponent<RespawnComponent>()->RespawnOwner();
+	owner->GetComponent<RespawnComponent>()->RespawnOwner();
 
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
 	ss.PlayMusic("../Data/sounds/BGM.wav", -1);

@@ -6,36 +6,36 @@
 #include "SpriteComponent.h"
 #include "LivesComponent.h"
 
-std::unique_ptr<game::PlayerState> game::PlayerMoveState::HandleState(PlayerComponent& playerComp)
+std::unique_ptr<game::PlayerState> game::PlayerMoveState::HandleState(dae::GameObject* pOwner)
 {
-	if (playerComp.GetOwner()->GetWorldPosition() == m_LastPos)
+	if (pOwner->GetWorldPosition() == m_LastPos)
 		return std::make_unique<PlayerIdleState>();
 
 	if (m_Throw)
 		return std::make_unique<PlayerPepperState>();
 
-	if (m_CurrentHealth != playerComp.GetOwner()->GetComponent<LivesComponent>()->GetCurrentNrOfLives())
+	if (m_CurrentHealth != pOwner->GetComponent<LivesComponent>()->GetCurrentNrOfLives())
 		return std::make_unique<PlayerDyingState>();
 
-	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
+	m_LastPos = pOwner->GetWorldPosition();
 	return nullptr;
 }
 
-void game::PlayerMoveState::OnEnter(PlayerComponent& playerComp)
+void game::PlayerMoveState::OnEnter(dae::GameObject* pOwner)
 {
 	// change animation based on direction
-	ChangeDirection(playerComp.GetDirection());
+	ChangeDirection(pOwner->GetComponent<PlayerComponent>()->GetDirection());
 	if (m_Direction.x == 1.f)
-		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkRight");
+		pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkRight");
 	else if (m_Direction.x == -1.f)
-		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
+		pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	else if (m_Direction.y == 1.f)
-		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkDown");
+		pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkDown");
 	else if (m_Direction.y == -1.f)
-		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkUp");
+		pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkUp");
 
-	m_LastPos = playerComp.GetOwner()->GetWorldPosition();
-	m_CurrentHealth = playerComp.GetOwner()->GetComponent<LivesComponent>()->GetCurrentNrOfLives();
+	m_LastPos = pOwner->GetWorldPosition();
+	m_CurrentHealth = pOwner->GetComponent<LivesComponent>()->GetCurrentNrOfLives();
 }
 
 void game::PlayerMoveState::ChangeDirection(glm::vec3 direction)

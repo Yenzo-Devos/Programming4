@@ -9,6 +9,12 @@ namespace game
 	{
 	public:
 		PlayGameState(int gameModeIndex);
+		~PlayGameState() = default;
+
+		PlayGameState(const PlayGameState& other) = delete;
+		PlayGameState(PlayGameState&& other) = delete;
+		PlayGameState& operator=(const PlayGameState& other) = delete;
+		PlayGameState& operator=(PlayGameState&& other) = delete;
 
 		std::unique_ptr<GameState> HandleState(dae::GameObject*) override;
 		void OnEnter(dae::GameObject* owner) override;

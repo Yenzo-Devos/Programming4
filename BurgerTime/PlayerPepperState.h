@@ -8,9 +8,16 @@ namespace game
 	{
 	public:
 		PlayerPepperState() = default;
+		~PlayerPepperState() = default;
+
+		PlayerPepperState(const PlayerPepperState& other) = delete;
+		PlayerPepperState(PlayerPepperState&& other) = delete;
+		PlayerPepperState& operator=(const PlayerPepperState& other) = delete;
+		PlayerPepperState& operator=(PlayerPepperState&& other) = delete;
+
 		void Update(float deltaTime) override;
-		std::unique_ptr<PlayerState> HandleState(PlayerComponent&) override;
-		void OnEnter(PlayerComponent& playerComp) override;
+		std::unique_ptr<PlayerState> HandleState(dae::GameObject* pOwner) override;
+		void OnEnter(dae::GameObject* pOwner) override;
 	private:
 		
 		bool m_TimerDone{ false };

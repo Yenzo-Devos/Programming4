@@ -8,6 +8,13 @@ namespace game
 	public:
 		EnemyDeadState() = default;
 		EnemyDeadState(int pointsToBeAwarded, dae::GameObject* pLastInteractedObj);
+		~EnemyDeadState() = default;
+
+		EnemyDeadState(const EnemyDeadState& other) = delete;
+		EnemyDeadState(EnemyDeadState&& other) = delete;
+		EnemyDeadState& operator=(const EnemyDeadState& other) = delete;
+		EnemyDeadState& operator=(EnemyDeadState&& other) = delete;
+
 		virtual void Update(float deltaTime);
 		std::unique_ptr<EnemyState> HandleState(dae::GameObject& owner) override;
 		void OnEnter(dae::GameObject& owner) override;

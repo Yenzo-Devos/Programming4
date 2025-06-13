@@ -6,7 +6,7 @@ namespace game
 	class IngredientState
 	{
 	public:
-		virtual ~IngredientState() {}
+		virtual ~IngredientState() = default;
 		virtual void Update(float) {}
 		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&) { return nullptr; }
 		virtual void OnEnter(dae::GameObject&) {}
