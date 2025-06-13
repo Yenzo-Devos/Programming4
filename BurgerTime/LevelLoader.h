@@ -20,7 +20,7 @@ namespace game
 		LevelLoader& operator=(const LevelLoader& other) = delete;
 		LevelLoader& operator=(LevelLoader&& other) = delete;
 	
-		void LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene, GameModeComponent::PlayerData playerData, int gamemode);
+		void LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene, GameModeComponent::PlayerData playerData, int gamemodeIndex);
 	private:
 		friend class Singleton<LevelLoader>;
 		LevelLoader() = default;
@@ -34,9 +34,9 @@ namespace game
 
 		// dynamic objects
 		std::unique_ptr<dae::GameObject> CreateIngredient(int type, int idGroup, int x, int y, std::vector<dae::GameObject*> plateVec);
-		std::unique_ptr<dae::GameObject> CreatePlayer(int id, int x, int y, int gamemoder);
+		std::unique_ptr<dae::GameObject> CreatePlayer(int id, int x, int y, int gamemodeIndex);
 		std::unique_ptr<dae::GameObject> CreatePepper();
-		std::unique_ptr<dae::GameObject> CreateEnemy(const std::string& type, int x, int y);
+		std::unique_ptr<dae::GameObject> CreateEnemy(const std::string& type, int x, int y, bool isFirst, int gamemodeIndex);
 		std::unique_ptr<dae::GameObject> CreatePointEffect();
 		
 		void AddPlayerDataToObjects(dae::Scene* pScene, GameModeComponent::PlayerData playerData, int gamemode);

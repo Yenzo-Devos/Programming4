@@ -1,4 +1,5 @@
 #include "StartScreenState.h"
+#include "PlayGameState.h"
 #include "SinglePlayerGameState.h"
 #include "CoopGameState.h"
 #include "VersusGameState.h"
@@ -7,16 +8,9 @@
 
 std::unique_ptr<game::GameState> game::StartScreenState::HandleState(dae::GameObject*)
 {
-	if (!m_ModeSelected)
-		return nullptr;
-
-	if (m_ItemIndex == 0)
-		return std::make_unique<SingleplayerGameState>();
-	if (m_ItemIndex == 1)
-		return std::make_unique<CoopGameState>();
-	if (m_ItemIndex == 2)
-		return std::make_unique<VersusGameState>();
-
+	if (m_ModeSelected)
+		return std::make_unique<PlayGameState>(m_ItemIndex);
+	
 	return nullptr;
 }
 

@@ -1,18 +1,22 @@
-#include "CoopGameState.h"
+#include "PlayGameState.h"
 #include "LeaderboardState.h"
 #include "SceneManager.h"
-#include "GameModeComponent.h"
 #include "LevelLoader.h"
-#include "CommandLoader.h"
 #include "UILoader.h"
+#include "CommandLoader.h"
 #include "CollisionHandler.h"
 #include "InputManager.h"
 #include "PointsComponent.h"
 #include "LivesComponent.h"
-#include "PepperComponent.h"
 #include "PlayerComponent.h"
+#include "PepperComponent.h"
 
-std::unique_ptr<game::GameState> game::CoopGameState::HandleState(dae::GameObject*)
+game::PlayGameState::PlayGameState(int gameModeIndex)
+	: m_GameModeIndex{ gameModeIndex }
+{
+}
+
+std::unique_ptr<game::GameState> game::PlayGameState::HandleState(dae::GameObject*)
 {
 	if (m_GameHasEnded)
 		return std::make_unique<LeaderboardState>();
@@ -20,25 +24,25 @@ std::unique_ptr<game::GameState> game::CoopGameState::HandleState(dae::GameObjec
 	return nullptr;
 }
 
-void game::CoopGameState::OnEnter(dae::GameObject* owner)
+void game::PlayGameState::OnEnter(dae::GameObject* owner)
 {
-	auto scene = dae::SceneManager::GetInstance().CreateScene("co-op");
+	auto scene = dae::SceneManager::GetInstance().CreateScene(m_SceneNames[m_GameModeIndex]);
 	auto playerData = owner->GetComponent<GameModeComponent>()->GetPlayerData();
-	LevelLoader::GetInstance().LoadLevel("../Data/", "levels/level1.json", scene, playerData, 1);
-
+	
+	LevelLoader::GetInstance().LoadLevel("../Data/", "levels/level1.json", scene, playerData, m_GameModeIndex);
 	UILoader::GetInstance().LoadGameUI(scene);
-	//CommandLoader::GetInstance().CreateCoopCommands(scene, owner);
+	CommandLoader::GetInstance().CreateGameCommand(scene, owner, m_GameModeIndex);
 	dae::CollisionHandler::GetInstance().Init();
-	dae::SceneManager::GetInstance().SetActiveScene("co-op");
+	dae::SceneManager::GetInstance().SetActiveScene(m_SceneNames[m_GameModeIndex]);
 }
 
-void game::CoopGameState::OnExit(dae::GameObject*)
+void game::PlayGameState::OnExit(dae::GameObject*)
 {
 	dae::InputManager::GetInstance().UnBindGamePadCommands();
 	dae::InputManager::GetInstance().UnBindKeyboardCommands();
 }
 
-void game::CoopGameState::LoadNextLevel(dae::GameObject* owner)
+void game::PlayGameState::LoadNextLevel(dae::GameObject* owner)
 {
 	++m_Level;
 	m_Level = ((m_Level - 1) % 3) + 1;
@@ -48,14 +52,13 @@ void game::CoopGameState::LoadNextLevel(dae::GameObject* owner)
 	RemoveAllObjects();
 
 	std::string levelName = "levels/level" + std::to_string(m_Level) + ".json";
-	LevelLoader::GetInstance().LoadLevel("../Data/", levelName, scene, playerData, 1);
-
+	LevelLoader::GetInstance().LoadLevel("../Data/", levelName, scene, playerData, m_GameModeIndex);
 	UILoader::GetInstance().LoadGameUI(scene);
-	//CommandLoader::GetInstance().CreateCoopCommands(scene, owner);
+	CommandLoader::GetInstance().CreateGameCommand(scene, owner, m_GameModeIndex);
 	dae::CollisionHandler::GetInstance().Init();
 }
 
-game::GameModeComponent::PlayerData game::CoopGameState::CreateBufferPlayerData(dae::Scene* pScene)
+game::GameModeComponent::PlayerData game::PlayGameState::CreateBufferPlayerData(dae::Scene* pScene)
 {
 	auto player = pScene->GetObjectByTag("player0");
 	GameModeComponent::PlayerData playerData{ };
@@ -65,7 +68,7 @@ game::GameModeComponent::PlayerData game::CoopGameState::CreateBufferPlayerData(
 	return playerData;
 }
 
-void game::CoopGameState::RemoveAllObjects()
+void game::PlayGameState::RemoveAllObjects()
 {
 	dae::SceneManager::GetInstance().GetActiveScene()->RemoveAll();
 	dae::InputManager::GetInstance().UnBindGamePadCommands();

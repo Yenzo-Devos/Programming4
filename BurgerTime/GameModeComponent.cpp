@@ -1,7 +1,6 @@
 #include "GameModeComponent.h"
 #include "StartScreenState.h"
-#include "SingleplayerGameState.h"
-#include "CoopGameState.h"
+#include "PlayGameState.h"
 #include "LeaderboardState.h"
 #include "LeaderboardHandler.h"
 #include "GameObject.h"
@@ -52,9 +51,8 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 	case dae::Event::OnPlayerDeath:
 	{
 		std::vector<dae::GameObject*> pEnemies{};
-		auto state = dynamic_cast<SingleplayerGameState*>(m_pState.get());
-		auto coopState = dynamic_cast<CoopGameState*>(m_pState.get());
-		if (state || coopState)
+		auto state = dynamic_cast<PlayGameState*>(m_pState.get());
+		if (state)
 		{
 			pEnemies = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
 			for (auto enemy : pEnemies)
@@ -64,17 +62,11 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 	}
 	case dae::Event::OnGameEnded:
 	{
-		auto singleplayerState = dynamic_cast<SingleplayerGameState*>(m_pState.get());
-		if (singleplayerState)
+		auto state = dynamic_cast<PlayGameState*>(m_pState.get());
+		if (state)
 		{
 			m_FinishedPoints = pGameObject->GetComponent<PointsComponent>()->GetCurrentPoints();
-			singleplayerState->EndGame();
-		}
-		auto coopState = dynamic_cast<CoopGameState*>(m_pState.get());
-		if (coopState)
-		{
-			m_FinishedPoints = pGameObject->GetComponent<PointsComponent>()->GetCurrentPoints();
-			coopState->EndGame();
+			state->EndGame();
 		}
 		break;
 	}
@@ -85,13 +77,9 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 			int nrOfPlates = static_cast<int>(dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("plate").size());
 			if (++m_NrOfBurgerDone == nrOfPlates)
 			{
-				auto singleplayerState = dynamic_cast<SingleplayerGameState*>(m_pState.get());
-				if (singleplayerState)
-					singleplayerState->LoadNextLevel(m_pOwner);
-
-				auto coopState = dynamic_cast<CoopGameState*>(m_pState.get());
-				if (coopState)
-					coopState->LoadNextLevel(m_pOwner);
+				auto state = dynamic_cast<PlayGameState*>(m_pState.get());
+				if (state)
+					state->LoadNextLevel(m_pOwner);
 			}
 		}
 		break;

@@ -31,7 +31,7 @@ void game::SingleplayerGameState::OnEnter(dae::GameObject* owner)
     LevelLoader::GetInstance().LoadLevel("../Data/", "levels/level1.json", scene, playerData, 0);
 
     UILoader::GetInstance().LoadGameUI(scene);
-    CommandLoader::GetInstance().CreateSinglePlayerCommands(scene, owner);
+    //CommandLoader::GetInstance().CreateSinglePlayerCommands(scene, owner);
     dae::CollisionHandler::GetInstance().Init();
     dae::SceneManager::GetInstance().SetActiveScene("singleplayer");
 }
@@ -55,7 +55,7 @@ void game::SingleplayerGameState::LoadNextLevel(dae::GameObject* owner)
     LevelLoader::GetInstance().LoadLevel("../Data/", levelName, scene, playerData, 0);
     
     UILoader::GetInstance().LoadGameUI(scene);
-    CommandLoader::GetInstance().CreateSinglePlayerCommands(scene, owner);
+    //CommandLoader::GetInstance().CreateSinglePlayerCommands(scene, owner);
     dae::CollisionHandler::GetInstance().Init();
 }
 

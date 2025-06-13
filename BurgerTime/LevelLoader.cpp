@@ -22,7 +22,7 @@
 #include "PointEffectComponent.h"
 #include "GameModeComponent.h"
 
-void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene, GameModeComponent::PlayerData playerData, int gamemode)
+void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string& fileName, dae::Scene* scene, GameModeComponent::PlayerData playerData, int gamemodeIndex)
 {
 	using json = nlohmann::json;
 
@@ -51,12 +51,17 @@ void game::LevelLoader::LoadLevel(const std::string& dataPath, const std::string
 		auto dynamicObject = jsonData["dynamicObjects"];
 		for (const auto& ingredient : dynamicObject["ingredient"])
 			scene->Add(CreateIngredient(ingredient["type"], ingredient["idGroup"], ingredient["x"], ingredient["y"], scene->GetAllObjectByTag("plate")));
+		
+		bool isFirst{ true };
 		for (const auto& enemy : dynamicObject["enemy"])
-			scene->Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"]));
+		{
+			scene->Add(CreateEnemy(enemy["type"], enemy["x"], enemy["y"], isFirst, gamemodeIndex));
+			isFirst = false;
+		}
 		for (const auto& player : dynamicObject["player"])
-			scene->Add(CreatePlayer(player["id"], player["x"], player["y"], gamemode));
+			scene->Add(CreatePlayer(player["id"], player["x"], player["y"], gamemodeIndex));
 
-		AddPlayerDataToObjects(scene, playerData, gamemode);
+		AddPlayerDataToObjects(scene, playerData, gamemodeIndex);
 	}
 	catch (const std::exception& e)
 	{
@@ -173,7 +178,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	return ingredient;
 }
 
-std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::string& type, int x, int y)
+std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::string& type, int x, int y, bool isFirst, int gamemodeIndex)
 {
 	auto enemy = std::make_unique<dae::GameObject>();
 	enemy->GiveTag("enemy");
@@ -198,7 +203,10 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
 
 	auto pLadders = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("ladder");
-	enemy->AddComponent<game::ChaseComponent>(pLadders);
+	if (gamemodeIndex == 2)
+		enemy->AddComponent<game::ChaseComponent>(pLadders, isFirst);
+	else
+		enemy->AddComponent<game::ChaseComponent>(pLadders, false);
 	
 	int pointMultiplier{};
 	if (type == "hotdog")
@@ -212,8 +220,9 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->AddComponent<game::EnemyComponent>(pointEffect.get(), pointMultiplier);
 	dae::SceneManager::GetInstance().GetActiveScene()->Add(std::move(pointEffect));
 
-	enemy->AddComponent<game::RespawnComponent>(glm::vec3{x, y, 0.f});
+	enemy->AddComponent<game::RespawnComponent>(glm::vec3{ x, y, 0.f });
 	enemy->AddComponent<game::FallComponent>(100.f);
+	
 	return enemy;
 }
 
@@ -254,7 +263,7 @@ void game::LevelLoader::AddPlayerDataToObjects(dae::Scene* pScene, GameModeCompo
 			player->GetComponent<PlayerComponent>()->GetPepper()->AddComponent<PepperComponent>(pepperHitbox, playerData.nrOfPepper);
 		}
 	}
-	else if (gamemode == 0)
+	else if (gamemode == 0 or gamemode == 2)
 	{
 		auto player = pScene->GetObjectByTag("player0");
 		player->AddComponent<PointsComponent>(playerData.score);
@@ -266,7 +275,8 @@ void game::LevelLoader::AddPlayerDataToObjects(dae::Scene* pScene, GameModeCompo
 
 std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, int y, int gamemode)
 {
-	if (id == 1 and gamemode == 0)
+	if (id == 1 and gamemode == 0 or
+		id == 1 and gamemode == 2)
 		return nullptr;
 
 	auto player = std::make_unique<dae::GameObject>();

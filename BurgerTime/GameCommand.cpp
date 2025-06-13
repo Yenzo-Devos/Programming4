@@ -16,8 +16,7 @@
 #include "PlayerWinningState.h"
 #include "IngredientComponent.h"
 #include "GameModeComponent.h"
-#include "SingleplayerGameState.h"
-#include "CoopGameState.h"
+#include "PlayGameState.h"
 
 #include <ranges>
 #include <memory>
@@ -123,16 +122,10 @@ game::SkipLevel::SkipLevel(dae::GameObject* pGameObject)
 bool game::SkipLevel::Execute(float)
 {
 	auto state = GetGameObject()->GetComponent<GameModeComponent>()->GetState();
-	auto singlePlayerState = dynamic_cast<SingleplayerGameState*>(state);
-	if (singlePlayerState)
+	auto gameState = dynamic_cast<PlayGameState*>(state);
+	if (gameState)
 	{
-		singlePlayerState->LoadNextLevel(GetGameObject());
-		return true;
-	}
-	auto coopState = dynamic_cast<CoopGameState*>(state);
-	if (coopState)
-	{
-		coopState->LoadNextLevel(GetGameObject());
+		gameState->LoadNextLevel(GetGameObject());
 		return true;
 	}
 

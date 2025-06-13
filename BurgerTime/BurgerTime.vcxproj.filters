@@ -207,6 +207,9 @@
     <ClCompile Include="CommandLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayGameState.cpp">
+      <Filter>Source Files\States\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommand.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="CommandLoader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayGameState.h">
+      <Filter>Header Files\States\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include "MenuCommands.h"
 #include "GameCommand.h"
+#include "ChaseComponent.h"
 
 void game::CommandLoader::CreateStartMenuCommands(dae::Scene* pScene)
 {
@@ -25,6 +26,22 @@ void game::CommandLoader::CreateStartMenuCommands(dae::Scene* pScene)
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMenuMoveDownCommand), dae::InputState::Released, SDL_SCANCODE_S);
 }
 
+void game::CommandLoader::CreateGameCommand(dae::Scene* pScene, dae::GameObject* pGameState, int gameModeIndex)
+{
+    if (gameModeIndex == 0)
+    {
+        CreateSinglePlayerCommands(pScene, pGameState);
+        return;
+    }
+    else if (gameModeIndex == 1)
+    {
+        CreateCoopCommands(pScene, pGameState);
+        return;
+    }
+    else if (gameModeIndex == 2)
+        CreateVersusCommands(pScene, pGameState);
+}
+
 void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::GameObject* pGameState)
 {
     auto player = pScene->GetObjectByTag("player0");
@@ -34,21 +51,21 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
     auto moveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
     auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
     auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
-    auto ThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
+    auto throwPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
 
     // controller bindings
     dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_LEFT);
     dae::InputManager::GetInstance().BindCommand(std::move(moveRightCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_RIGHT);
     dae::InputManager::GetInstance().BindCommand(std::move(moveUpCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_UP);
     dae::InputManager::GetInstance().BindCommand(std::move(moveDownCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_DOWN);
-    dae::InputManager::GetInstance().BindCommand(std::move(ThrowPepperCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_B);
+    dae::InputManager::GetInstance().BindCommand(std::move(throwPepperCommand), 0, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_B);
 
     auto keyboardMoveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto keyboardMoveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
     auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
     auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
-    auto SkipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
+    auto skipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
 
     // keyboard bindings
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveLeftCommand), dae::InputState::Held, SDL_SCANCODE_A);
@@ -56,7 +73,7 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveUpCommand), dae::InputState::Held, SDL_SCANCODE_W);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
-    dae::InputManager::GetInstance().BindCommand(std::move(SkipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+    dae::InputManager::GetInstance().BindCommand(std::move(skipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
 }
 
 void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject* pGameState)
@@ -95,7 +112,7 @@ void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject
     auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
     auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
-    auto SkipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
+    auto skipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
 
     // keyboard bindings
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveLeftCommand), dae::InputState::Held, SDL_SCANCODE_A);
@@ -103,7 +120,59 @@ void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveUpCommand), dae::InputState::Held, SDL_SCANCODE_W);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
     dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
-    dae::InputManager::GetInstance().BindCommand(std::move(SkipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+    dae::InputManager::GetInstance().BindCommand(std::move(skipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
+}
+
+void game::CommandLoader::CreateVersusCommands(dae::Scene* pScene, dae::GameObject* pGameState)
+{
+    dae::GameObject* controlledEnemy{};
+    auto enemyVec = pScene->GetAllObjectByTag("enemy");
+    for (auto enemy : enemyVec)
+    {
+        if (enemy->GetComponent<ChaseComponent>()->GetIsOwnerControlled())
+            controlledEnemy = enemy;
+    }
+
+    auto player = pScene->GetObjectByTag("player0");
+    float speed = 100.f;
+
+    auto moveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
+    auto moveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
+    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
+    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto throwPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
+
+    auto enemyMoveLeftCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(-1, 0, 0));
+    auto enemyMoveRightCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(1, 0, 0));
+    auto enemyMoveUpCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(0, -1, 0));
+    auto enemyMoveDownCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(0, 1, 0));
+
+    // controller bindings
+    dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommand), 1, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_LEFT);
+    dae::InputManager::GetInstance().BindCommand(std::move(moveRightCommand), 1, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_RIGHT);
+    dae::InputManager::GetInstance().BindCommand(std::move(moveUpCommand), 1, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_UP);
+    dae::InputManager::GetInstance().BindCommand(std::move(moveDownCommand), 1, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_DOWN);
+    dae::InputManager::GetInstance().BindCommand(std::move(throwPepperCommand), 1, dae::InputState::Released, dae::GamePad::GamePadButton::BUTTON_B);
+
+    dae::InputManager::GetInstance().BindCommand(std::move(enemyMoveLeftCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_LEFT);
+    dae::InputManager::GetInstance().BindCommand(std::move(enemyMoveRightCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_RIGHT);
+    dae::InputManager::GetInstance().BindCommand(std::move(enemyMoveUpCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_UP);
+    dae::InputManager::GetInstance().BindCommand(std::move(enemyMoveDownCommand), 0, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_DOWN);
+
+    auto keyboardMoveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
+    auto keyboardMoveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
+    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
+    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
+    auto skipLevelCommand = std::make_unique<game::SkipLevel>(pGameState);
+
+    // keyboard bindings
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveLeftCommand), dae::InputState::Held, SDL_SCANCODE_A);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveRightCommand), dae::InputState::Held, SDL_SCANCODE_D);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveUpCommand), dae::InputState::Held, SDL_SCANCODE_W);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardMoveDownCommand), dae::InputState::Held, SDL_SCANCODE_S);
+    dae::InputManager::GetInstance().BindCommand(std::move(keyboardThrowPepperCommand), dae::InputState::Released, SDL_SCANCODE_E);
+    dae::InputManager::GetInstance().BindCommand(std::move(skipLevelCommand), dae::InputState::Released, SDL_SCANCODE_F1);
 }
 
 void game::CommandLoader::CreateLeaderboardCommands(dae::Scene* pScene)

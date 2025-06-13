@@ -7,20 +7,29 @@
 #include "HitboxComponent.h"
 #include "LivesComponent.h"
 
-game::ChaseComponent::ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec)
+game::ChaseComponent::ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec, bool isBeingControlled)
 	: BaseComponent(pOwner)
 	, m_pLadderVec{ pLadderVec }
 	, m_MoveLeftCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{-1.f, 0.f, 0.f}) }
 	, m_MoveRightCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{1.f, 0.f, 0.f}) }
 	, m_MoveUpCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{0.f, -1.f, 0.f}) }
 	, m_MoveDownCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{0.f, 1.f, 0.f}) }
+	, m_IsOwnerControlled{isBeingControlled}
 {
 }
 
 void game::ChaseComponent::Update(float deltaTime)
 {
 	if (!m_IsActive)
+	{
+		if (m_IsOwnerControlled)
+			CheckHitPlayer();
 		return;
+	}
+	else if (m_IsActive && m_IsOwnerControlled)
+	{
+		Activate(false);
+	}
 
 	if (m_IsDirectionLocked)
 	{

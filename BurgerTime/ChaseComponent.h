@@ -8,7 +8,7 @@ namespace game
 	class ChaseComponent : public dae::BaseComponent
 	{
 	public:
-		ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec);
+		ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec, bool isBeingControlled);
 		~ChaseComponent() = default;
 
 		ChaseComponent(const ChaseComponent& other) = delete;
@@ -21,9 +21,11 @@ namespace game
 		glm::vec2 GetDirection() { return m_LockedDirection; }
 
 		void Activate(bool isActive) { m_IsActive = isActive; }
+		bool GetIsOwnerControlled() const { return m_IsOwnerControlled; }
 	
 	private:
 		bool m_IsActive{ true };
+		bool m_IsOwnerControlled{};
 
 		// movement vars
 		bool m_IsOnLadder{ false };
