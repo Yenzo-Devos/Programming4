@@ -123,15 +123,6 @@
     <ClCompile Include="StartScreenState.cpp">
       <Filter>Source Files\States\Game</Filter>
     </ClCompile>
-    <ClCompile Include="SingleplayerGameState.cpp">
-      <Filter>Source Files\States\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="VersusGameState.cpp">
-      <Filter>Source Files\States\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="CoopGameState.cpp">
-      <Filter>Source Files\States\Game</Filter>
-    </ClCompile>
     <ClCompile Include="LeaderboardState.cpp">
       <Filter>Source Files\States\Game</Filter>
     </ClCompile>
@@ -273,15 +264,6 @@
       <Filter>Header Files\States\Game</Filter>
     </ClInclude>
     <ClInclude Include="LeaderboardState.h">
-      <Filter>Header Files\States\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="SingleplayerGameState.h">
-      <Filter>Header Files\States\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="VersusGameState.h">
-      <Filter>Header Files\States\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="CoopGameState.h">
       <Filter>Header Files\States\Game</Filter>
     </ClInclude>
     <ClInclude Include="EnemyShowPointsState.h">

@@ -38,4 +38,7 @@ void game::PlayerDyingState::OnExit(PlayerComponent& playerComp)
 		enemy->GetComponent<ChaseComponent>()->Activate(true);
 	}
 	playerComp.GetOwner()->GetComponent<RespawnComponent>()->RespawnOwner();
+
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	ss.PlayMusic("../Data/sounds/BGM.wav", -1);
 }

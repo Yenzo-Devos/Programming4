@@ -166,7 +166,6 @@
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="ChaseComponent.cpp" />
     <ClCompile Include="CommandLoader.cpp" />
-    <ClCompile Include="CoopGameState.cpp" />
     <ClCompile Include="CursorComponent.cpp" />
     <ClCompile Include="EnemyChaseState.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
@@ -206,15 +205,12 @@
     <ClCompile Include="PointsComponent.cpp" />
     <ClCompile Include="PointsDisplayComponent.cpp" />
     <ClCompile Include="RespawnComponent.cpp" />
-    <ClCompile Include="SingleplayerGameState.cpp" />
     <ClCompile Include="StartScreenState.cpp" />
     <ClCompile Include="UILoader.cpp" />
-    <ClCompile Include="VersusGameState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaseComponent.h" />
     <ClInclude Include="CommandLoader.h" />
-    <ClInclude Include="CoopGameState.h" />
     <ClInclude Include="CursorComponent.h" />
     <ClInclude Include="EnemyChaseState.h" />
     <ClInclude Include="EnemyComponent.h" />
@@ -256,10 +252,8 @@
     <ClInclude Include="PointsComponent.h" />
     <ClInclude Include="PointsDisplayComponent.h" />
     <ClInclude Include="RespawnComponent.h" />
-    <ClInclude Include="SingleplayerGameState.h" />
     <ClInclude Include="StartScreenState.h" />
     <ClInclude Include="UILoader.h" />
-    <ClInclude Include="VersusGameState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
