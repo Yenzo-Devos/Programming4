@@ -47,18 +47,18 @@
 
 void LoadSounds()
 {
-	auto& sdlSoundSystem = dae::ServiceLocator::GetSoundSystem();
-	sdlSoundSystem.Load("../Data/sounds/Death.wav", "Death");
-	sdlSoundSystem.Load("../Data/sounds/Pepper_Shake.wav", "PepperShake");
-	sdlSoundSystem.Load("../Data/sounds/Round_Clear.wav", "RoundClear");
+	//auto& sdlSoundSystem = dae::ServiceLocator::GetSoundSystem();
+	//sdlSoundSystem.Load("../Data/sounds/Death.wav", "Death");
+	//sdlSoundSystem.Load("../Data/sounds/Pepper_Shake.wav", "PepperShake");
+	//sdlSoundSystem.Load("../Data/sounds/Round_Clear.wav", "RoundClear");
 	
-	sdlSoundSystem.Load("../Data/sounds/Enemy_Fall.wav", "EnemyFall");
-	sdlSoundSystem.Load("../Data/sounds/Enemy_Sprayed.wav", "EnemySprayed");
-	sdlSoundSystem.Load("../Data/sounds/Enemy_Squashed.wav", "EnemySquashed");
+	//sdlSoundSystem.Load("../Data/sounds/Enemy_Fall.wav", "EnemyFall");
+	//sdlSoundSystem.Load("../Data/sounds/Enemy_Sprayed.wav", "EnemySprayed");
+	//sdlSoundSystem.Load("../Data/sounds/Enemy_Squashed.wav", "EnemySquashed");
 	
-	sdlSoundSystem.Load("../Data/sounds/Burger_Fall.wav", "BurgerFall");
-	sdlSoundSystem.Load("../Data/sounds/Burger_Land.wav", "BurgerLand");
-	sdlSoundSystem.Load("../Data/sounds/Burger_Step.wav", "BurgerStep");
+	//sdlSoundSystem.Load("../Data/sounds/Burger_Fall.wav", "BurgerFall");
+	//sdlSoundSystem.Load("../Data/sounds/Burger_Land.wav", "BurgerLand");
+	//sdlSoundSystem.Load("../Data/sounds/Burger_Step.wav", "BurgerStep");
 }
 
 void load()

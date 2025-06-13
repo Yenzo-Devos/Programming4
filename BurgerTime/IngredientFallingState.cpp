@@ -8,6 +8,7 @@
 #include "FallComponent.h"
 #include "EnemyComponent.h"
 #include "PointsComponent.h"
+#include "ServiceLocator.h"
 
 
 game::IngredientFallingState::IngredientFallingState(dae::GameObject* pLastInteractedObj)
@@ -72,6 +73,10 @@ void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
         else
             enemy->GetComponent<EnemyComponent>()->StartFalling(m_pLastInteractedObj, isFirst, static_cast<int>(enemySet.size()));
     }
+
+    auto& ss = dae::ServiceLocator::GetSoundSystem();
+    dae::AudioFile ingredientFallAudio{ "../Data/sounds/Burger_Fall.wav", "BurgerFall", 0 };
+    ss.AddToQueue(ingredientFallAudio);
 }
 
 void game::IngredientFallingState::OnExit(dae::GameObject& owner)

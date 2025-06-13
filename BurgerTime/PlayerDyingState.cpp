@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "RespawnComponent.h"
 #include "ChaseComponent.h"
+#include "ServiceLocator.h"
 
 void game::PlayerDyingState::Update(float deltaTime)
 {
@@ -22,6 +23,10 @@ std::unique_ptr<game::PlayerState> game::PlayerDyingState::HandleState(PlayerCom
 void game::PlayerDyingState::OnEnter(PlayerComponent& playerComp)
 {
 	playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	dae::AudioFile deathAudio{ "../Data/sounds/Death.wav", "Death", 0 };
+	ss.AddToQueue(deathAudio);
+	ss.StopMusic();
 }
 
 void game::PlayerDyingState::OnExit(PlayerComponent& playerComp)

@@ -38,6 +38,7 @@ private:
 
 	bool m_IsActive{ true };
 	std::mutex m_QueueMutex{};
+	std::mutex m_PlayMutex{};
 	std::jthread m_AudioThread{};
 	std::condition_variable m_Condition;
 	
@@ -47,8 +48,8 @@ private:
 };
 
 dae::SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
+	: m_AudioThread{ [this](std::stop_token stopToken) { this->AudioThreadQueue(std::move(stopToken)); } }
 {
-	m_AudioThread = std::jthread(&SDLSoundSystemImpl::AudioThreadQueue, this);
 }
 
 dae::SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
@@ -162,31 +163,27 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::AddToQueue(AudioFile audio)
 	m_Condition.notify_all();
 }
 
+// got help with this logic from Yarno Ceulemans mine just locked my whole game up
 void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token stopToken)
 {
-	std::unique_lock<std::mutex> lock(m_QueueMutex);
-
 	while (!stopToken.stop_requested())
 	{
-		m_Condition.wait(lock, [this, &stopToken]() {
+		std::unique_lock<std::mutex> playLock{ m_PlayMutex };
+		m_Condition.wait(playLock, [this, &stopToken]() -> bool {
+			std::lock_guard queueLock{ m_QueueMutex };
 			return !m_AudioQueue.empty() || stopToken.stop_requested();
 			});
-	}
 
-	// lock here to check size
-	while (!m_AudioQueue.empty())
-	{
+		m_QueueMutex.lock();
 		AudioFile temp = m_AudioQueue.front();
 		m_AudioQueue.pop();
-		lock.unlock();
+		m_QueueMutex.unlock();
 
 		if (!Load(temp.filePath, temp.name))
 			continue;
-		
+
 		if (m_pLoadedSounds.find(temp.name) != m_pLoadedSounds.end())
 			Play(temp.name, 100, temp.loops);
-
-		lock.lock();
 	}
 }
 

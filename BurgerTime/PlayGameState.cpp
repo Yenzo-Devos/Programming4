@@ -10,6 +10,7 @@
 #include "LivesComponent.h"
 #include "PlayerComponent.h"
 #include "PepperComponent.h"
+#include "ServiceLocator.h"
 
 game::PlayGameState::PlayGameState(int gameModeIndex)
 	: m_GameModeIndex{ gameModeIndex }
@@ -34,6 +35,9 @@ void game::PlayGameState::OnEnter(dae::GameObject* owner)
 	CommandLoader::GetInstance().CreateGameCommand(scene, owner, m_GameModeIndex);
 	dae::CollisionHandler::GetInstance().Init();
 	dae::SceneManager::GetInstance().SetActiveScene(m_SceneNames[m_GameModeIndex]);
+
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	ss.PlayMusic("../Data/sounds/BGM.wav", -1);
 }
 
 void game::PlayGameState::OnExit(dae::GameObject*)
@@ -44,6 +48,9 @@ void game::PlayGameState::OnExit(dae::GameObject*)
 
 void game::PlayGameState::LoadNextLevel(dae::GameObject* owner)
 {
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	ss.PlayMusic("../Data/sounds/BGM.wav", -1);
+
 	++m_Level;
 	m_Level = ((m_Level - 1) % 3) + 1;
 	auto scene = dae::SceneManager::GetInstance().GetActiveScene();

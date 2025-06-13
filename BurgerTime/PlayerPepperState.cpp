@@ -1,6 +1,7 @@
 #include "PlayerPepperState.h"
 #include "PlayerIdleState.h"
 #include "SpriteComponent.h"
+#include "ServiceLocator.h"
 
 void game::PlayerPepperState::Update(float deltaTime)
 {
@@ -23,4 +24,8 @@ void game::PlayerPepperState::OnEnter(PlayerComponent& playerComp)
 		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayRight");
 	if (dir.x == -1.f)
 		playerComp.GetOwner()->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("sprayLeft");
+
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	dae::AudioFile pepperAudio{ "../Data/sounds/Pepper_Shake.wav", "PepperShake", 0 };
+	ss.AddToQueue(pepperAudio);
 }

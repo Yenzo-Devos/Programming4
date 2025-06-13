@@ -3,6 +3,7 @@
 #include "CollisionHandler.h"
 #include "EnemyShowPointsState.h"
 #include "EnemyDeadState.h"
+#include "ServiceLocator.h"
 
 game::EnemyFallState::EnemyFallState(dae::GameObject* pLastInteractedObj, bool isFirst, int nrOfEnemiesFalling)
 	: m_pLastInteractedObj{ pLastInteractedObj }
@@ -59,6 +60,10 @@ void game::EnemyFallState::OnEnter(dae::GameObject& owner)
 	m_pHitboxComp = owner.GetComponent<dae::HitboxComponent>();
 	m_pFallComp = owner.GetComponent<FallComponent>();
 	m_pFallComp->Activate(true);
+
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	dae::AudioFile enemyFallAudio{ "../Data/sounds/Enemy_Fall.wav", "EnemyFall", 0 };
+	ss.AddToQueue(enemyFallAudio);
 }
 
 void game::EnemyFallState::OnExit(dae::GameObject&)
