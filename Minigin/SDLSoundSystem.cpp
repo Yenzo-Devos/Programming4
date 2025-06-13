@@ -22,20 +22,26 @@ public:
 
 	bool Load(const std::string& filePath, const std::string& soundID);
 	void Play(const std::string& soundID, const int volume, int loops);
-	void Pause();
-	void Resume();
-	void Stop();
+	void PlayMusic(const std::string& filepath, int loops);
+	void PauseSound();
+	void PauseMusic();
+	void ResumeSound();
+	void ResumeMusic();
+	void StopSound();
+	void StopMusic();
 	void MuteAllSound();
 	void SetVolume(const std::string& soundID, const int volume);
 	void AddToQueue(AudioFile audio);
 
 private:
-	void AudioThreadQueue();
+	void AudioThreadQueue(std::stop_token stopToken);
 
 	bool m_IsActive{ true };
-	std::jthread m_AudioThread{};
-	std::queue<AudioFile> m_AudioQueue{};
 	std::mutex m_QueueMutex{};
+	std::jthread m_AudioThread{};
+	std::condition_variable m_Condition;
+	
+	std::queue<AudioFile> m_AudioQueue{};
 	std::unordered_map<std::string, Mix_Chunk*> m_pLoadedSounds{};
 	bool m_IsMuted{ false };
 };
@@ -47,10 +53,10 @@ dae::SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
 
 dae::SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
 {
+	m_IsActive = false;
 	for (auto sound : m_pLoadedSounds)
 		Mix_FreeChunk(sound.second);
 
-	m_IsActive = false;
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_Quit();
@@ -82,27 +88,63 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::Play(const std::string& soundID, c
 	Mix_Volume(channel, volume);
 }
 
-void dae::SDLSoundSystem::SDLSoundSystemImpl::Pause()
+void dae::SDLSoundSystem::SDLSoundSystemImpl::PlayMusic(const std::string& filepath, int loops)
+{
+	Mix_Music* pMusic = Mix_LoadMUS(filepath.c_str());
+	if (!pMusic)
+	{
+		std::cerr << "Loading music failed: " << Mix_GetError() << '\n';
+		return;
+	}
+	if (Mix_PlayMusic(pMusic, loops) == -1)
+	{
+		std::cerr << "Playing music failed: " << Mix_GetError() << '\n';
+		return;
+	}
+}
+
+void dae::SDLSoundSystem::SDLSoundSystemImpl::PauseSound()
 {
 	Mix_Pause(-1);
 }
 
-void dae::SDLSoundSystem::SDLSoundSystemImpl::Resume()
+void dae::SDLSoundSystem::SDLSoundSystemImpl::PauseMusic()
+{
+	Mix_PauseMusic();
+}
+
+void dae::SDLSoundSystem::SDLSoundSystemImpl::ResumeSound()
 {
 	Mix_Resume(-1);
 }
 
-void dae::SDLSoundSystem::SDLSoundSystemImpl::Stop()
+void dae::SDLSoundSystem::SDLSoundSystemImpl::ResumeMusic()
+{
+	Mix_ResumeMusic();
+}
+
+void dae::SDLSoundSystem::SDLSoundSystemImpl::StopSound()
 {
 	Mix_HaltChannel(-1);
+}
+
+void dae::SDLSoundSystem::SDLSoundSystemImpl::StopMusic()
+{
+	Mix_HaltMusic();
 }
 
 void dae::SDLSoundSystem::SDLSoundSystemImpl::MuteAllSound()
 {
 	if (m_IsMuted)
+	{
 		Mix_Volume(-1, 100);
+		Mix_VolumeMusic(100);
+	}
 	else
+	{
 		Mix_Volume(-1, 0);
+		Mix_VolumeMusic(100);
+	}
 }
 
 void dae::SDLSoundSystem::SDLSoundSystemImpl::SetVolume(const std::string& soundID, const int volume)
@@ -112,30 +154,39 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::SetVolume(const std::string& sound
 
 void dae::SDLSoundSystem::SDLSoundSystemImpl::AddToQueue(AudioFile audio)
 {
-	m_AudioQueue.push(audio);
+	{
+		std::lock_guard<std::mutex> lock(m_QueueMutex);
+		m_AudioQueue.push(audio);
+	}
+
+	m_Condition.notify_all();
 }
 
-void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue()
+void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token stopToken)
 {
-	while (m_IsActive)
+	std::unique_lock<std::mutex> lock(m_QueueMutex);
+
+	while (!stopToken.stop_requested())
 	{
-		while (m_AudioQueue.size() > 0)
-		{
-			AudioFile temp{};
-			{
-				std::scoped_lock lock(m_QueueMutex);
-				temp = m_AudioQueue.front();
-			}
-			
-			if (!Load(temp.filePath, temp.name))
-				continue;
-			
-			if (m_pLoadedSounds.find(temp.name) != m_pLoadedSounds.end())
-			{
-				Play(temp.name, 100, temp.loops);
-				m_AudioQueue.pop();
-			}
-		}
+		m_Condition.wait(lock, [this, &stopToken]() {
+			return !m_AudioQueue.empty() || stopToken.stop_requested();
+			});
+	}
+
+	// lock here to check size
+	while (!m_AudioQueue.empty())
+	{
+		AudioFile temp = m_AudioQueue.front();
+		m_AudioQueue.pop();
+		lock.unlock();
+
+		if (!Load(temp.filePath, temp.name))
+			continue;
+		
+		if (m_pLoadedSounds.find(temp.name) != m_pLoadedSounds.end())
+			Play(temp.name, 100, temp.loops);
+
+		lock.lock();
 	}
 }
 
@@ -158,19 +209,39 @@ void dae::SDLSoundSystem::Play(const std::string& soundID, const int volume, int
 	m_pImpl->Play(soundID, volume, loops);
 }
 
-void dae::SDLSoundSystem::Pause()
+void dae::SDLSoundSystem::PlayMusic(const std::string& filepath, int loops)
 {
-	m_pImpl->Pause();
+	m_pImpl->PlayMusic(filepath, loops);
 }
 
-void dae::SDLSoundSystem::Resume()
+void dae::SDLSoundSystem::PauseSound()
 {
-	m_pImpl->Resume();
+	m_pImpl->PauseSound();
 }
 
-void dae::SDLSoundSystem::Stop()
+void dae::SDLSoundSystem::PauseMusic()
 {
-	m_pImpl->Stop();
+	m_pImpl->PauseMusic();
+}
+
+void dae::SDLSoundSystem::ResumeSound()
+{
+	m_pImpl->ResumeSound();
+}
+
+void dae::SDLSoundSystem::ResumeMusic()
+{
+	m_pImpl->ResumeMusic();
+}
+
+void dae::SDLSoundSystem::StopSound()
+{
+	m_pImpl->StopSound();
+}
+
+void dae::SDLSoundSystem::StopMusic()
+{
+	m_pImpl->StopMusic();
 }
 
 void dae::SDLSoundSystem::MuteAllSound()

@@ -1,6 +1,5 @@
 #pragma once
 #include "SoundSystem.h"
-
 #include <memory>
 
 namespace dae
@@ -18,6 +17,6 @@ namespace dae
 		}
 
 	private:
-		inline static std::unique_ptr<SoundSystem> m_pSoundSystemInstance = nullptr;
+		static std::unique_ptr<SoundSystem> m_pSoundSystemInstance;
 	};
 }

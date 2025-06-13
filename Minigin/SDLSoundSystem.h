@@ -12,9 +12,13 @@ namespace dae
 
 		bool Load(const std::string& filePath, const std::string& soundID) override;
 		void Play(const std::string& soundID, const int volume, int loops) override;
-		void Pause() override;
-		void Resume() override;
-		void Stop() override;
+		void PlayMusic(const std::string& filepath, int loops) override;
+		void PauseSound() override;
+		void PauseMusic() override;
+		void ResumeSound() override;
+		void ResumeMusic() override;
+		void StopSound() override;
+		void StopMusic() override;
 		void MuteAllSound() override;
 		void SetVolume(const std::string& soundID, const int volume) override;
 		void AddToQueue(AudioFile audio);
