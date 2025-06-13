@@ -56,6 +56,16 @@ dae::SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
 {
 	m_AudioThread.request_stop();
 	m_Condition.notify_all();
+	for (auto sound : m_pLoadedSounds)
+		StopSound();
+	StopMusic();
+
+	for (auto sound : m_pLoadedSounds)
+		Mix_FreeChunk(sound.second);
+	Mix_FreeMusic(m_pLoadedMusic);
+
+	Mix_CloseAudio();
+	Mix_Quit();
 	SDL_Quit();
 	m_AudioThread.join();
 }
@@ -176,6 +186,8 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token&&
 			return !m_AudioQueue.empty() || stopToken.stop_requested();
 			});
 
+		if (stopToken.stop_requested()) break;
+		
 		m_QueueMutex.lock();
 		AudioFile temp = m_AudioQueue.front();
 		m_AudioQueue.pop();
@@ -187,17 +199,6 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token&&
 		if (m_pLoadedSounds.find(temp.name) != m_pLoadedSounds.end())
 			Play(temp.name, 100, temp.loops);
 	}
-
-	for (auto sound : m_pLoadedSounds)
-		StopSound();
-	StopMusic();
-
-	for (auto sound : m_pLoadedSounds)
-		Mix_FreeChunk(sound.second);
-	Mix_FreeMusic(m_pLoadedMusic);
-
-	Mix_CloseAudio();
-	Mix_Quit();
 }
 
 dae::SDLSoundSystem::SDLSoundSystem()
