@@ -64,7 +64,6 @@ void LoadSounds()
 void load()
 {
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
-	LoadSounds();
 
 	auto scene = dae::SceneManager::GetInstance().CreateScene("start_screen");
 	// create the gamemode

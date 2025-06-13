@@ -34,7 +34,7 @@ public:
 	void AddToQueue(AudioFile audio);
 
 private:
-	void AudioThreadQueue(std::stop_token stopToken);
+	void AudioThreadQueue(std::stop_token&& stopToken);
 
 	std::mutex m_QueueMutex{};
 	std::mutex m_PlayMutex{};
@@ -55,16 +55,7 @@ dae::SDLSoundSystem::SDLSoundSystemImpl::SDLSoundSystemImpl()
 dae::SDLSoundSystem::SDLSoundSystemImpl::~SDLSoundSystemImpl()
 {
 	m_AudioThread.request_stop();
-	for (auto sound : m_pLoadedSounds)
-		StopSound();
-	StopMusic();
-	
-	for (auto sound : m_pLoadedSounds)
-		Mix_FreeChunk(sound.second);
-	Mix_FreeMusic(m_pLoadedMusic);
-
-	Mix_CloseAudio();
-	Mix_Quit();
+	m_Condition.notify_all();
 	SDL_Quit();
 	m_AudioThread.join();
 }
@@ -175,7 +166,7 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::AddToQueue(AudioFile audio)
 }
 
 // got help with this logic from Yarno Ceulemans mine just locked my whole game up
-void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token stopToken)
+void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token&& stopToken)
 {
 	while (!stopToken.stop_requested())
 	{
@@ -196,6 +187,17 @@ void dae::SDLSoundSystem::SDLSoundSystemImpl::AudioThreadQueue(std::stop_token s
 		if (m_pLoadedSounds.find(temp.name) != m_pLoadedSounds.end())
 			Play(temp.name, 100, temp.loops);
 	}
+
+	for (auto sound : m_pLoadedSounds)
+		StopSound();
+	StopMusic();
+
+	for (auto sound : m_pLoadedSounds)
+		Mix_FreeChunk(sound.second);
+	Mix_FreeMusic(m_pLoadedMusic);
+
+	Mix_CloseAudio();
+	Mix_Quit();
 }
 
 dae::SDLSoundSystem::SDLSoundSystem()
