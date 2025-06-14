@@ -21,7 +21,7 @@ void game::PepperComponent::Update(float deltaTime)
 		DeActivate();
 
 	glm::vec2 pos = { m_pOwner->GetWorldPosition().x, m_pOwner->GetWorldPosition().y };
-	auto enemies = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", pos, m_pOwner->GetDimensions().first, m_pOwner->GetDimensions().second);
+	auto enemies = game::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", pos, m_pOwner->GetDimensions().first, m_pOwner->GetDimensions().second);
 	if (enemies.empty())
 		return;
 

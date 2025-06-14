@@ -37,7 +37,7 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
         EmptyLandingPlatform();
 
     auto pos = owner->GetWorldPosition();
-    auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
+    auto platformObj = game::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
     if (!platformObj)
         return nullptr;
 
@@ -91,7 +91,7 @@ void game::IngredientFallingState::OnExit(dae::GameObject* owner)
 
 void game::IngredientFallingState::EmptyLandingPlatform()
 {
-    auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(m_pHitboxComp->GetHitbox("left_hitbox"));
+    auto ingredientVec = game::CollisionHandler::GetInstance().PerformIngredientCheck(m_pHitboxComp->GetHitbox("left_hitbox"));
     if (!ingredientVec.empty())
         for (const auto& ingredient : ingredientVec)
             for (int index{ 0 }; index < 4; ++index)
@@ -103,7 +103,7 @@ std::unordered_set<dae::GameObject*> game::IngredientFallingState::CheckIfEnemie
     std::unordered_set<dae::GameObject*> enemyVec{};
     for (auto hitbox : m_pHitboxComp->GetAllHitboxes())
     {
-        auto bufferVec = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", hitbox);
+        auto bufferVec = game::CollisionHandler::GetInstance().IsOverlappingWithObject("enemy", hitbox);
         enemyVec.insert(bufferVec.begin(), bufferVec.end());
     }
     return enemyVec;

@@ -28,7 +28,7 @@ std::unique_ptr<game::EnemyState> game::EnemyFallState::HandleState(dae::GameObj
 		return nullptr;
 
 	auto hitbox = m_pHitboxComp->GetHitbox("main_hitbox");
-	auto platform = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("platform", hitbox);
+	auto platform = game::CollisionHandler::GetInstance().IsOverlappingWithObject("platform", hitbox);
 	if (static_cast<int>(platform.size()) > 0)
 		if (m_FirstToFall)
 		{
@@ -40,7 +40,7 @@ std::unique_ptr<game::EnemyState> game::EnemyFallState::HandleState(dae::GameObj
 		else
 			return std::make_unique<EnemyShowPointsState>();
 	
-	auto plate = dae::CollisionHandler::GetInstance().IsOverlappingWithObject("plate", hitbox);
+	auto plate = game::CollisionHandler::GetInstance().IsOverlappingWithObject("plate", hitbox);
 	if (static_cast<int>(plate.size()) > 0)
 		if (m_FirstToFall)
 		{

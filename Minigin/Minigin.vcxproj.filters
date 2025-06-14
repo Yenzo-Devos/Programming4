@@ -114,9 +114,6 @@
     <ClInclude Include="HitboxComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -181,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="HitboxComponent.cpp">
       <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionHandler.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Source Files\Components</Filter>

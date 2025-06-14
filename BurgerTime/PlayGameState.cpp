@@ -33,7 +33,7 @@ void game::PlayGameState::OnEnter(dae::GameObject* owner)
 	LevelLoader::GetInstance().LoadLevel("../Data/", "levels/level1.json", scene, playerData, m_GameModeIndex);
 	UILoader::GetInstance().LoadGameUI(scene);
 	CommandLoader::GetInstance().CreateGameCommand(scene, owner, m_GameModeIndex);
-	dae::CollisionHandler::GetInstance().Init();
+	game::CollisionHandler::GetInstance().Init();
 	dae::SceneManager::GetInstance().SetActiveScene(m_SceneNames[m_GameModeIndex]);
 
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
@@ -65,7 +65,7 @@ void game::PlayGameState::LoadNextLevel(dae::GameObject* owner)
 	LevelLoader::GetInstance().LoadLevel("../Data/", levelName, scene, playerData, m_GameModeIndex);
 	UILoader::GetInstance().LoadGameUI(scene);
 	CommandLoader::GetInstance().CreateGameCommand(scene, owner, m_GameModeIndex);
-	dae::CollisionHandler::GetInstance().Init();
+	game::CollisionHandler::GetInstance().Init();
 }
 
 game::GameModeComponent::PlayerData game::PlayGameState::CreateBufferPlayerData(dae::Scene* pScene)

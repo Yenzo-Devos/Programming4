@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Minigin\CollisionHandler.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
     <ClCompile Include="ChaseComponent.cpp" />
     <ClCompile Include="CommandLoader.cpp" />
@@ -208,6 +209,7 @@
     <ClCompile Include="UILoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Minigin\CollisionHandler.h" />
     <ClInclude Include="ChaseComponent.h" />
     <ClInclude Include="CommandLoader.h" />
     <ClInclude Include="CursorComponent.h" />

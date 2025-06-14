@@ -3,7 +3,7 @@
 #include "Scene.h"
 #include "HitboxComponent.h"
 
-void dae::CollisionHandler::Init()
+void game::CollisionHandler::Init()
 {
 	m_pWalkableObjectVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("walkable_object");
 	m_pLadderVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("ladder");
@@ -15,7 +15,7 @@ void dae::CollisionHandler::Init()
 	m_pPlayerVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("player0");
 }
 
-bool dae::CollisionHandler::IsNextWalkPossible(glm::vec2 pos, int width, int height)
+bool game::CollisionHandler::IsNextWalkPossible(glm::vec2 pos, int width, int height)
 {
 	for (const auto& walkableObject : m_pWalkableObjectVec)
 	{
@@ -29,7 +29,7 @@ bool dae::CollisionHandler::IsNextWalkPossible(glm::vec2 pos, int width, int hei
 	return false;
 }
 
-bool dae::CollisionHandler::IsNextClimbPossible(glm::vec2 pos, int height)
+bool game::CollisionHandler::IsNextClimbPossible(glm::vec2 pos, int height)
 {
 	for (const auto& ladder : m_pLadderVec)
 	{
@@ -43,7 +43,7 @@ bool dae::CollisionHandler::IsNextClimbPossible(glm::vec2 pos, int height)
 	return false;
 }
 
-std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(const std::string& identifier, glm::vec2 pos, int width, int height)
+std::vector<dae::GameObject*> game::CollisionHandler::IsOverlappingWithObject(const std::string& identifier, glm::vec2 pos, int width, int height)
 {
 	std::vector<dae::GameObject*> resultVec{};
 	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag(identifier);
@@ -52,14 +52,14 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 	for (const auto& obj : objectsToCheck)
 	{
 		auto hitbox = obj->GetComponent<dae::HitboxComponent>()->GetHitbox("main_hitbox");
-		HitboxComponent::Box pBox = HitboxComponent::Box{ static_cast<int>(pos.x), static_cast<int>(pos.y), width, height, 0, 0 };
+		dae::HitboxComponent::Box pBox = dae::HitboxComponent::Box{ static_cast<int>(pos.x), static_cast<int>(pos.y), width, height, 0, 0 };
 		if (IsOverlapping(*hitbox, pBox))
 			resultVec.emplace_back(obj);
 	}
 	return resultVec;
 }
 
-std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(const std::string& identifier, HitboxComponent::Box* hitbox)
+std::vector<dae::GameObject*> game::CollisionHandler::IsOverlappingWithObject(const std::string& identifier, dae::HitboxComponent::Box* hitbox)
 {
 	std::vector<dae::GameObject*> resultVec{};
 	auto objectsToCheck = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag(identifier);
@@ -75,7 +75,7 @@ std::vector<dae::GameObject*> dae::CollisionHandler::IsOverlappingWithObject(con
 	return resultVec;
 }
 
-std::vector<dae::GameObject*> dae::CollisionHandler::AreEnemiesHit(HitboxComponent::Box* hitbox)
+std::vector<dae::GameObject*> game::CollisionHandler::AreEnemiesHit(dae::HitboxComponent::Box* hitbox)
 {
 	std::vector<dae::GameObject*> resultVec{};
 	for (const auto& enemy : m_pEnemyVec)
@@ -87,7 +87,7 @@ std::vector<dae::GameObject*> dae::CollisionHandler::AreEnemiesHit(HitboxCompone
 	return resultVec;
 }
 
-dae::GameObject* dae::CollisionHandler::HasIngredientLanded(glm::vec2 pos)
+dae::GameObject* game::CollisionHandler::HasIngredientLanded(glm::vec2 pos)
 {
 	for (const auto& platform : m_pPlatformVec)
 	{		
@@ -106,7 +106,7 @@ dae::GameObject* dae::CollisionHandler::HasIngredientLanded(glm::vec2 pos)
 	return nullptr;
 }
 
-std::vector<std::pair<dae::GameObject*, int>> dae::CollisionHandler::PerformIngredientCheck(HitboxComponent::Box* hitbox)
+std::vector<std::pair<dae::GameObject*, int>> game::CollisionHandler::PerformIngredientCheck(dae::HitboxComponent::Box* hitbox)
 {
 	std::vector<std::pair<dae::GameObject*, int>> resultVec{};
 	for (const auto& ingredient : m_pIngredientVec)
@@ -125,7 +125,7 @@ std::vector<std::pair<dae::GameObject*, int>> dae::CollisionHandler::PerformIngr
 	return resultVec;
 }
 
-bool dae::CollisionHandler::IsOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const
+bool game::CollisionHandler::IsOverlapping(dae::HitboxComponent::Box& hitbox, dae::HitboxComponent::Box& otherHitbox) const
 {
 	if (hitbox.left > otherHitbox.left + otherHitbox.width or otherHitbox.left > hitbox.left + hitbox.width)
 		return false;
@@ -134,7 +134,7 @@ bool dae::CollisionHandler::IsOverlapping(HitboxComponent::Box& hitbox, HitboxCo
 	return true;
 }
 
-bool dae::CollisionHandler::IsFullyOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const
+bool game::CollisionHandler::IsFullyOverlapping(dae::HitboxComponent::Box& hitbox, dae::HitboxComponent::Box& otherHitbox) const
 {
 	if (hitbox.left < otherHitbox.left or hitbox.left + hitbox.width > otherHitbox.left + otherHitbox.width)
 		return false;

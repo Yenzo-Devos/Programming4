@@ -4,7 +4,7 @@
 #include "glm.hpp"
 #include "GameObject.h"
 
-namespace dae
+namespace game
 {
 	class CollisionHandler final : public dae::Singleton<CollisionHandler>
 	{
@@ -21,27 +21,27 @@ namespace dae
 		bool IsNextWalkPossible(glm::vec2 pos, int width, int height);
 		bool IsNextClimbPossible(glm::vec2 pos, int height);
 
-		std::vector<GameObject*> IsOverlappingWithObject(const std::string& identifier, glm::vec2 pos, int width, int height);
-		std::vector<GameObject*> IsOverlappingWithObject(const std::string& identifier, HitboxComponent::Box* hitbox);
+		std::vector<dae::GameObject*> IsOverlappingWithObject(const std::string& identifier, glm::vec2 pos, int width, int height);
+		std::vector<dae::GameObject*> IsOverlappingWithObject(const std::string& identifier, dae::HitboxComponent::Box* hitbox);
 
-		std::vector<GameObject*> AreEnemiesHit(HitboxComponent::Box* hitbox);
-		GameObject* HasIngredientLanded(glm::vec2 pos);
+		std::vector<dae::GameObject*> AreEnemiesHit(dae::HitboxComponent::Box* hitbox);
+		dae::GameObject* HasIngredientLanded(glm::vec2 pos);
 
-		std::vector<std::pair<GameObject*, int>> PerformIngredientCheck(HitboxComponent::Box* hitbox);
+		std::vector<std::pair<dae::GameObject*, int>> PerformIngredientCheck(dae::HitboxComponent::Box* hitbox);
 
 	private:
 		friend class Singleton<CollisionHandler>;
 		CollisionHandler() = default;
 
-		bool IsOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const;
-		bool IsFullyOverlapping(HitboxComponent::Box& hitbox, HitboxComponent::Box& otherHitbox) const;
+		bool IsOverlapping(dae::HitboxComponent::Box& hitbox, dae::HitboxComponent::Box& otherHitbox) const;
+		bool IsFullyOverlapping(dae::HitboxComponent::Box& hitbox, dae::HitboxComponent::Box& otherHitbox) const;
 
-		std::vector<GameObject*> m_pWalkableObjectVec{};
-		std::vector<GameObject*> m_pLadderVec{};
-		std::vector<GameObject*> m_pIngredientVec{};
-		std::vector<GameObject*> m_pEnemyVec{};
-		std::vector<GameObject*> m_pPlayerVec{};
-		std::vector<GameObject*> m_pPlatformVec{};
-		std::vector<GameObject*> m_pPlateVec{};
+		std::vector<dae::GameObject*> m_pWalkableObjectVec{};
+		std::vector<dae::GameObject*> m_pLadderVec{};
+		std::vector<dae::GameObject*> m_pIngredientVec{};
+		std::vector<dae::GameObject*> m_pEnemyVec{};
+		std::vector<dae::GameObject*> m_pPlayerVec{};
+		std::vector<dae::GameObject*> m_pPlatformVec{};
+		std::vector<dae::GameObject*> m_pPlateVec{};
 	};
 }

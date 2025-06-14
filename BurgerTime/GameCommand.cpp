@@ -47,7 +47,7 @@ bool game::MoveCommand::Climb(float deltaTime)
 {
 	// check if overlapping with ladder
 	auto nextPos = GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime);
-	if (dae::CollisionHandler::GetInstance().IsNextClimbPossible(nextPos, GetGameObject()->GetDimensions().second))
+	if (game::CollisionHandler::GetInstance().IsNextClimbPossible(nextPos, GetGameObject()->GetDimensions().second))
 	{
 		GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
 
@@ -56,7 +56,7 @@ bool game::MoveCommand::Climb(float deltaTime)
 			auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
 			playerComp->ChangeDirection(m_Direction);
 
-			auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox"));
+			auto ingredientVec = game::CollisionHandler::GetInstance().PerformIngredientCheck(GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox"));
 			if (!ingredientVec.empty())
 				for (const auto& ingredient : ingredientVec)
 					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second, GetGameObject());
@@ -71,7 +71,7 @@ bool game::MoveCommand::Walk(float deltaTime)
 	// clean this up
 	auto nextPos = GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime);
 	auto dimensions = GetGameObject()->GetDimensions();
-	if (dae::CollisionHandler::GetInstance().IsNextWalkPossible(nextPos, dimensions.first, dimensions.second))
+	if (game::CollisionHandler::GetInstance().IsNextWalkPossible(nextPos, dimensions.first, dimensions.second))
 	{
 		GetGameObject()->SetLocalPosition(GetGameObject()->GetWorldPosition() + (m_Direction * m_Speed * deltaTime));
 		if (GetGameObject()->HasComponent<game::PlayerComponent>())
@@ -80,7 +80,7 @@ bool game::MoveCommand::Walk(float deltaTime)
 			playerComp->ChangeDirection(m_Direction);
 			
 			// check for ingredient overlap
-			auto ingredientVec = dae::CollisionHandler::GetInstance().PerformIngredientCheck(GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox"));
+			auto ingredientVec = game::CollisionHandler::GetInstance().PerformIngredientCheck(GetGameObject()->GetComponent<dae::HitboxComponent>()->GetHitbox("feet_hitbox"));
 			if (!ingredientVec.empty())
 				for (const auto& ingredient : ingredientVec)
 					ingredient.first->GetComponent<IngredientComponent>()->Hit(ingredient.second, GetGameObject());

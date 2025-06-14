@@ -198,6 +198,9 @@
     <ClCompile Include="PlayGameState.cpp">
       <Filter>Source Files\States\Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\Minigin\CollisionHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommand.h">
@@ -331,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="PlayGameState.h">
       <Filter>Header Files\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Minigin\CollisionHandler.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
