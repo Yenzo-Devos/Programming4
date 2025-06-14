@@ -18,10 +18,11 @@ namespace game
 		void Broadcast(dae::GameObject* pGameObject, dae::Event event) override;
 		
 		int GetID() { return m_ID; }
+		void UpdateHitbox();
+
 	private:
 		bool m_IsFull{ false };
 		const int m_ID;
-		void UpdateHitbox();
 	};
 }
 

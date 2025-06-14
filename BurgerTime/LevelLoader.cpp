@@ -166,12 +166,9 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("left_middle_hitbox", 16, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_middle_hitbox", 32, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("right_hitbox", 48, 0, 16, 16);
-	ingredient->AddComponent<game::IngredientComponent>(type);
+	ingredient->AddComponent<game::IngredientComponent>(type, idGroup);
 	ingredient->AddComponent<game::FallComponent>(100.f);
-
-	for (const auto& plate : plateVec)
-		if (idGroup == plate->GetComponent<PlateComponent>()->GetID())
-			ingredient->GetComponent<game::IngredientComponent>()->AddObserver(plate->GetComponent<PlateComponent>());
+	
 	auto gamemode = dae::SceneManager::GetInstance().GetGameMode();
 	ingredient->GetComponent<game::IngredientComponent>()->AddObserver(gamemode->GetComponent<GameModeComponent>());
 

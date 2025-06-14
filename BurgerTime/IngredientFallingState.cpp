@@ -9,6 +9,9 @@
 #include "EnemyComponent.h"
 #include "PointsComponent.h"
 #include "ServiceLocator.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "PlateComponent.h"
 
 
 game::IngredientFallingState::IngredientFallingState(dae::GameObject* pLastInteractedObj)
@@ -28,12 +31,12 @@ void game::IngredientFallingState::Update(float deltaTime)
         enemy->GetComponent<EnemyComponent>()->Hit(m_pLastInteractedObj);
 }
 
-std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(dae::GameObject& owner)
+std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState(dae::GameObject* owner)
 {
     if (m_GracePeriodOver)
         EmptyLandingPlatform();
 
-    auto pos = owner.GetWorldPosition();
+    auto pos = owner->GetWorldPosition();
     auto platformObj = dae::CollisionHandler::GetInstance().HasIngredientLanded({ pos.x, pos.y + 14 });
     if (!platformObj)
         return nullptr;
@@ -42,23 +45,25 @@ std::unique_ptr<game::IngredientState> game::IngredientFallingState::HandleState
     {
         m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(50);
         for (int index{0}; index < 4; ++index)
-            owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
+            owner->GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
         return std::make_unique<IngredientIdleState>();
     }
     else if (platformObj->GetTag() == "plate")
     {
         m_pLastInteractedObj->GetComponent<PointsComponent>()->AddPoints(50);
         for (int index{0}; index < 4; ++index)
-            owner.GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
+            owner->GetComponent<dae::RenderComponent>()->ChangeOffset(index, index*16);
+        auto plate = GetCorrectPlate(owner);
+        plate->GetComponent<PlateComponent>()->UpdateHitbox();
         return std::make_unique<IngredientOnPlateState>();
     }
     return nullptr;
 }
 
-void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
+void game::IngredientFallingState::OnEnter(dae::GameObject* owner)
 {
-    m_pHitboxComp = owner.GetComponent<dae::HitboxComponent>();
-    owner.GetComponent<game::FallComponent>()->Activate(true);
+    m_pHitboxComp = owner->GetComponent<dae::HitboxComponent>();
+    owner->GetComponent<game::FallComponent>()->Activate(true);
 
     // check if enemies were on it and set them to falling
     auto enemySet = CheckIfEnemiesCollide();
@@ -79,9 +84,9 @@ void game::IngredientFallingState::OnEnter(dae::GameObject& owner)
     ss.AddToQueue(ingredientFallAudio);
 }
 
-void game::IngredientFallingState::OnExit(dae::GameObject& owner)
+void game::IngredientFallingState::OnExit(dae::GameObject* owner)
 {
-    owner.GetComponent<game::FallComponent>()->Activate(false);
+    owner->GetComponent<game::FallComponent>()->Activate(false);
 }
 
 void game::IngredientFallingState::EmptyLandingPlatform()
@@ -102,4 +107,15 @@ std::unordered_set<dae::GameObject*> game::IngredientFallingState::CheckIfEnemie
         enemyVec.insert(bufferVec.begin(), bufferVec.end());
     }
     return enemyVec;
+}
+
+dae::GameObject* game::IngredientFallingState::GetCorrectPlate(dae::GameObject* pOwner)
+{
+    auto plates = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("plate");
+    for (auto plate : plates)
+    {
+        if (plate->GetComponent<PlateComponent>()->GetID() == pOwner->GetComponent<IngredientComponent>()->GetId())
+            return plate;
+    }
+    return nullptr;
 }

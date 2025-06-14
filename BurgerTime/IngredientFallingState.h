@@ -18,9 +18,9 @@ namespace game
 		IngredientFallingState& operator=(IngredientFallingState&& other) = delete;
 
 		virtual void Update(float deltaTime);
-		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject&);
-		virtual void OnEnter(dae::GameObject& owner);
-		virtual void OnExit(dae::GameObject& owner);
+		virtual std::unique_ptr<IngredientState> HandleState(dae::GameObject*);
+		virtual void OnEnter(dae::GameObject* owner);
+		virtual void OnExit(dae::GameObject* owner);
 	
 	private:
 		const float m_GraceTime{ 0.25f };
@@ -31,6 +31,7 @@ namespace game
 		dae::HitboxComponent* m_pHitboxComp{};
 		void EmptyLandingPlatform();
 		std::unordered_set<dae::GameObject*> CheckIfEnemiesCollide();
+		dae::GameObject* GetCorrectPlate(dae::GameObject* pOwner);
 	};
 }
 

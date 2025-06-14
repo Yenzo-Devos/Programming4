@@ -6,7 +6,7 @@
 #include "ServiceLocator.h"
 #include <algorithm>
 
-std::unique_ptr<game::IngredientState> game::IngredientIdleState::HandleState(dae::GameObject&)
+std::unique_ptr<game::IngredientState> game::IngredientIdleState::HandleState(dae::GameObject*)
 {
     // if all hitbox are hit start falling
     if (std::all_of(m_IsLowered.begin(), m_IsLowered.end(), [](bool b) {return b; }))
@@ -14,9 +14,9 @@ std::unique_ptr<game::IngredientState> game::IngredientIdleState::HandleState(da
     return nullptr;
 }
 
-void game::IngredientIdleState::OnEnter(dae::GameObject& owner)
+void game::IngredientIdleState::OnEnter(dae::GameObject* owner)
 {
-    owner.GetComponent<FallComponent>()->Activate(false);
+    owner->GetComponent<FallComponent>()->Activate(false);
 
     auto& ss = dae::ServiceLocator::GetSoundSystem();
     dae::AudioFile ingredientLandAudio{ "../Data/sounds/Burger_Land.wav", "BurgerFall", 0 };

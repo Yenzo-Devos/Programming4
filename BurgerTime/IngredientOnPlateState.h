@@ -13,6 +13,6 @@ namespace game
 		IngredientOnPlateState& operator=(const IngredientOnPlateState& other) = delete;
 		IngredientOnPlateState& operator=(IngredientOnPlateState&& other) = delete;
 
-		void OnEnter(dae::GameObject& owner) override;
+		void OnEnter(dae::GameObject* owner) override;
 	};
 }

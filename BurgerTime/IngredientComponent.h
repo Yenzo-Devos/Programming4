@@ -15,7 +15,7 @@ namespace game
 	class IngredientComponent : public dae::BaseComponent
 	{
 	public:
-		IngredientComponent(dae::GameObject* pOwner, int type);
+		IngredientComponent(dae::GameObject* pOwner, int type, int id);
 		~IngredientComponent() = default;
 
 		IngredientComponent(const IngredientComponent& other) = delete;
@@ -32,9 +32,11 @@ namespace game
 		void RemoveObserver(dae::Observer* pObserver);
 		void FellOnPlate();
 		bool IsTopBun() { return m_Type == 1; }
+		int GetId() const { return m_ID; }
 
 	private:
 		int m_Type{};
+		int m_ID{};
 		std::unique_ptr<game::IngredientState> m_pState;
 		std::array<bool, 4> m_IsLowered{};
 

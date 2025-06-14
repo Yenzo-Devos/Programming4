@@ -10,6 +10,9 @@ dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Update(float deltaTime)
 {
+	if (m_ComponentVec.empty())
+		return;
+	
 	for (const auto& comp : m_ComponentVec)
 	{
 		comp->Update(deltaTime);

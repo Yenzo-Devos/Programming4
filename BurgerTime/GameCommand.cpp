@@ -99,6 +99,9 @@ bool game::ThrowPepperCommand::Execute(float)
 {
 	// get direction
 	auto playerComp = GetGameObject()->GetComponent<game::PlayerComponent>();
+	if (dynamic_cast<PlayerDyingState*>(playerComp->GetState()))
+		return false;
+
 	glm::vec3 direction = playerComp->GetDirection();
 	glm::vec3 playerPos = GetGameObject()->GetWorldPosition();
 	
