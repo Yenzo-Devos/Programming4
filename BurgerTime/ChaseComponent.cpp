@@ -26,6 +26,7 @@ void game::ChaseComponent::Update(float deltaTime)
 			CheckHitPlayer();
 		return;
 	}
+
 	else if (m_IsActive && m_IsOwnerControlled)
 	{
 		Activate(false);
@@ -42,7 +43,7 @@ void game::ChaseComponent::Update(float deltaTime)
 			return;
 		}
 	}
-
+	
 	if (!m_pLockedChaseObj)
 		m_pLockedChaseObj = GetClosestObjectToChase();
 	
@@ -96,55 +97,52 @@ void game::ChaseComponent::CheckMoveOnLadder(dae::GameObject* pTarget, float del
 	const auto pos = m_pOwner->GetWorldPosition();
 	const auto targetPos = pTarget->GetWorldPosition();
 	const auto deltaX = targetPos.x - pos.x;
-	const auto deltaY = targetPos.y - pos.y;
-	if (std::abs(deltaX) < std::abs(deltaY) or
-		std::abs(deltaY) <= 1.5f)
+
+	bool hasMoved{ false };
+	if (deltaX > 0)
 	{
-		bool hasMoved{ false };
-		if (deltaX > 0)
+		if (m_MoveRightCommand->Execute(deltaTime))
 		{
-			if (m_MoveRightCommand->Execute(deltaTime))
-			{
-				LockInDirection(glm::vec2{ 1.f, 0.f });
-				hasMoved = true;
-				m_IsOnLadder = false;
-			}
-		}
-		else
-		{
-			if (m_MoveLeftCommand->Execute(deltaTime))
-			{
-				LockInDirection(glm::vec2{ -1.f, 0.f });
-				hasMoved = true;
-				m_IsOnLadder = false;
-			}
-		}
-
-		if (!hasMoved)
-		{
-			if (CheckLadderMovement(pTarget, deltaTime))
-				m_IsOnLadder = true;
-			else
-			{
-				if (deltaX > 0 and m_MoveLeftCommand->Execute(deltaTime))
-					LockInDirection(glm::vec2{ -1.f, 0.f });
-				else if (deltaX <= 0 and m_MoveRightCommand->Execute(deltaTime))
-					LockInDirection(glm::vec2{ 1.f, 0.f });
-
-				m_IsOnLadder = false;
-			}
+			LockInDirection(glm::vec2{ 1.f, 0.f });
+			hasMoved = true;
+			m_IsOnLadder = false;
 		}
 	}
 	else
 	{
+		if (m_MoveLeftCommand->Execute(deltaTime))
+		{
+			LockInDirection(glm::vec2{ -1.f, 0.f });
+			hasMoved = true;
+			m_IsOnLadder = false;
+		}
+	}
+
+	if (!hasMoved)
+	{
 		if (CheckLadderMovement(pTarget, deltaTime))
 			m_IsOnLadder = true;
+		else
+		{
+			if (deltaX > 0 and m_MoveLeftCommand->Execute(deltaTime))
+				LockInDirection(glm::vec2{ -1.f, 0.f });
+			else if (deltaX <= 0 and m_MoveRightCommand->Execute(deltaTime))
+				LockInDirection(glm::vec2{ 1.f, 0.f });
+		
+			m_IsOnLadder = false;
+		}
 	}
 }
 
 bool game::ChaseComponent::CheckLadderMovement(dae::GameObject* pTarget, float deltaTime)
 {
-	if (m_pOwner->GetWorldPosition().y > pTarget->GetWorldPosition().y)
+	if (m_IsOnLadder)
+	{
+		MoveOnLockedPosition(deltaTime);
+		return true;
+	}
+
+	if (m_pOwner->GetWorldPosition().y >= pTarget->GetWorldPosition().y)
 	{
 		if (m_MoveUpCommand->Execute(deltaTime))
 		{
