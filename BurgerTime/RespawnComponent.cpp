@@ -10,5 +10,4 @@ game::RespawnComponent::RespawnComponent(dae::GameObject* pOwner, glm::vec2 resp
 void game::RespawnComponent::RespawnOwner()
 {
 	m_pOwner->SetLocalPosition(m_RespawnLocation);
-	// TODO: Set state to Moving again
 }

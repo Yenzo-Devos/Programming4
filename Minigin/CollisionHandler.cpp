@@ -11,7 +11,6 @@ void game::CollisionHandler::Init()
 	m_pPlatformVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("platform");
 	m_pPlateVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("plate");
 	m_pEnemyVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("enemy");
-	// TODO: find a way to get player0 and 1 in this when needed
 	m_pPlayerVec = dae::SceneManager::GetInstance().GetActiveScene()->GetAllObjectByTag("player0");
 }
 

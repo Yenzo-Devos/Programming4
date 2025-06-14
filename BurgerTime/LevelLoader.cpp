@@ -80,7 +80,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateLadder(int x, int y, i
 	ladder->AddComponent<dae::RenderComponent>();
 	ladder->AddComponent<dae::TextureComponent>(ladder->GetComponent<dae::RenderComponent>());
 	ladder->GetComponent<dae::TextureComponent>()->LoadTexture(textureFileName);
-	// add collision comp for ladder and if needed a ladder component
+
 	ladder->AddComponent<dae::HitboxComponent>();
 	ladder->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32 * length);
 	return ladder;
@@ -96,7 +96,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlatform(int, int x, i
 	platform->AddComponent<dae::RenderComponent>();
 	platform->AddComponent<dae::TextureComponent>(platform->GetComponent<dae::RenderComponent>());
 	platform->GetComponent<dae::TextureComponent>()->LoadTexture("static_objects/platform.png");
-	// add platformcompnent and collisionComp
+
 	platform->AddComponent<dae::HitboxComponent>();
 	platform->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 64, 6);
 	
@@ -160,7 +160,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateIngredient(int type, i
 	ingredient->GetComponent<dae::RenderComponent>()->AddObjectToRender(dae::RenderComponent::Rect{x+48, y, 16, 14}, dae::RenderComponent::Rect{48, 0, 16, 14}, 48);
 	ingredient->AddComponent<dae::TextureComponent>(ingredient->GetComponent<dae::RenderComponent>());
 	ingredient->GetComponent<dae::TextureComponent>()->LoadTexture(textureFileName);
-	// add collisionComp and ingredientComp
+
 	ingredient->AddComponent<dae::HitboxComponent>();
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("left_hitbox", 0, 0, 16, 16);
 	ingredient->GetComponent<dae::HitboxComponent>()->AddHitbox("left_middle_hitbox", 16, 0, 16, 16);
@@ -195,7 +195,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreateEnemy(const std::strin
 	enemy->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayed", 2, 5, 10.f);
 	enemy->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("walkLeft");
 	
-	// add collisioncomp and EnemyComp
+
 	enemy->AddComponent<dae::HitboxComponent>();
 	enemy->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
 
@@ -308,7 +308,7 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePlayer(int id, int x, 
 	player->GetComponent<dae::SpriteComponent>()->LoadAnimationData("sprayRight", 1, 8, 1.f);
 	player->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("dying");
 
-	// add collisioncomp and playercomp
+
 	player->AddComponent<dae::HitboxComponent>();
 	player->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 5, 0, 22, 32);
 	player->GetComponent<dae::HitboxComponent>()->AddHitbox("feet_hitbox", 5, 32, 22, 6);
@@ -341,6 +341,5 @@ std::unique_ptr<dae::GameObject> game::LevelLoader::CreatePepper()
 	pepper->AddComponent<dae::HitboxComponent>();
 	pepper->GetComponent<dae::HitboxComponent>()->AddHitbox("main_hitbox", 0, 0, 32, 32);
 
-	//pepper->AddComponent<game::PepperComponent>(pepper->GetComponent<dae::HitboxComponent>(), 5);
 	return pepper;
 }

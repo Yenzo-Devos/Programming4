@@ -153,9 +153,6 @@
     <ClCompile Include="FallComponent.cpp">
       <Filter>Source Files\Components\GameComponents</Filter>
     </ClCompile>
-    <ClCompile Include="FPSComponent.cpp">
-      <Filter>Source Files\Components\GameComponents</Filter>
-    </ClCompile>
     <ClCompile Include="IngredientComponent.cpp">
       <Filter>Source Files\Components\GameComponents</Filter>
     </ClCompile>
@@ -285,9 +282,6 @@
       <Filter>Header Files\Components\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="FallComponent.h">
-      <Filter>Header Files\Components\GameComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSComponent.h">
       <Filter>Header Files\Components\GameComponents</Filter>
     </ClInclude>
     <ClInclude Include="IngredientComponent.h">

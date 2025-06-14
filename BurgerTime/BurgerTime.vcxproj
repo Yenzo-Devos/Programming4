@@ -177,7 +177,6 @@
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="EnemyStunnedState.cpp" />
     <ClCompile Include="FallComponent.cpp" />
-    <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameCommand.cpp" />
     <ClCompile Include="GameModeComponent.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -222,7 +221,6 @@
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="EnemyStunnedState.h" />
     <ClInclude Include="FallComponent.h" />
-    <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameCommand.h" />
     <ClInclude Include="GameModeComponent.h" />
     <ClInclude Include="GameState.h" />
