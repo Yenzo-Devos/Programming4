@@ -20,6 +20,16 @@ void game::GameModeComponent::Update(float deltaTime)
 {
 	m_pState->Update(deltaTime);
 	HandleState();
+
+	if (m_LevelReloaded)
+	{
+		m_AccuReloadTime += deltaTime;
+		if (m_AccuReloadTime > m_ReloadTime)
+		{
+			m_LevelReloaded = false;
+			m_AccuReloadTime = 0.f;
+		}
+	}
 }
 
 void game::GameModeComponent::HandleState()
@@ -78,8 +88,11 @@ void game::GameModeComponent::Broadcast(dae::GameObject* pGameObject, dae::Event
 			if (++m_NrOfBurgerDone == nrOfPlates)
 			{
 				auto state = dynamic_cast<PlayGameState*>(m_pState.get());
-				if (state)
-					state->LoadNextLevel(m_pOwner);
+				if (state && !m_LevelReloaded)
+				{
+					m_LevelReloaded = state->LoadNextLevel(m_pOwner);
+					state->SetObjectsDelete();
+				}
 			}
 		}
 		break;

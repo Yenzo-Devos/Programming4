@@ -24,7 +24,12 @@ void Scene::Add(std::unique_ptr<GameObject> object)
 
 void Scene::Remove(std::unique_ptr<GameObject> object)
 {
-	m_pObjects.erase(std::remove(m_pObjects.begin(), m_pObjects.end(), object), m_pObjects.end());
+	auto it = std::remove_if(m_pObjects.begin(), m_pObjects.end(),
+		[&object](const std::unique_ptr<GameObject>& ptr) {
+			return ptr.get() == object.get();
+		});
+
+	m_pObjects.erase(it, m_pObjects.end());
 }
 
 void dae::Scene::RemoveByTag(const std::string& tag)
@@ -38,7 +43,8 @@ void dae::Scene::RemoveByTag(const std::string& tag)
 
 void Scene::RemoveAll()
 {
-	m_pObjects.clear();
+	for (const auto& obj : m_pObjects)
+		obj->SetDead();
 }
 
 GameObject* Scene::GetObjectByTag(const std::string& tag)
@@ -78,20 +84,37 @@ void Scene::Update(float deltaTime)
 {
 	for(auto& object : m_pObjects)
 	{
-		object->Update(deltaTime);
+		if (object)
+			object->Update(deltaTime);
 	}
 
 	for (auto& object : m_pObjects)
 	{
+		if (!object)
+			continue;
+
 		if (object->GetIsDead())
+		{
 			Remove(std::move(object));
+			m_DoneRemoving = true;
+		}
 	}
+
+	if (m_DoneRemoving)
+	{
+		m_pObjects.clear();
+		m_DoneRemoving = false;
+	}
+
 }
 
 void Scene::Render() const
 {
 	for (const auto& object : m_pObjects)
 	{
+		if (!object)
+			return;
+
 		if (object->HasComponent<RenderComponent>())
 		object->GetComponent<RenderComponent>()->Render();
 	}

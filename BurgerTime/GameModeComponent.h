@@ -39,6 +39,10 @@ namespace game
 		std::unique_ptr<GameState> m_pState{};
 		int m_FinishedPoints{ };
 		int m_NrOfBurgerDone{ };
+		bool m_LevelReloaded{ false };
+
+		float m_AccuReloadTime{ };
+		const float m_ReloadTime{ 10.f };
 		PlayerData m_PlayerData{ 0, 5, 3};
 	};
 }

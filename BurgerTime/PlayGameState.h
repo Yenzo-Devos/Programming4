@@ -16,20 +16,30 @@ namespace game
 		PlayGameState& operator=(const PlayGameState& other) = delete;
 		PlayGameState& operator=(PlayGameState&& other) = delete;
 
+		void Update(float deltaTime) override;
 		std::unique_ptr<GameState> HandleState(dae::GameObject*) override;
 		void OnEnter(dae::GameObject* owner) override;
 		void OnExit(dae::GameObject*) override;
 
-		void LoadNextLevel(dae::GameObject* owner);
+		bool LoadNextLevel(dae::GameObject* owner);
 		void EndGame() { m_GameHasEnded = true; }
+
+		void SetObjectsDelete() { m_ObjectsDeleted = true; }
 
 	private:
 		int m_GameModeIndex{};
 		int m_Level{ 1 };
+		bool m_ObjectsDeleted{ false };
 		bool m_GameHasEnded{ false };
+
+		float m_AccuFrameTime{};
+		const float m_FrameTime{ .1f };
+
+		GameModeComponent::PlayerData m_BufferPlayerData{};
 		std::vector<std::string> m_SceneNames{ "singleplayer", "co-op", "versus" };
 
 		GameModeComponent::PlayerData CreateBufferPlayerData(dae::Scene* pScene);
+		void ActualLoadingOfObjects(dae::GameObject* owner);
 		void RemoveAllObjects();
 	};
 }

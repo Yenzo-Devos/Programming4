@@ -127,6 +127,7 @@ bool game::SkipLevelCommand::Execute(float)
 	if (gameState)
 	{
 		gameState->LoadNextLevel(GetGameObject());
+		gameState->SetObjectsDelete();
 		return true;
 	}
 	return false;

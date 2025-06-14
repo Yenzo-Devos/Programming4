@@ -32,6 +32,7 @@ namespace dae
 	private: 
 		std::string m_Name;
 		std::vector<std::unique_ptr<GameObject>> m_pObjects{};
+		bool m_DoneRemoving{ false };
 	};
 
 }
