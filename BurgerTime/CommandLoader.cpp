@@ -49,8 +49,8 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
 
     auto moveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto moveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
-    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
-    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed/2, glm::vec3(0, -1, 0));
+    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed/2, glm::vec3(0, 1, 0));
     auto throwPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
 
     // controller bindings
@@ -62,8 +62,8 @@ void game::CommandLoader::CreateSinglePlayerCommands(dae::Scene* pScene, dae::Ga
 
     auto keyboardMoveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto keyboardMoveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
-    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
-    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, -1, 0));
+    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
     auto skipLevelCommand = std::make_unique<game::SkipLevelCommand>(pGameState);
     auto muteCommand = std::make_unique<game::MuteSoundCommand>();
@@ -86,14 +86,14 @@ void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject
 
     auto moveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto moveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
-    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
-    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, -1, 0));
+    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, 1, 0));
     auto throwPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
 
     auto otherMoveLeftCommand = std::make_unique<game::MoveCommand>(otherPlayer, speed, glm::vec3(-1, 0, 0));
     auto otherMoveRightCommand = std::make_unique<game::MoveCommand>(otherPlayer, speed, glm::vec3(1, 0, 0));
-    auto otherMoveUpCommand = std::make_unique<game::MoveCommand>(otherPlayer, speed, glm::vec3(0, -1, 0));
-    auto otherMoveDownCommand = std::make_unique<game::MoveCommand>(otherPlayer, speed, glm::vec3(0, 1, 0));
+    auto otherMoveUpCommand = std::make_unique<game::MoveCommand>(otherPlayer, speed / 2, glm::vec3(0, -1, 0));
+    auto otherMoveDownCommand = std::make_unique<game::MoveCommand>(otherPlayer, speed / 2, glm::vec3(0, 1, 0));
     auto otherThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(otherPlayer);
 
     // controller bindings
@@ -111,8 +111,8 @@ void game::CommandLoader::CreateCoopCommands(dae::Scene* pScene, dae::GameObject
 
     auto keyboardMoveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto keyboardMoveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
-    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
-    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, -1, 0));
+    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
     auto skipLevelCommand = std::make_unique<game::SkipLevelCommand>(pGameState);
     auto muteCommand = std::make_unique<game::MuteSoundCommand>();
@@ -142,14 +142,14 @@ void game::CommandLoader::CreateVersusCommands(dae::Scene* pScene, dae::GameObje
 
     auto moveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto moveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
-    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
-    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto moveUpCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, -1, 0));
+    auto moveDownCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, 1, 0));
     auto throwPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
 
     auto enemyMoveLeftCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(-1, 0, 0));
     auto enemyMoveRightCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(1, 0, 0));
-    auto enemyMoveUpCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(0, -1, 0));
-    auto enemyMoveDownCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed, glm::vec3(0, 1, 0));
+    auto enemyMoveUpCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed / 2, glm::vec3(0, -1, 0));
+    auto enemyMoveDownCommand = std::make_unique<game::MoveCommand>(controlledEnemy, speed / 2, glm::vec3(0, 1, 0));
 
     // controller bindings
     dae::InputManager::GetInstance().BindCommand(std::move(moveLeftCommand), 1, dae::InputState::Held, dae::GamePad::GamePadButton::DPAD_LEFT);
@@ -165,8 +165,8 @@ void game::CommandLoader::CreateVersusCommands(dae::Scene* pScene, dae::GameObje
 
     auto keyboardMoveLeftCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(-1, 0, 0));
     auto keyboardMoveRightCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(1, 0, 0));
-    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, -1, 0));
-    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed, glm::vec3(0, 1, 0));
+    auto keyboardMoveUpCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, -1, 0));
+    auto keyboardMoveDownCommand = std::make_unique<game::MoveCommand>(player, speed / 2, glm::vec3(0, 1, 0));
     auto keyboardThrowPepperCommand = std::make_unique<game::ThrowPepperCommand>(player);
     auto skipLevelCommand = std::make_unique<game::SkipLevelCommand>(pGameState);
     auto muteCommand = std::make_unique<game::MuteSoundCommand>();

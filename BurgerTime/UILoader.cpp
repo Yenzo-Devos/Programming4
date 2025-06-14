@@ -121,6 +121,9 @@ void game::UILoader::LoadLeaderBoardUI(dae::Scene* scene)
 	scene->Add(std::move(letter2));
 	scene->Add(std::move(letter3));
 	scene->Add(std::move(menu));
+
+	auto pressButtonToConfirm = CreateSimpleTextObject(glm::vec2{ 20.f, 450.f }, "Press E or button A to confirm", 12);
+	scene->Add(std::move(pressButtonToConfirm));
 }
 
 std::unique_ptr<dae::GameObject> game::UILoader::CreateSimpleTextObject(glm::vec2 pos, const std::string& text, int fontSize)
