@@ -16,8 +16,6 @@
 
 void game::UILoader::LoadStartScreenUI(dae::Scene* scene)
 {
-	// title if wanted
-
 	auto pointer = CreateSimpleTextObject(glm::vec2{ 60.f, 200.f }, ">", 18);
 	pointer->AddComponent<CursorComponent>();
 	scene->Add(std::move(pointer));
@@ -37,6 +35,9 @@ void game::UILoader::LoadStartScreenUI(dae::Scene* scene)
 	scene->Add(std::move(coopText));
 	scene->Add(std::move(versusText));
 	scene->Add(std::move(menu));
+
+	auto pressButtonToConfirm = CreateSimpleTextObject(glm::vec2{ 20.f, 450.f }, "Press E or button A to play", 12);
+	scene->Add(std::move(pressButtonToConfirm));
 }
 
 void game::UILoader::LoadGameUI(dae::Scene* scene)
