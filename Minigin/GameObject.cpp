@@ -98,14 +98,14 @@ void dae::GameObject::SetPositionDirty()
 	std::for_each(m_pChildren.begin(), m_pChildren.end(), std::mem_fn(&dae::GameObject::SetPositionDirty));
 }
 
-const glm::vec3& dae::GameObject::GetWorldPosition()
+const glm::vec2& dae::GameObject::GetWorldPosition()
 {
 	if (m_IsPositionDirty)
 		UpdateWorldPosition();
 	return m_WorldPosition;
 }
 
-void dae::GameObject::SetLocalPosition(const glm::vec3& pos)
+void dae::GameObject::SetLocalPosition(const glm::vec2& pos)
 {
 	m_LocalPosition = pos;
 	SetPositionDirty();

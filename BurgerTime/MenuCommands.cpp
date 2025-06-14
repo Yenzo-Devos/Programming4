@@ -18,13 +18,13 @@ bool game::MenuMoveCommand::Execute(float)
         if (m_Direction.x == 1.f)
         {
             auto nextPos = m_pMenu->GetNextItemLocation(true);
-            GetGameObject()->SetLocalPosition(glm::vec3{ nextPos.x, pos.y, 0.f });
+            GetGameObject()->SetLocalPosition(glm::vec2{ nextPos.x, pos.y });
             return true;
         }
         else if (m_Direction.x == -1.f)
         {
             auto nextPos = m_pMenu->GetNextItemLocation(false);
-            GetGameObject()->SetLocalPosition(glm::vec3{ nextPos.x, pos.y, 0.f });
+            GetGameObject()->SetLocalPosition(glm::vec2{ nextPos.x, pos.y });
             return true;
         }
     }
@@ -33,13 +33,13 @@ bool game::MenuMoveCommand::Execute(float)
         if (m_Direction.y == -1.f)
         {
             auto nextPos = m_pMenu->GetNextItemLocation(false);
-            GetGameObject()->SetLocalPosition(glm::vec3{ pos.x, nextPos.y, 0.f });
+            GetGameObject()->SetLocalPosition(glm::vec2{ pos.x, nextPos.y });
             return true;
         }
         else if (m_Direction.y == 1.f)
         {
             auto nextPos = m_pMenu->GetNextItemLocation(true);
-            GetGameObject()->SetLocalPosition(glm::vec3{ pos.x, nextPos.y, 0.f });
+            GetGameObject()->SetLocalPosition(glm::vec2{ pos.x, nextPos.y });
             return true;
         }
     }

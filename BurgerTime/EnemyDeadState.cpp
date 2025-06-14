@@ -36,5 +36,5 @@ void game::EnemyDeadState::OnEnter(dae::GameObject& owner)
         auto pointEffect = owner.GetComponent<EnemyComponent>()->GetPointEffect();
         pointEffect->GetComponent<PointEffectComponent>()->SpawnEffect(owner.GetWorldPosition(), m_PointsToBeAwarded);
     }
-    owner.SetLocalPosition({ -50.f, -50.f, 0.f });
+    owner.SetLocalPosition(glm::vec2{ -50.f, -50.f });
 }

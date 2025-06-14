@@ -10,7 +10,7 @@ namespace game
 	class RespawnComponent : public dae::BaseComponent
 	{
 	public:
-		RespawnComponent(dae::GameObject* pOwner, glm::vec3 respawnLocation);
+		RespawnComponent(dae::GameObject* pOwner, glm::vec2 respawnLocation);
 		~RespawnComponent() = default;
 
 		RespawnComponent(const RespawnComponent& other) = delete;
@@ -22,7 +22,7 @@ namespace game
 
 		void RespawnOwner();
 	private:
-		glm::vec3 m_RespawnLocation;
+		glm::vec2 m_RespawnLocation;
 	};
 }
 

@@ -28,8 +28,8 @@ namespace dae
 		GameObject* GetChildAt(int index) { return m_pChildren[index]; }
 
 		// position functions
-		const glm::vec3& GetWorldPosition();
-		void SetLocalPosition(const glm::vec3& pos);
+		const glm::vec2& GetWorldPosition();
+		void SetLocalPosition(const glm::vec2& pos);
 		void UpdateWorldPosition();
 		
 		void SetDimensions(int width, int height);
@@ -60,8 +60,8 @@ namespace dae
 
 		// position member vars
 		bool m_IsPositionDirty{ false };
-		glm::vec3 m_WorldPosition{};
-		glm::vec3 m_LocalPosition{};
+		glm::vec2 m_WorldPosition{};
+		glm::vec2 m_LocalPosition{};
 		int m_Width{};
 		int m_Height{};
 

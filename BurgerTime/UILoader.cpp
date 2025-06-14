@@ -55,7 +55,7 @@ void game::UILoader::LoadGameUI(dae::Scene* scene)
 	chefPointsObj->AddComponent<game::PointsDisplayComponent>(chefPointsObj->GetComponent<dae::TextComponent>());	
 	
 	auto chefLivesObj = scene->CreateObject();
-	chefLivesObj->SetLocalPosition(glm::vec3{ 0.f, 480.f, 0.f });
+	chefLivesObj->SetLocalPosition(glm::vec2{ 0.f, 480.f });
 	chefLivesObj->AddComponent<dae::RenderComponent>(true);
 
 	dae::RenderComponent::Rect dstRect{ 0, 464, 16, 16 };
@@ -129,7 +129,7 @@ void game::UILoader::LoadLeaderBoardUI(dae::Scene* scene)
 std::unique_ptr<dae::GameObject> game::UILoader::CreateSimpleTextObject(glm::vec2 pos, const std::string& text, int fontSize)
 {
 	auto textObj = std::make_unique<dae::GameObject>();
-	textObj->SetLocalPosition(glm::vec3{ pos.x, pos.y, 0.f });
+	textObj->SetLocalPosition(glm::vec2{ pos.x, pos.y});
 	textObj->GiveTag(text);
 	textObj->AddComponent<dae::RenderComponent>();
 	textObj->AddComponent<dae::TextComponent>(textObj->GetComponent<dae::RenderComponent>());

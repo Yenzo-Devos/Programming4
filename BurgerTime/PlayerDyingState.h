@@ -20,7 +20,7 @@ namespace game
 		void OnEnter(dae::GameObject* owner) override;
 		void OnExit(dae::GameObject* owner) override;
 	private:
-		glm::vec3 m_LastPos{};
+		glm::vec2 m_LastPos{};
 		float m_AccuDeadTime{};
 		const float m_DeadTime{ 2.f };
 	};

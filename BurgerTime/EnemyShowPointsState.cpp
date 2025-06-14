@@ -34,7 +34,7 @@ void game::EnemyShowPointsState::OnEnter(dae::GameObject& owner)
         pointEffect->GetComponent<PointEffectComponent>()->SpawnEffect(owner.GetWorldPosition(), m_PointsToBeAwarded);
     }
     m_BufferPos = owner.GetWorldPosition();
-    owner.SetLocalPosition({ -50.f, -50.f, 0.f });
+    owner.SetLocalPosition(glm::vec2{ -50.f, -50.f });
 }
 
 void game::EnemyShowPointsState::OnExit(dae::GameObject& owner)

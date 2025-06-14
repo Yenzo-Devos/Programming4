@@ -20,7 +20,7 @@
 #include <ranges>
 #include <memory>
 
-game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec3 direction)
+game::MoveCommand::MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec2 direction)
 	: GameObjectCommand(pGameObject)
 	, m_Speed{ speed }
 	, m_Direction{ direction }
@@ -102,8 +102,8 @@ bool game::ThrowPepperCommand::Execute(float)
 	if (dynamic_cast<PlayerDyingState*>(playerComp->GetState()))
 		return false;
 
-	glm::vec3 direction = playerComp->GetDirection();
-	glm::vec3 playerPos = GetGameObject()->GetWorldPosition();
+	glm::vec2 direction = playerComp->GetDirection();
+	glm::vec2 playerPos = GetGameObject()->GetWorldPosition();
 	
 	glm::vec2 pos{};
 	if (direction.x == 1.f)

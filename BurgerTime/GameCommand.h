@@ -11,7 +11,7 @@ namespace game
 	class MoveCommand : public dae::GameObjectCommand
 	{
 	public:
-		MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec3 direction);
+		MoveCommand(dae::GameObject* pGameObject, float speed, glm::vec2 direction);
 		~MoveCommand() = default;
 
 		MoveCommand(const MoveCommand& other) = delete;
@@ -23,7 +23,7 @@ namespace game
 
 	private:
 		float m_Speed;
-		glm::vec3 m_Direction;
+		glm::vec2 m_Direction;
 	
 		bool Climb(float deltaTime);
 		bool Walk(float deltaTime);

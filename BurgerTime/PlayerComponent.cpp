@@ -27,7 +27,7 @@ void game::PlayerComponent::HandleState()
 	}
 }
 
-void game::PlayerComponent::ChangeDirection(glm::vec3 direction)
+void game::PlayerComponent::ChangeDirection(glm::vec2 direction)
 {
 	if (m_Direction != direction)
 		m_Direction = direction;

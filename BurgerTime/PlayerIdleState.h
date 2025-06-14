@@ -19,7 +19,7 @@ namespace game
 		std::unique_ptr<PlayerState> HandleState(dae::GameObject* pOwner) override;
 		void OnEnter(dae::GameObject* pOwner) override;
 	private:
-		glm::vec3 m_LastPos{};
+		glm::vec2 m_LastPos{};
 		int m_CurrentHealth{};
 	};
 }

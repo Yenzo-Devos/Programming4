@@ -41,7 +41,7 @@ bool game::PepperComponent::Activate(glm::vec2 pos, glm::vec2 dir)
 	m_pPepperEvent->Broadcast(m_pOwner, dae::Event::PepperUsed);
 
 	m_IsActive = true;
-	m_pOwner->SetLocalPosition({ pos, 0.f });
+	m_pOwner->SetLocalPosition(pos);
 	if (dir.x == 1.f)
 		m_pOwner->GetComponent<dae::SpriteComponent>()->SetCurrentAnimation("pepperRight");
 	else if (dir.x == -1.f)
@@ -62,6 +62,6 @@ void game::PepperComponent::RemoveObserver(dae::Observer* pObserver)
 void game::PepperComponent::DeActivate()
 {
 	m_IsActive = false;
-	m_pOwner->SetLocalPosition({ -50.f, -50.f, 0.f });
+	m_pOwner->SetLocalPosition(glm::vec2{ -50.f, -50.f });
 	m_AccuActiveTime = 0.f;
 }

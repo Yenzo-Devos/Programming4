@@ -18,12 +18,12 @@ void game::PointEffectComponent::Update(float deltaTime)
 void game::PointEffectComponent::SpawnEffect(glm::vec2 pos, int points)
 {
 	m_pSpriteComp->SetCurrentAnimation(std::to_string(points));
-	m_pOwner->SetLocalPosition(glm::vec3{ pos.x, pos.y, 0.f });
+	m_pOwner->SetLocalPosition(glm::vec2{ pos.x, pos.y });
 }
 
 void game::PointEffectComponent::KillEffect()
 {
-	m_pOwner->SetLocalPosition(glm::vec3{ -50.f, -50.f, 0.f });
+	m_pOwner->SetLocalPosition(glm::vec2{ -50.f, -50.f });
 	m_AccuLifeTime = 0.f;
 	m_IsActive = false;
 }

@@ -21,6 +21,6 @@ namespace game
 	private:
 		bool m_IsActive{ false };
 		const float m_Speed{};
-		glm::vec3 m_Direction{ 0.f, 1.f, 0.f };
+		glm::vec2 m_Direction{ 0.f, 1.f };
 	};
 }

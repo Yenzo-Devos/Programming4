@@ -10,10 +10,10 @@
 game::ChaseComponent::ChaseComponent(dae::GameObject* pOwner, std::vector<dae::GameObject*> pLadderVec, bool isBeingControlled)
 	: BaseComponent(pOwner)
 	, m_pLadderVec{ pLadderVec }
-	, m_MoveLeftCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{-1.f, 0.f, 0.f}) }
-	, m_MoveRightCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec3{1.f, 0.f, 0.f}) }
-	, m_MoveUpCommand{ std::make_unique<MoveCommand>(pOwner, 25.f, glm::vec3{0.f, -1.f, 0.f}) }
-	, m_MoveDownCommand{ std::make_unique<MoveCommand>(pOwner, 25.f, glm::vec3{0.f, 1.f, 0.f}) }
+	, m_MoveLeftCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec2{-1.f, 0.f}) }
+	, m_MoveRightCommand{ std::make_unique<MoveCommand>(pOwner, 50.f, glm::vec2{1.f, 0.f}) }
+	, m_MoveUpCommand{ std::make_unique<MoveCommand>(pOwner, 25.f, glm::vec2{0.f, -1.f}) }
+	, m_MoveDownCommand{ std::make_unique<MoveCommand>(pOwner, 25.f, glm::vec2{0.f, 1.f}) }
 	, m_IsOwnerControlled{isBeingControlled}
 {
 }
@@ -47,7 +47,6 @@ void game::ChaseComponent::Update(float deltaTime)
 	if (!m_pLockedChaseObj)
 		m_pLockedChaseObj = GetClosestObjectToChase();
 	
-	// check if there is a ladder?
 	if (!m_IsOnLadder)
 	{
 		if (CheckLadderMovement(m_pLockedChaseObj, deltaTime))

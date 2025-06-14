@@ -26,6 +26,6 @@ namespace game
 		const float m_ShowPointsTime{ 2.f };
 		int m_PointsToBeAwarded{};
 		dae::GameObject* m_pLastInteractedObj{};
-		glm::vec3 m_BufferPos{};
+		glm::vec2 m_BufferPos{};
 	};
 }
